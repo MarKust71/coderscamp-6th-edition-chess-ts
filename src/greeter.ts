@@ -1,4 +1,3 @@
-
 export class Greeter {
     name: string;
 

@@ -1,9 +1,12 @@
-Webpack 4 + TypeScript starter
-------------------------------
+## Webpack 4 + TypeScript starter
 
 [![Build Status](https://travis-ci.org/juristr/webpack-typescript-starter.svg?branch=master)](https://travis-ci.org/juristr/webpack-typescript-starter)
 
-This is by far no sophisticated starter or whatever. The goal is to get the simplest possible setup to get you started with Webpack 4 and TypeScript. You can then start from here and add further stuff you need, such as SASS compilation, add framework specific stuff etc.
+https://github.com/juristr/webpack-typescript-starter
+
+This is by far no sophisticated starter or whatever. The goal is to get the simplest possible setup to get you started
+with Webpack 4 and TypeScript. You can then start from here and add further stuff you need, such as SASS compilation,
+add framework specific stuff etc.
 
 Also check out the official Webpack 4 docs for a proper TypeScript setup: https://webpack.js.org/guides/typescript/
 
@@ -11,11 +14,11 @@ _Note, this is still a WIP. Contributions/suggestions are welcome :smiley:_
 
 ## Features
 
-- [x] Webpack 4
-- [x] TypeScript 2 compilation
-- [x] ts-lint
-- [x] Webpack Development Server
-- [x] Karma and Jasmine test execution
+-   [x] Webpack 4
+-   [x] TypeScript 2 compilation
+-   [x] ts-lint
+-   [x] Webpack Development Server
+-   [x] Karma and Jasmine test execution
 
 ## How to use
 
@@ -36,15 +39,16 @@ $ npm i
 # Start developing and serve your app:
 npm start
 
-# Build your app without minification: 
+# Build your app without minification:
 npm run build
 
-# Build your app with minification: 
+# Build your app with minification:
 npm run build.all
 
 # run unit tests:
 npm run test
 ```
+
 ## Contributions
 
 Of course! Open an issue and let's discuss :smiley:.
@@ -53,5 +57,4 @@ Of course! Open an issue and let's discuss :smiley:.
 
 Similar projects that could be a point of inspiration:
 
-- [krasimir/webpack-library-starter](https://github.com/krasimir/webpack-library-starter)
-
+-   [krasimir/webpack-library-starter](https://github.com/krasimir/webpack-library-starter)
