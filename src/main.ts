@@ -1,4 +1,7 @@
-import { Greeter } from './greeter';
+import { setup } from './setup';
 
-const g = new Greeter('Juri');
-g.greet();
+// checkWinner();
+
+// changePlayer(); to wszystko na później
+
+window.onload = setup;
