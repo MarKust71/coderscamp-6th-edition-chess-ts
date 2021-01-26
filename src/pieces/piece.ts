@@ -9,10 +9,10 @@ interface PieceModel {
 }
 
 export class Piece implements PieceModel {
-    // x: number;
-    // y: number;
-    // display: string;
-    // side: 'white' | 'black';
+    x: number;
+    y: number;
+    display: string;
+    side: 'white' | 'black';
     constructor(x: number, y: number, side: 'white' | 'black') {
         this.x = x;
         this.y = y;

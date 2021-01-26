@@ -1,16 +1,18 @@
 import { board } from './board';
 
-export const touched = (e): void => {
-    const x = e.currentTarget.id[0];
-    const y = e.currentTarget.id[2];
+export const touched = (event: MouseEvent): void => {
+    const { id } = event.currentTarget as HTMLAreaElement;
+    const x: number = parseInt(id[0]);
+    const y: number = parseInt(id[2]);
     if (!board[x][y]) {
         return;
     }
     const possibleMoves = board[x][y].findLegalMoves();
     for (const el of possibleMoves) {
         document.getElementById(el).className += ` possibleMove`;
-        document.getElementById(el).addEventListener('click', (e) => {
-            board[x][y].move(e.currentTarget.id);
+        document.getElementById(el).addEventListener('click', (event) => {
+            const { id } = event.currentTarget as HTMLAreaElement;
+                board[x][y].move(id);
             for (let x = 0; x < board.length; x++) {
                 for (let y = 0; y < board[x].length; y++) {
                     document.getElementById(`${x},${y}`).className = document

@@ -1,7 +1,7 @@
 import { touched } from './touched';
 import { board } from './board';
 
-export const setup = () => {
+export const setup = (): void => {
     for (let x = 0; x < board.length; x++) {
         for (let y = 0; y < board[x].length; y++) {
             const square = document.createElement('div');
