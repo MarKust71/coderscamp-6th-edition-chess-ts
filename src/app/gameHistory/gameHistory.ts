@@ -1,3 +1,6 @@
+import { Coordinates, Side } from '../types';
+import { Piece } from '../pieces/pieces';
+import { Timer } from '../timers/timers';
 export class Movement {
     piece: Piece;
     origin: Coordinates;
@@ -9,12 +12,18 @@ export class Movement {
         this.origin = origin;
         this.timers = timers;
 
-        this.notation = Movement.notationStrategy();
+        //this.notation = Movement.createNotation(piece, origin, destination);
     }
 
-    static notationStrategy(): string {
-        return '';
-    }
+    // static createNotation(piece: Piece, origin: Coordinates, destination: Coordinates): string {
+    //     //const sameTypeFigure = board.findPiece(piece.name, piece.side)
+    //     let figure: string = piece.name === 'pawn' ? String.fromCharCode(97 + origin.x) : piece.name[0].toUpperCase();
+    //     const move: string = String.fromCharCode(97 + destination.x) + destination.y + 1;
+    //     const capture: string = board.pieceOnSquare(destination.x, destination.y) ? 'x' : '';
+    //     // ep. - bicie w locie
+
+    //     return '';
+    // }
 }
 
 export class gameHistory {
@@ -25,7 +34,7 @@ export class gameHistory {
     }
 
     whoseTurn(): Side {
-        return this.history.length % 2 === 0 ? 'white' : 'black';
+        return this.history.length % 2 === 0 ? Side.WHITE : Side.BLACK;
     }
 
     newMove(move: Movement): void {
@@ -39,8 +48,8 @@ export class gameHistory {
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
         const lastMove: Movement = history.pop();
 
-        lastMove.piece.x = lastMove.origin.x;
-        lastMove.piece.y = lastMove.origin.y;
+        lastMove.piece.coordinates.x = lastMove.origin.x;
+        lastMove.piece.coordinates.y = lastMove.origin.y;
 
         // Repaint on board
     }
