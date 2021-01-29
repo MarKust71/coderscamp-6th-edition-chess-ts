@@ -1,5 +1,5 @@
 import { Coordinates, Side } from '../types';
-import { Piece } from '../pieces/pieces';
+import { Piece } from '../pieces/piece';
 import { Timer } from '../timers/timers';
 export class Movement {
     piece: Piece;

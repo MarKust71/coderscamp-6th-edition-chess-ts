@@ -1,4 +1,6 @@
-import { board } from './board';
+import { board } from './board/board';
+
+import { Coordinates } from './types';
 
 export const touched = (event: MouseEvent): void => {
     const { id } = event.currentTarget as HTMLAreaElement;
@@ -8,11 +10,12 @@ export const touched = (event: MouseEvent): void => {
         return;
     }
     const possibleMoves = board[x][y].findLegalMoves();
-    for (const el of possibleMoves) {
+    for (const coordinates of possibleMoves) {
+        const el = `${coordinates.x},${coordinates.y}`;
         document.getElementById(el).className += ` possibleMove`;
         document.getElementById(el).addEventListener('click', (event) => {
             const { id } = event.currentTarget as HTMLAreaElement;
-            board[x][y].move(id);
+            board[x][y].move({ x: parseInt(id[0]), y: parseInt(id[2]) });
             for (let x = 0; x < board.length; x++) {
                 for (let y = 0; y < board[x].length; y++) {
                     document.getElementById(`${x},${y}`).className = document

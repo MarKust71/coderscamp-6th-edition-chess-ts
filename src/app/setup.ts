@@ -1,5 +1,5 @@
 import { touched } from './touched';
-import { board } from './board';
+import { board } from './board/board';
 
 export const setup = (): void => {
     for (let x = 0; x < board.length; x++) {
