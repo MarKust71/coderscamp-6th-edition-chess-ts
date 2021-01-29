@@ -1,4 +1,4 @@
-import { Pawn } from './pieces/pawn';
+import { Pawn } from '../pieces/pawn';
 
 export const board = new Array(8);
 for (let i = 0; i < 8; i++) {

@@ -1,4 +1,4 @@
-import { board } from '../board';
+import { board } from '../app/board';
 
 interface PieceModel {
     x: number;

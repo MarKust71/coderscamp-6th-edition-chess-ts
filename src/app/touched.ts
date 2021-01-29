@@ -12,7 +12,7 @@ export const touched = (event: MouseEvent): void => {
         document.getElementById(el).className += ` possibleMove`;
         document.getElementById(el).addEventListener('click', (event) => {
             const { id } = event.currentTarget as HTMLAreaElement;
-                board[x][y].move(id);
+            board[x][y].move(id);
             for (let x = 0; x < board.length; x++) {
                 for (let y = 0; y < board[x].length; y++) {
                     document.getElementById(`${x},${y}`).className = document
