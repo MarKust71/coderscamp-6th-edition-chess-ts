@@ -26,18 +26,16 @@ export class Piece implements PieceModel {
     }
 
     move(coordinates: Coordinates): void {
-        console.log('Coordinates from move: ', coordinates);
-
         const newX = coordinates.x;
         const newY = coordinates.y;
 
         // clearing previous place
-        board[this.coordinates.x][this.coordinates.y] = null;
+        board.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = undefined;
         document.getElementById(`${this.coordinates.x},${this.coordinates.y}`).innerHTML = '';
         // setting new
         this.coordinates.x = newX;
         this.coordinates.y = newY;
-        board[this.coordinates.x][this.coordinates.y] = this;
+        board.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = this;
         document.getElementById(`${coordinates.x},${coordinates.y}`).innerHTML = this.display;
     }
 }

@@ -36,7 +36,7 @@ export class gameHistory {
         return JSON.parse(localStorage.getItem('history'));
     }
 
-    setHistory(history: Array<Movement>) {}
+    setHistory(history: Array<Movement>): void {}
 
     whoseTurn(): Side {
         return this.getHistory().length % 2 === 0 ? Side.WHITE : Side.BLACK;
