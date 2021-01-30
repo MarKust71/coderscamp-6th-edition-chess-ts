@@ -1,10 +1,10 @@
-import { Coordinates, Side } from '../types';
+import { Coordinates, Side, Name } from '../types';
 import { board } from '../board/board';
 
 interface PieceModel {
     coordinates: Coordinates;
     side: Side;
-    name: string;
+    name: Name;
     move: (coordinates: Coordinates) => void;
     findLegalMoves(): void;
 }
@@ -13,7 +13,7 @@ export class Piece implements PieceModel {
     side: Side;
     hasMoved: boolean;
     display: string;
-    name: string;
+    name: Name;
 
     constructor(coordinates: Coordinates, side: Side) {
         this.side = side;

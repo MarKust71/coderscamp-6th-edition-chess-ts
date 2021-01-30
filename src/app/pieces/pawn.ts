@@ -1,4 +1,4 @@
-import { Coordinates, Side } from '../types';
+import { Coordinates, Side, Name } from '../types';
 
 import { Piece } from './piece';
 
@@ -11,12 +11,12 @@ interface PawnModel {
     move: (coordinates: Coordinates) => void;
 }
 export class Pawn extends Piece implements PawnModel {
-    name: string;
+    name: Name;
     display: string;
 
     constructor(coordinates: Coordinates, side: Side) {
         super(coordinates, side);
-        this.name = 'pawn';
+        this.name = Name.PAWN;
         this.display = `<i class="fas fa-chess-pawn ${side}"></i>`;
     }
 

@@ -1,6 +1,7 @@
-import { Coordinates, Side } from '../types';
+import { Coordinates, Side, Name } from '../types';
 import { Piece } from '../pieces/piece';
 import { Timer } from '../timers/timers';
+import { board } from '../board/board';
 export class Movement {
     piece: Piece;
     origin: Coordinates;
@@ -15,26 +16,30 @@ export class Movement {
         //this.notation = Movement.createNotation(piece, origin, destination);
     }
 
-    // static createNotation(piece: Piece, origin: Coordinates, destination: Coordinates): string {
-    //     //const sameTypeFigure = board.findPiece(piece.name, piece.side)
-    //     let figure: string = piece.name === 'pawn' ? String.fromCharCode(97 + origin.x) : piece.name[0].toUpperCase();
-    //     const move: string = String.fromCharCode(97 + destination.x) + destination.y + 1;
-    //     const capture: string = board.pieceOnSquare(destination.x, destination.y) ? 'x' : '';
-    //     // ep. - bicie w locie
+    static createNotation(piece: Piece, origin: Coordinates, destination: Coordinates): string {
+        //const sameTypeFigure = board.findPiece(piece.name, piece.side)
+        const figure: string =
+            piece.name === Name.PAWN ? String.fromCharCode(97 + origin.x) : piece.name[0].toUpperCase();
+        const move: string = String.fromCharCode(97 + destination.x) + destination.y + 1;
+        const capture: string = ''; // board.pieceOnSquare(destination.x, destination.y) ? 'x' : '';
+        // ep. - bicie w locie
 
-    //     return '';
-    // }
+        // En passant
+        //if(piece.name === Name.PAWN && )
+
+        return figure + capture + move;
+    }
 }
 
 export class gameHistory {
-    history: Array<Movement>;
-
-    constructor() {
-        this.history = [];
+    getHistory(): Array<Movement> {
+        return JSON.parse(localStorage.getItem('history'));
     }
 
+    setHistory(history: Array<Movement>) {}
+
     whoseTurn(): Side {
-        return this.history.length % 2 === 0 ? Side.WHITE : Side.BLACK;
+        return this.getHistory().length % 2 === 0 ? Side.WHITE : Side.BLACK;
     }
 
     newMove(move: Movement): void {
@@ -52,6 +57,10 @@ export class gameHistory {
         lastMove.piece.coordinates.y = lastMove.origin.y;
 
         // Repaint on board
+    }
+
+    lastMove(): Movement {
+        return this.getHistory().pop();
     }
 
     playFromTheStart(): void {
