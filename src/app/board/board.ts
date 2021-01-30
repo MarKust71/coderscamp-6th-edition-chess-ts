@@ -11,11 +11,11 @@ export class Square {
         this.coordinates = { x: x, y: y };
     }
 }
-class Board {
+class ChessBoard {
     board: Array<Array<Square>>;
 
     constructor() {
-        this.board = Board.pieceSetup(Board.boardSetup());
+        this.board = ChessBoard.pieceSetup(ChessBoard.boardSetup());
     }
 
     static boardSetup(): Array<Array<Square>> {
@@ -41,7 +41,7 @@ class Board {
 
     markLegalMoves(coordinates: Array<Coordinates>, originCoords: Coordinates) {
         for (const coords of coordinates) {
-            const squareElement = document.getElementById(`${coords.x},${coords.y}`);
+            const squareElement = document.getElementById(JSON.stringify({ x: coords.x, y: coords.y }));
             squareElement.classList.add('possibleMove');
             squareElement.addEventListener('click', (event: MouseEvent) => {
                 this.intendedMove(event, originCoords);
@@ -52,7 +52,9 @@ class Board {
     unmarkLegalMoves() {
         for (const row of this.board) {
             for (const square of row) {
-                const originalElement = document.getElementById(`${square.coordinates.x},${square.coordinates.y}`);
+                const originalElement = document.getElementById(
+                    JSON.stringify({ x: square.coordinates.x, y: square.coordinates.y }),
+                );
                 originalElement.classList.remove('possibleMove');
 
                 // Removing eventListener by cloning and replacing node
@@ -65,12 +67,10 @@ class Board {
 
     intendedMove(event: MouseEvent, originCoords: Coordinates) {
         const { id } = event.currentTarget as HTMLAreaElement;
-        board.board[originCoords.x][originCoords.y].pieceOnSquare.move({
-            x: parseInt(id[0]),
-            y: parseInt(id[2]),
-        });
+        const coordinates = JSON.parse(id);
+        chessBoard.board[originCoords.x][originCoords.y].pieceOnSquare.move(coordinates);
         this.unmarkLegalMoves();
     }
 }
 
-export const board = new Board();
+export const chessBoard = new ChessBoard();

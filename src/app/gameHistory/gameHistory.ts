@@ -1,7 +1,7 @@
 import { Coordinates, Side, Name } from '../types';
 import { Piece } from '../pieces/piece';
 import { Timer } from '../timers/timers';
-import { board } from '../board/board';
+import { chessBoard } from '../board/board';
 export class Movement {
     piece: Piece;
     origin: Coordinates;

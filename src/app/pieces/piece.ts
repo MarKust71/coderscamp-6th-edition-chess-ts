@@ -1,5 +1,5 @@
 import { Coordinates, Side, Name } from '../types';
-import { board } from '../board/board';
+import { chessBoard } from '../board/board';
 
 interface PieceModel {
     coordinates: Coordinates;
@@ -29,13 +29,16 @@ export class Piece implements PieceModel {
         const newX = coordinates.x;
         const newY = coordinates.y;
 
+        console.log(coordinates);
+        console.log(this.coordinates);
         // clearing previous place
-        board.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = undefined;
-        document.getElementById(`${this.coordinates.x},${this.coordinates.y}`).innerHTML = '';
+        chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = undefined;
+        document.getElementById(JSON.stringify({ x: this.coordinates.x, y: this.coordinates.y })).innerHTML = '';
+
         // setting new
         this.coordinates.x = newX;
         this.coordinates.y = newY;
-        board.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = this;
-        document.getElementById(`${coordinates.x},${coordinates.y}`).innerHTML = this.display;
+        chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = this;
+        document.getElementById(JSON.stringify({ x: coordinates.x, y: coordinates.y })).innerHTML = this.display;
     }
 }

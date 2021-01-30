@@ -1,4 +1,4 @@
-import { setup } from './app/setup';
+import { setup } from './view/setup';
 
 // checkWinner();
 

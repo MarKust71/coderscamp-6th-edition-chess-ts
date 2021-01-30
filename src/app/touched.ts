@@ -1,14 +1,13 @@
-import { board } from './board/board';
+import { chessBoard } from './board/board';
 
 export const touched = (event: MouseEvent): void => {
     const { id } = event.currentTarget as HTMLAreaElement;
-    const x: number = parseInt(id[0]);
-    const y: number = parseInt(id[2]);
+    const { x, y } = JSON.parse(id);
 
-    if (!board.board[x][y].pieceOnSquare) {
+    if (!chessBoard.board[x][y].pieceOnSquare) {
         return;
     }
 
-    board.unmarkLegalMoves();
-    board.markLegalMoves(board.board[x][y].pieceOnSquare.findLegalMoves(), { x: x, y: y });
+    chessBoard.unmarkLegalMoves();
+    chessBoard.markLegalMoves(chessBoard.board[x][y].pieceOnSquare.findLegalMoves(), { x, y });
 };
