@@ -4,6 +4,7 @@ import { board } from '../board/board';
 interface PieceModel {
     coordinates: Coordinates;
     side: Side;
+    name: string;
     move: (coordinates: Coordinates) => void;
     findLegalMoves(): void;
 }
@@ -12,6 +13,7 @@ export class Piece implements PieceModel {
     side: Side;
     hasMoved: boolean;
     display: string;
+    name: string;
 
     constructor(coordinates: Coordinates, side: Side) {
         this.side = side;
