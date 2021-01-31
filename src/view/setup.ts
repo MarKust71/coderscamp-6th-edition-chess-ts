@@ -6,7 +6,6 @@ export const setup = (): void => {
         for (let column = 0; column < chessBoard.board[row].length; column++) {
             const square = document.createElement('div');
             square.id = JSON.stringify({ x: row, y: column });
-            //square.id = `{ "x": "${row}", "y": "${column}" }`;
             square.innerHTML = chessBoard.board[row][column].pieceOnSquare
                 ? chessBoard.board[row][column].pieceOnSquare.display
                 : '';

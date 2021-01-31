@@ -17,41 +17,81 @@ export class Movement {
     }
 
     static createNotation(piece: Piece, origin: Coordinates, destination: Coordinates): string {
-        //const sameTypeFigure = board.findPiece(piece.name, piece.side)
+        const secondPieceCoordinates = sameNameFigureAbleToMove();
+        let columnOrRowSymbol = '';
+        let special = '';
         const figure: string =
             piece.name === Name.PAWN ? String.fromCharCode(97 + origin.x) : piece.name[0].toUpperCase();
         const move: string = String.fromCharCode(97 + destination.x) + destination.y + 1;
-        const capture: string = ''; // board.pieceOnSquare(destination.x, destination.y) ? 'x' : '';
-        // ep. - bicie w locie
+        const capture: string = chessBoard.board[destination.x][destination.y].pieceOnSquare ? ':' : '';
+
+        // Adding additional origin information if two or more pieces of the same side can move on the same square
+        if (secondPieceCoordinates && piece.name !== Name.PAWN) {
+            columnOrRowSymbol =
+                secondPieceCoordinates.y === piece.coordinates.y
+                    ? String(origin.y)
+                    : String.fromCharCode(97 + origin.x);
+        }
 
         // En passant
-        //if(piece.name === Name.PAWN && )
+        if (
+            piece.name === Name.PAWN &&
+            Math.abs(destination.x - origin.x) === 1 &&
+            Math.abs(destination.y - origin.y) === 1
+        ) {
+            const lastMove = gameHistory.lastMove();
+            if (lastMove.piece.name === Name.PAWN && Math.abs(lastMove.origin.x - lastMove.piece.coordinates.x) === 2) {
+                special = '(e.p.)';
+            }
+        }
 
-        return figure + capture + move;
+        // Promotion
+
+        // Castle
+        if (piece.name === Name.KING && Math.abs(origin.y - destination.y) === 2) {
+            if (destination.y === 2) {
+                return 'O-O-O';
+            } else return 'O-O';
+        }
+
+        return figure + columnOrRowSymbol + capture + move + special;
+
+        function sameNameFigureAbleToMove(): Coordinates | undefined {
+            for (const row of chessBoard.board) {
+                for (const square of row) {
+                    const secondPiece = square.pieceOnSquare;
+                    if (secondPiece.name === piece.name && secondPiece.side === piece.side)
+                        for (const coordinates of secondPiece.findLegalMoves()) {
+                            if (coordinates.x === destination.x && coordinates.y === destination.y)
+                                return secondPiece.coordinates;
+                        }
+                }
+            }
+        }
     }
 }
 
 export class gameHistory {
-    getHistory(): Array<Movement> {
+    static getHistory(): Array<Movement> {
         return JSON.parse(localStorage.getItem('history'));
     }
 
-    setHistory(history: Array<Movement>): void {}
+    static setHistory(history: Array<Movement>): void {}
 
-    whoseTurn(): Side {
-        return this.getHistory().length % 2 === 0 ? Side.WHITE : Side.BLACK;
+    static whoseTurn(): Side {
+        return gameHistory.getHistory().length % 2 === 0 ? Side.WHITE : Side.BLACK;
     }
 
-    newMove(move: Movement): void {
+    static newMove(move: Movement): void {
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
 
         history.push(move);
         localStorage.setItem('history', JSON.stringify(history));
     }
 
-    undoMove(): void {
+    static undoMove(): void {
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
-        const lastMove: Movement = history.pop();
+        const lastMove: Movement = history.shift();
 
         lastMove.piece.coordinates.x = lastMove.origin.x;
         lastMove.piece.coordinates.y = lastMove.origin.y;
@@ -59,19 +99,18 @@ export class gameHistory {
         // Repaint on board
     }
 
-    lastMove(): Movement {
-        return this.getHistory().pop();
+    static lastMove(): Movement {
+        return gameHistory.getHistory().shift();
     }
 
-    playFromTheStart(): void {
-        // Setup board
+    static playFromTheStart(): void {
         const TIME_BETWEEN_MOVES = 600;
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
 
         for (let i = 0; i < history.length; i++) {
             setTimeout(() => {
-                const move: Movement = history.shift();
-                const piece: Piece = null; //piece at square x = move.origin.x, y = move.origin.y
+                const move: Movement = history.pop();
+                const piece = chessBoard.board[move.origin.x][move.origin.y].pieceOnSquare;
                 piece.move({ x: move.origin.x, y: move.origin.y });
             }, TIME_BETWEEN_MOVES);
         }

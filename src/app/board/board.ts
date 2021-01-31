@@ -15,7 +15,25 @@ class ChessBoard {
     board: Array<Array<Square>>;
 
     constructor() {
-        this.board = ChessBoard.pieceSetup(ChessBoard.boardSetup());
+        this.board = this.pieceSetup();
+    }
+
+    pieceSetup() {
+        return ChessBoard.pieceSetup(ChessBoard.boardSetup());
+    }
+
+    paintPieces() {
+        for (const row of this.board) {
+            for (const square of row) {
+                const squareElement = document.getElementById(
+                    JSON.stringify({ x: square.coordinates.x, y: square.coordinates.y }),
+                );
+
+                squareElement.innerHTML = chessBoard.board[square.coordinates.x][square.coordinates.y].pieceOnSquare
+                    ? chessBoard.board[square.coordinates.x][square.coordinates.y].pieceOnSquare.display
+                    : '';
+            }
+        }
     }
 
     static boardSetup(): Array<Array<Square>> {
