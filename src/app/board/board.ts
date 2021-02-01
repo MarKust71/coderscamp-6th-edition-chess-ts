@@ -38,6 +38,14 @@ export class ChessBoard {
         }
     }
 
+    clearPieces() {
+        for (const row of this.board) {
+            for (const square of row) {
+                square.pieceOnSquare = undefined;
+            }
+        }
+    }
+
     static boardSetup(): Array<Array<Square>> {
         const BOARD_SIDE_LENGTH = 8;
         const board = [];
