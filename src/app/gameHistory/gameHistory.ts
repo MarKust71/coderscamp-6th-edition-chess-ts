@@ -12,18 +12,22 @@ export class Movement {
         this.piece = piece;
         this.origin = origin;
         this.timers = timers;
-
-        //this.notation = Movement.createNotation(piece, origin, destination);
+        this.notation = Movement.createNotation(piece, origin, destination);
     }
 
     static createNotation(piece: Piece, origin: Coordinates, destination: Coordinates): string {
         const secondPieceCoordinates = sameNameFigureAbleToMove();
         let columnOrRowSymbol = '';
         let special = '';
-        const figure: string =
-            piece.name === Name.PAWN ? String.fromCharCode(97 + origin.x) : piece.name[0].toUpperCase();
-        const move: string = String.fromCharCode(97 + destination.x) + destination.y + 1;
-        const capture: string = chessBoard.board[destination.x][destination.y].pieceOnSquare ? ':' : '';
+        let capture = '';
+        const figure: string = piece.name === Name.PAWN ? '' : piece.name[0].toUpperCase();
+        const move: string = String.fromCharCode(97 + destination.y) + String(8 - destination.x);
+
+        // Capture
+        console.log(chessBoard.board[destination.x][destination.y].pieceOnSquare);
+        if (chessBoard.board[destination.x][destination.y].pieceOnSquare) {
+            capture = piece.name === Name.PAWN ? String.fromCharCode(97 + origin.y) + ':' : ':';
+        }
 
         // Adding additional origin information if two or more pieces of the same side can move on the same square
         if (secondPieceCoordinates && piece.name !== Name.PAWN) {
@@ -39,13 +43,18 @@ export class Movement {
             Math.abs(destination.x - origin.x) === 1 &&
             Math.abs(destination.y - origin.y) === 1
         ) {
-            const lastMove = gameHistory.lastMove();
-            if (lastMove.piece.name === Name.PAWN && Math.abs(lastMove.origin.x - lastMove.piece.coordinates.x) === 2) {
+            const lastMove = GameHistory.lastMove();
+            if (
+                lastMove &&
+                lastMove.piece.name === Name.PAWN &&
+                Math.abs(lastMove.origin.x - lastMove.piece.coordinates.x) === 2
+            ) {
                 special = '(e.p.)';
             }
         }
 
         // Promotion
+        // f8H - move f8 then promote to Hetman
 
         // Castle
         if (piece.name === Name.KING && Math.abs(origin.y - destination.y) === 2) {
@@ -54,13 +63,18 @@ export class Movement {
             } else return 'O-O';
         }
 
+        // Check and checkmate
+        // Check: +
+        // Mate: #
+        // Stalemate:
+
         return figure + columnOrRowSymbol + capture + move + special;
 
         function sameNameFigureAbleToMove(): Coordinates | undefined {
             for (const row of chessBoard.board) {
                 for (const square of row) {
                     const secondPiece = square.pieceOnSquare;
-                    if (secondPiece.name === piece.name && secondPiece.side === piece.side)
+                    if (secondPiece && secondPiece.name === piece.name && secondPiece.side === piece.side)
                         for (const coordinates of secondPiece.findLegalMoves()) {
                             if (coordinates.x === destination.x && coordinates.y === destination.y)
                                 return secondPiece.coordinates;
@@ -71,15 +85,17 @@ export class Movement {
     }
 }
 
-export class gameHistory {
+export class GameHistory {
     static getHistory(): Array<Movement> {
         return JSON.parse(localStorage.getItem('history'));
     }
 
-    static setHistory(history: Array<Movement>): void {}
+    static setHistory(history: Array<Movement>): void {
+        localStorage.setItem('history', JSON.stringify(history));
+    }
 
     static whoseTurn(): Side {
-        return gameHistory.getHistory().length % 2 === 0 ? Side.WHITE : Side.BLACK;
+        return GameHistory.getHistory().length % 2 === 0 ? Side.WHITE : Side.BLACK;
     }
 
     static newMove(move: Movement): void {
@@ -100,7 +116,7 @@ export class gameHistory {
     }
 
     static lastMove(): Movement {
-        return gameHistory.getHistory().shift();
+        return GameHistory.getHistory().shift();
     }
 
     static playFromTheStart(): void {
