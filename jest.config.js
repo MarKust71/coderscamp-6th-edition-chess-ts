@@ -1,8 +1,12 @@
+const { defaults } = require('jest-config');
+
 module.exports = {
-    roots: ['<rootDir>/src'],
+    roots: ['<rootDir>'],
     transform: {
-        '^.+\\.tsx?$': 'ts-jest',
+        '^.+\\.(ts|tsx)$': 'ts-jest',
     },
+    preset: 'ts-jest',
+    testEnvironment: 'node',
     coverageThreshold: {
         global: {
             branches: 80,
@@ -12,4 +16,6 @@ module.exports = {
         },
     },
     coverageReporters: ['json', 'lcov', 'text', 'clover'],
+    testMatch: ['**/?(*.)+(spec|test).+(ts|tsx|js)'],
+    moduleFileExtensions: [...defaults.moduleFileExtensions, 'ts', 'tsx'],
 };

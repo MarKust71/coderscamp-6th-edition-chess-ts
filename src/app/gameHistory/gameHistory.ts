@@ -12,46 +12,102 @@ export class Movement {
         this.piece = piece;
         this.origin = origin;
         this.timers = timers;
-
-        //this.notation = Movement.createNotation(piece, origin, destination);
+        this.notation = Movement.createNotation(piece, origin, destination);
     }
 
     static createNotation(piece: Piece, origin: Coordinates, destination: Coordinates): string {
-        //const sameTypeFigure = board.findPiece(piece.name, piece.side)
-        const figure: string =
-            piece.name === Name.PAWN ? String.fromCharCode(97 + origin.x) : piece.name[0].toUpperCase();
-        const move: string = String.fromCharCode(97 + destination.x) + destination.y + 1;
-        const capture: string = ''; // board.pieceOnSquare(destination.x, destination.y) ? 'x' : '';
-        // ep. - bicie w locie
+        const secondPieceCoordinates = sameNameFigureAbleToMove();
+        let columnOrRowSymbol = '';
+        let special = '';
+        let capture = '';
+        const figure: string = piece.name === Name.PAWN ? '' : piece.name[0].toUpperCase();
+        const move: string = String.fromCharCode(97 + destination.y) + String(8 - destination.x);
+
+        // Capture
+        console.log(chessBoard.board[destination.x][destination.y].pieceOnSquare);
+        if (chessBoard.board[destination.x][destination.y].pieceOnSquare) {
+            capture = piece.name === Name.PAWN ? String.fromCharCode(97 + origin.y) + ':' : ':';
+        }
+
+        // Adding additional origin information if two or more pieces of the same side can move on the same square
+        if (secondPieceCoordinates && piece.name !== Name.PAWN) {
+            columnOrRowSymbol =
+                secondPieceCoordinates.y === piece.coordinates.y
+                    ? String(origin.y)
+                    : String.fromCharCode(97 + origin.x);
+        }
 
         // En passant
-        //if(piece.name === Name.PAWN && )
+        if (
+            piece.name === Name.PAWN &&
+            Math.abs(destination.x - origin.x) === 1 &&
+            Math.abs(destination.y - origin.y) === 1
+        ) {
+            const lastMove = GameHistory.lastMove();
+            if (
+                lastMove &&
+                lastMove.piece.name === Name.PAWN &&
+                Math.abs(lastMove.origin.x - lastMove.piece.coordinates.x) === 2
+            ) {
+                special = '(e.p.)';
+            }
+        }
 
-        return figure + capture + move;
+        // Promotion
+        // f8H - move f8 then promote to Hetman
+
+        // Castle
+        if (piece.name === Name.KING && Math.abs(origin.y - destination.y) === 2) {
+            if (destination.y === 2) {
+                return 'O-O-O';
+            } else return 'O-O';
+        }
+
+        // Check and checkmate
+        // Check: +
+        // Mate: #
+        // Stalemate:
+
+        return figure + columnOrRowSymbol + capture + move + special;
+
+        function sameNameFigureAbleToMove(): Coordinates | undefined {
+            for (const row of chessBoard.board) {
+                for (const square of row) {
+                    const secondPiece = square.pieceOnSquare;
+                    if (secondPiece && secondPiece.name === piece.name && secondPiece.side === piece.side)
+                        for (const coordinates of secondPiece.findLegalMoves()) {
+                            if (coordinates.x === destination.x && coordinates.y === destination.y)
+                                return secondPiece.coordinates;
+                        }
+                }
+            }
+        }
     }
 }
 
-export class gameHistory {
-    getHistory(): Array<Movement> {
+export class GameHistory {
+    static getHistory(): Array<Movement> {
         return JSON.parse(localStorage.getItem('history'));
     }
 
-    setHistory(history: Array<Movement>): void {}
-
-    whoseTurn(): Side {
-        return this.getHistory().length % 2 === 0 ? Side.WHITE : Side.BLACK;
+    static setHistory(history: Array<Movement>): void {
+        localStorage.setItem('history', JSON.stringify(history));
     }
 
-    newMove(move: Movement): void {
+    static whoseTurn(): Side {
+        return GameHistory.getHistory().length % 2 === 0 ? Side.WHITE : Side.BLACK;
+    }
+
+    static newMove(move: Movement): void {
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
 
         history.push(move);
         localStorage.setItem('history', JSON.stringify(history));
     }
 
-    undoMove(): void {
+    static undoMove(): void {
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
-        const lastMove: Movement = history.pop();
+        const lastMove: Movement = history.shift();
 
         lastMove.piece.coordinates.x = lastMove.origin.x;
         lastMove.piece.coordinates.y = lastMove.origin.y;
@@ -59,19 +115,18 @@ export class gameHistory {
         // Repaint on board
     }
 
-    lastMove(): Movement {
-        return this.getHistory().pop();
+    static lastMove(): Movement {
+        return GameHistory.getHistory().shift();
     }
 
-    playFromTheStart(): void {
-        // Setup board
+    static playFromTheStart(): void {
         const TIME_BETWEEN_MOVES = 600;
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
 
         for (let i = 0; i < history.length; i++) {
             setTimeout(() => {
-                const move: Movement = history.shift();
-                const piece: Piece = null; //piece at square x = move.origin.x, y = move.origin.y
+                const move: Movement = history.pop();
+                const piece = chessBoard.board[move.origin.x][move.origin.y].pieceOnSquare;
                 piece.move({ x: move.origin.x, y: move.origin.y });
             }, TIME_BETWEEN_MOVES);
         }

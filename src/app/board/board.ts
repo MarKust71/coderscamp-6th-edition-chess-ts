@@ -2,6 +2,8 @@ import { Pawn } from '../pieces/pawn';
 import { Piece } from '../pieces/piece';
 import { Coordinates, Side } from '../types';
 import { touched } from '../touched';
+import { GameHistory, Movement } from '../gameHistory/gameHistory';
+import { Timer } from '../timers/timers';
 
 export class Square {
     coordinates: Coordinates;
@@ -11,11 +13,29 @@ export class Square {
         this.coordinates = { x: x, y: y };
     }
 }
-class ChessBoard {
+export class ChessBoard {
     board: Array<Array<Square>>;
 
     constructor() {
-        this.board = ChessBoard.pieceSetup(ChessBoard.boardSetup());
+        this.board = this.pieceSetup();
+    }
+
+    pieceSetup() {
+        return ChessBoard.pieceSetup(ChessBoard.boardSetup());
+    }
+
+    paintPieces() {
+        for (const row of this.board) {
+            for (const square of row) {
+                const squareElement = document.getElementById(
+                    JSON.stringify({ x: square.coordinates.x, y: square.coordinates.y }),
+                );
+
+                squareElement.innerHTML = chessBoard.board[square.coordinates.x][square.coordinates.y].pieceOnSquare
+                    ? chessBoard.board[square.coordinates.x][square.coordinates.y].pieceOnSquare.display
+                    : '';
+            }
+        }
     }
 
     static boardSetup(): Array<Array<Square>> {
@@ -44,7 +64,7 @@ class ChessBoard {
             const squareElement = document.getElementById(JSON.stringify({ x: coords.x, y: coords.y }));
             squareElement.classList.add('possibleMove');
             squareElement.addEventListener('click', (event: MouseEvent) => {
-                this.intendedMove(event, originCoords);
+                this.makeMove(event, originCoords);
             });
         }
     }
@@ -65,11 +85,13 @@ class ChessBoard {
         }
     }
 
-    intendedMove(event: MouseEvent, originCoords: Coordinates) {
+    makeMove(event: MouseEvent, originCoords: Coordinates) {
         const { id } = event.currentTarget as HTMLAreaElement;
         const coordinates = JSON.parse(id);
-        chessBoard.board[originCoords.x][originCoords.y].pieceOnSquare.move(coordinates);
+        const piece = chessBoard.board[originCoords.x][originCoords.y].pieceOnSquare;
+        piece.move(coordinates);
         this.unmarkLegalMoves();
+        GameHistory.newMove(new Movement(piece, originCoords, coordinates, [new Timer(), new Timer()]));
     }
 }
 
