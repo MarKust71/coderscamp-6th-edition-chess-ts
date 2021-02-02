@@ -53,9 +53,11 @@ export class ChessBoard {
     }
 
     static pieceSetup(board: Array<Array<Square>>): Array<Array<Square>> {
-        board[6][0].pieceOnSquare = new Pawn({ x: 6, y: 0 }, Side.WHITE);
-        board[6][1].pieceOnSquare = new Pawn({ x: 6, y: 1 }, Side.WHITE);
-
+        for (let i = 0; i < 8; i++) {
+            board[6][i].pieceOnSquare = new Pawn({ x: 6, y: i }, Side.WHITE);
+            board[1][i].pieceOnSquare = new Pawn({ x: 1, y: i }, Side.BLACK);
+        }
+        board[5][6].pieceOnSquare = new Pawn({ x: 5, y: 6 }, Side.WHITE);
         return board;
     }
 

@@ -15,4 +15,5 @@ export const setup = (): void => {
             document.getElementById('board').appendChild(square);
         }
     }
+    // gameplaySidebar();
 };
