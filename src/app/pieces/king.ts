@@ -3,7 +3,6 @@ import { GameHistory } from '../gameHistory/gameHistory';
 import { Coordinates, Side, Name } from '../types';
 
 import { Piece } from './piece';
-//import { Rook } from './rook';
 
 export class King extends Piece {
     constructor(coordinates: Coordinates = { x: -1, y: -1 }, side: Side) {

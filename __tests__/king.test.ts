@@ -1,12 +1,12 @@
 import { GameHistory, Movement } from '../src/app/gameHistory/gameHistory';
 import { Timer } from '../src/app/timers/timers';
+import { chessBoard } from '../src/app/board/board';
 import { Pawn } from '../src/app/pieces/pawn';
 import { King } from '../src/app/pieces/king';
 //import { Rook } from '../src/app/pieces/rook';
-import { chessBoard } from '../src/app/board/board';
 import { Side } from '../src/app/types';
 
-import { LocalStorageMock } from './localStorageMock';
+import { LocalStorageMock } from './mocks/localStorageMock';
 
 test('King construction with correct input.', () => {
     const defaultWhiteKing = new King({ x: -1, y: -1 }, Side.WHITE);
@@ -109,81 +109,98 @@ test('On edge legal moves detection.', () => {
     );
 });
 
-/*
 test('Same side pieces blocks legal moves.', () => {
-    const board = new Array(8);
-    for (let i = 0; i < 8; i++) {
-        board[i] = new Array(8);
-    }
+    global.localStorage = new LocalStorageMock();
+    localStorage.setItem('history', '[]');
 
-    const chessBoard;
+    const king = new King({ x: 4, y: 4 }, Side.WHITE);
+    const pawn1 = new Pawn({ x: 4, y: 5 }, Side.WHITE);
+    const pawn2 = new Pawn({ x: 4, y: 3 }, Side.WHITE);
+    const pawn3 = new Pawn({ x: 5, y: 5 }, Side.WHITE);
 
-    const kingOne = new King({ x: 3, y: 3 }, Side.WHITE);
-    const kingTwo = new King({ x: 4, y: 3 }, Side.WHITE);
-    const pawnOne = new Pawn({ x: 2, y: 3 }, Side.WHITE);
-    board[3][3] = kingOne;
-    board[4][3] = kingTwo;
-    board[2][3] = pawnOne;
+    chessBoard.clearPieces();
+    chessBoard.board[king.coordinates.x][king.coordinates.y].pieceOnSquare = king;
+    chessBoard.board[pawn1.coordinates.x][pawn1.coordinates.y].pieceOnSquare = pawn1;
+    chessBoard.board[pawn2.coordinates.x][pawn2.coordinates.y].pieceOnSquare = pawn2;
+    chessBoard.board[pawn3.coordinates.x][pawn3.coordinates.y].pieceOnSquare = pawn3;
 
-    expect(kingOne.findLegalMoves()).toEqual(
+    expect(king.findLegalMoves()).toEqual(
         expect.not.arrayContaining([
+            { x: 4, y: 5 },
             { x: 4, y: 3 },
-            { x: 2, y: 3 },
+            { x: 5, y: 5 },
         ]),
     );
 });
-*/
-/*
+
 test('Allows attacking opponents pieces.', () => {
-    const board = new Array(8);
-    for (let i = 0; i < 8; i++) {
-        board[i] = new Array(8);
-    }
+    global.localStorage = new LocalStorageMock();
+    localStorage.setItem('history', '[]');
 
-    const king = new King(3, 3, 'white');
-    const pawnOne = new Pawn(3, 4, 'black');
-    const pawnTwo = new Pawn(3, 2, 'black');
+    const king = new King({ x: 4, y: 4 }, Side.WHITE);
+    const pawn1 = new Pawn({ x: 4, y: 5 }, Side.BLACK);
+    const pawn2 = new Pawn({ x: 4, y: 3 }, Side.BLACK);
+    const pawn3 = new Pawn({ x: 5, y: 5 }, Side.WHITE);
 
-    board[3][3] = king;
-    board[3][4] = pawnOne;
-    board[3][2] = pawnTwo;
+    chessBoard.clearPieces();
+    chessBoard.board[king.coordinates.x][king.coordinates.y].pieceOnSquare = king;
+    chessBoard.board[pawn1.coordinates.x][pawn1.coordinates.y].pieceOnSquare = pawn1;
+    chessBoard.board[pawn2.coordinates.x][pawn2.coordinates.y].pieceOnSquare = pawn2;
+    chessBoard.board[pawn3.coordinates.x][pawn3.coordinates.y].pieceOnSquare = pawn3;
 
-    expect(kingOne.findLegalMoves()).toEqual(
-        expect.not.arrayContaining([
-            { x: 3, y: 4 },
-            { x: 3, y: 2 },
+    expect(king.findLegalMoves()).toEqual(
+        expect.arrayContaining([
+            { x: 4, y: 5 },
+            { x: 4, y: 3 },
         ]),
     );
 });
 
 test("Don't allow moving on squares and attacking pieces that are backed by enemy.", () => {
-    const board = new Array(8);
-    for (let i = 0; i < 8; i++) {
-        board[i] = new Array(8);
-    }
+    global.localStorage = new LocalStorageMock();
+    localStorage.setItem('history', '[]');
 
-    const king = new King(3, 3, 'white');
-    const pawnOne = new Pawn(3, 2, 'black');
-    const pawnTwo = new Pawn(2, 1, 'black');
-    const rook = new Rook(0, 4, 'black');
+    const king = new King({ x: 4, y: 4 }, Side.WHITE);
+    const pawn1 = new Pawn({ x: 3, y: 4 }, Side.BLACK);
+    const pawn2 = new Pawn({ x: 2, y: 3 }, Side.BLACK);
+    const pawn3 = new Pawn({ x: 2, y: 6 }, Side.BLACK);
 
-    board[3][3] = king;
-    board[3][2] = pawnOne;
-    board[2][1] = pawnTwo;
-    board[0][4] = rook;
+    chessBoard.clearPieces();
+    chessBoard.board[king.coordinates.x][king.coordinates.y].pieceOnSquare = king;
+    chessBoard.board[pawn1.coordinates.x][pawn1.coordinates.y].pieceOnSquare = pawn1;
+    chessBoard.board[pawn2.coordinates.x][pawn2.coordinates.y].pieceOnSquare = pawn2;
+    chessBoard.board[pawn3.coordinates.x][pawn3.coordinates.y].pieceOnSquare = pawn3;
 
     expect(king.findLegalMoves()).toEqual(
-        except.not.arrayContaining([
-            { x: 3, y: 2 },
-            { x: 2, y: 4 },
-            { x: 3, y: 4 },
-            { x: 4, y: 4 },
+        expect.arrayContaining([
+            { x: 3, y: 3 },
+            { x: 5, y: 4 },
+            { x: 5, y: 3 },
+            { x: 5, y: 5 },
         ]),
     );
 });
-*/
 
-//test("Detects if is under the check.",()=>{})
+test('Detects if is under the check.', () => {
+    global.localStorage = new LocalStorageMock();
+    localStorage.setItem('history', '[]');
+
+    const kingWhite = new King({ x: 4, y: 4 }, Side.WHITE);
+    const kingBlack = new King({ x: 0, y: 0 }, Side.BLACK);
+    const pawn1 = new Pawn({ x: 3, y: 3 }, Side.BLACK);
+    const pawn2 = new Pawn({ x: 2, y: 3 }, Side.BLACK);
+    const pawn3 = new Pawn({ x: 2, y: 6 }, Side.BLACK);
+
+    chessBoard.clearPieces();
+    chessBoard.board[kingWhite.coordinates.x][kingWhite.coordinates.y].pieceOnSquare = kingWhite;
+    chessBoard.board[kingBlack.coordinates.x][kingBlack.coordinates.y].pieceOnSquare = kingBlack;
+    chessBoard.board[pawn1.coordinates.x][pawn1.coordinates.y].pieceOnSquare = pawn1;
+    chessBoard.board[pawn2.coordinates.x][pawn2.coordinates.y].pieceOnSquare = pawn2;
+    chessBoard.board[pawn3.coordinates.x][pawn3.coordinates.y].pieceOnSquare = pawn3;
+
+    expect(kingWhite.underCheck()).toEqual(true);
+    expect(kingBlack.underCheck()).toEqual(false);
+});
 
 //test("Making castle.",()=>{})
 
