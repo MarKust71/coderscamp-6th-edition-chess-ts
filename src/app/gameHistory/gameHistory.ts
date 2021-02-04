@@ -24,7 +24,6 @@ export class Movement {
         const move: string = String.fromCharCode(97 + destination.y) + String(8 - destination.x);
 
         // Capture
-        console.log(chessBoard.board[destination.x][destination.y].pieceOnSquare);
         if (chessBoard.board[destination.x][destination.y].pieceOnSquare) {
             capture = piece.name === Name.PAWN ? String.fromCharCode(97 + origin.y) + ':' : ':';
         }
@@ -49,6 +48,7 @@ export class Movement {
                 lastMove.piece.name === Name.PAWN &&
                 Math.abs(lastMove.origin.x - lastMove.piece.coordinates.x) === 2
             ) {
+                capture = String.fromCharCode(97 + origin.y) + ':';
                 special = '(e.p.)';
             }
         }
@@ -66,7 +66,7 @@ export class Movement {
         // Check and checkmate
         // Check: +
         // Mate: #
-        // Stalemate:
+        // Stalemate: SS  //There is no official notation for stalemate as any other draw.
 
         return figure + columnOrRowSymbol + capture + move + special;
 
@@ -107,7 +107,7 @@ export class GameHistory {
 
     static undoMove(): void {
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
-        const lastMove: Movement = history.shift();
+        const lastMove: Movement = history.pop();
 
         lastMove.piece.coordinates.x = lastMove.origin.x;
         lastMove.piece.coordinates.y = lastMove.origin.y;
@@ -116,7 +116,7 @@ export class GameHistory {
     }
 
     static lastMove(): Movement {
-        return GameHistory.getHistory().shift();
+        return GameHistory.getHistory().pop();
     }
 
     static playFromTheStart(): void {
