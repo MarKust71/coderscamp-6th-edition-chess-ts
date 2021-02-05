@@ -3,7 +3,6 @@ import { Timer } from '../src/app/timers/timers';
 import { chessBoard } from '../src/app/board/board';
 import { Pawn } from '../src/app/pieces/pawn';
 import { King } from '../src/app/pieces/king';
-//import { Rook } from '../src/app/pieces/rook';
 import { Side } from '../src/app/types';
 
 import { LocalStorageMock } from './mocks/localStorageMock';
