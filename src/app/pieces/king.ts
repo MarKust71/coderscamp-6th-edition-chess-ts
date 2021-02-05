@@ -55,7 +55,7 @@ export class King extends Piece {
          ** Doing this by removing piece from board and then checking legal moves of all enemy pieces.
          */
         const enemySide = this.side === Side.WHITE ? Side.BLACK : Side.WHITE;
-        const pieceOnSquare = chessBoard.board[coordinates.x][coordinates.y].pieceOnSquare;
+        const { pieceOnSquare } = chessBoard.board[coordinates.x][coordinates.y];
         let isSafe = true;
         chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = undefined;
 
@@ -111,10 +111,10 @@ export class King extends Piece {
 
     validateInput(coordinates: Coordinates, side: Side): void {
         if (coordinates.x < -1 || coordinates.x > 7) {
-            throw `x is out of range.`;
+            throw 'x is out of range.';
         }
         if (coordinates.y < -1 || coordinates.y > 7) {
-            throw `y is out of range.`;
+            throw 'y is out of range.';
         }
         if (side !== 'white' && side !== 'black') {
             throw `Wrong value of parameter side: ${side}`;
