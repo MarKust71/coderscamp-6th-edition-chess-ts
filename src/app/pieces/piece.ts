@@ -29,8 +29,6 @@ export class Piece implements PieceModel {
         const newX = coordinates.x;
         const newY = coordinates.y;
 
-        console.log(coordinates);
-        console.log(this.coordinates);
         // clearing previous place
         chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = undefined;
         document.getElementById(JSON.stringify({ x: this.coordinates.x, y: this.coordinates.y })).innerHTML = '';
