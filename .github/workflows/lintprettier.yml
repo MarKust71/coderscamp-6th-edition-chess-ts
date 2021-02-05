@@ -11,7 +11,7 @@ jobs:
 
         strategy:
             matrix:
-                node-version: [12.x, 14.x, 15.x]
+                node-version: [15.x]
 
         steps:
             - uses: actions/checkout@v2
@@ -38,6 +38,9 @@ jobs:
               working-directory: ${{env.working-directory}}
             - name: npm prettier
               run: npm run prettier
+              working-directory: ${{env.working-directory}}
+            - name: npm stylelint
+              run: npm run stylelint
               working-directory: ${{env.working-directory}}
         env:
             working-directory: ./
