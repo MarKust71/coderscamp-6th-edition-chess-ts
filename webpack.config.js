@@ -3,13 +3,13 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '');
 const DESTINATION = path.resolve(__dirname, 'dist');
-const CONTENT = path.resolve(ROOT, 'public');
+const CONTENT = path.resolve(ROOT, '');
 
 module.exports = {
     context: ROOT,
 
     entry: {
-        main: './public/main.ts',
+        main: './main.ts',
     },
 
     output: {
