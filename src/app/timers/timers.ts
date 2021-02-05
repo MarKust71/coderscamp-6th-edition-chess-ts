@@ -1,5 +1,5 @@
 export class Timer {
-    init(): void {}
-    toggle(): void {}
-    setTimers(): void {}
+    init: () => void;
+    toggle: () => void;
+    setTimers: () => void;
 }

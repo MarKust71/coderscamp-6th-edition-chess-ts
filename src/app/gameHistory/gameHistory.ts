@@ -6,7 +6,7 @@ export class Movement {
     piece: Piece;
     origin: Coordinates;
     timers: Array<Timer>;
-    notation: String;
+    notation: string;
 
     constructor(piece: Piece, origin: Coordinates, destination: Coordinates, timers: Array<Timer>) {
         this.piece = piece;

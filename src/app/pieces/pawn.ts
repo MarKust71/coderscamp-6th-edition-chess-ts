@@ -28,6 +28,6 @@ export class Pawn extends Piece implements PawnModel {
         }
         return possibleMoves;
     }
-    promote(): void {}
-    enPassant(): void {}
+    promote: () => void;
+    enPassant: () => void;
 }

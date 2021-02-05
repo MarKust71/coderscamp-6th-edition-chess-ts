@@ -1,7 +1,8 @@
 import { chessBoard } from './board/board';
 
 export const touched = (event: MouseEvent): void => {
-    const { id } = event.currentTarget as HTMLAreaElement;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { id }: any = event.currentTarget; //as HTMLAreaElement;
     const { x, y } = JSON.parse(id);
 
     if (!chessBoard.board[x][y].pieceOnSquare) {
