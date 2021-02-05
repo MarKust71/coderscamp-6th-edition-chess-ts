@@ -4,7 +4,7 @@
     "description": "A simple Webpack 4 starter with TypeScript transpilation",
     "main": "index.js",
     "scripts": {
-        "start": "webpack serve --port 3000 --color --inline --progress --profile --watch --content-base src/ --mode development",
+        "start": "webpack serve --color --progress --profile --watch --mode development",
         "build": "webpack --config webpack.config.js --mode production",
         "build.prod": "webpack --config webpack.config.js --mode production",
         "build:types": "tsc --emitDeclarationOnly",

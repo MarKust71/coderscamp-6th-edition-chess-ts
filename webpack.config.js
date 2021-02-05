@@ -1,7 +1,7 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
-// const webpack = require('webpack');
 
-const ROOT = path.resolve(__dirname, 'src');
+const ROOT = path.resolve(__dirname, 'public');
 const DESTINATION = path.resolve(__dirname, 'dist');
 
 module.exports = {
@@ -14,6 +14,7 @@ module.exports = {
     output: {
         filename: '[name].bundle.js',
         path: DESTINATION,
+        publicPath: ROOT,
     },
 
     resolve: {
@@ -50,5 +51,5 @@ module.exports = {
     },
 
     devtool: 'cheap-module-source-map',
-    devServer: {},
+    devServer: { publicPath: '/', contentBase: ROOT, port: 3000, inline: true },
 };
