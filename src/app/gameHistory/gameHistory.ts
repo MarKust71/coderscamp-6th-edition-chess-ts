@@ -24,7 +24,6 @@ export class Movement {
         const move: string = String.fromCharCode(97 + destination.y) + String(8 - destination.x);
 
         // Capture
-        console.log(chessBoard.board[destination.x][destination.y].pieceOnSquare);
         if (chessBoard.board[destination.x][destination.y].pieceOnSquare) {
             capture = piece.name === Name.PAWN ? String.fromCharCode(97 + origin.y) + ':' : ':';
         }

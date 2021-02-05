@@ -1,5 +1,6 @@
 import { Pawn } from '../pieces/pawn';
 import { Piece } from '../pieces/piece';
+import { King } from '../pieces/king';
 import { Coordinates, Side } from '../types';
 import { touched } from '../touched';
 import { GameHistory, Movement } from '../gameHistory/gameHistory';
@@ -38,6 +39,14 @@ export class ChessBoard {
         }
     }
 
+    clearPieces() {
+        for (const row of this.board) {
+            for (const square of row) {
+                square.pieceOnSquare = undefined;
+            }
+        }
+    }
+
     static boardSetup(): Array<Array<Square>> {
         const BOARD_SIDE_LENGTH = 8;
         const board = [];
@@ -55,6 +64,9 @@ export class ChessBoard {
     static pieceSetup(board: Array<Array<Square>>): Array<Array<Square>> {
         board[6][0].pieceOnSquare = new Pawn({ x: 6, y: 0 }, Side.WHITE);
         board[6][1].pieceOnSquare = new Pawn({ x: 6, y: 1 }, Side.WHITE);
+
+        board[7][4].pieceOnSquare = new King({ x: 7, y: 4 }, Side.WHITE);
+        board[0][4].pieceOnSquare = new King({ x: 0, y: 4 }, Side.BLACK);
 
         return board;
     }
