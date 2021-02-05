@@ -11,9 +11,9 @@ export class King extends Piece {
 
         this.name = Name.KING;
 
-        this.display = `<i class="fas fa-chess-king ${side}"></i>`; //fontawesome king
+        this.display = `<i class="fas fa-chess-king ${side}"></i>`; // fontawesome king
 
-        if (coordinates.x == -1 || coordinates.y == -1) {
+        if (coordinates.x === -1 || coordinates.y === -1) {
             this.coordinates.x = side === 'white' ? 7 : 0;
             this.coordinates.y = 4;
         } else {
@@ -80,7 +80,7 @@ export class King extends Piece {
 
                         if (moves.length > 0) {
                             for (const coords of moves) {
-                                if (coords.x == coordinates.x && coords.y == coordinates.y) {
+                                if (coords.x === coordinates.x && coords.y === coordinates.y) {
                                     isSafe = false;
                                     break loopRow;
                                 }
