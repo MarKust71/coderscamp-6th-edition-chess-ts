@@ -3,7 +3,8 @@ import { Piece } from '../pieces/piece';
 import { Coordinates, Side } from '../types';
 import { touched } from '../touched';
 import { GameHistory, Movement } from '../gameHistory/gameHistory';
-import { Timer } from '../timers/timers';
+import { Timer } from '../timers/runTimer';
+import { Rook } from '../pieces/rook';
 
 export class Square {
     coordinates: Coordinates;
@@ -57,7 +58,8 @@ export class ChessBoard {
             board[6][i].pieceOnSquare = new Pawn({ x: 6, y: i }, Side.WHITE);
             board[1][i].pieceOnSquare = new Pawn({ x: 1, y: i }, Side.BLACK);
         }
-        board[5][6].pieceOnSquare = new Pawn({ x: 5, y: 6 }, Side.WHITE);
+        board[1][6].pieceOnSquare = new Pawn({ x: 1, y: 6 }, Side.WHITE);
+        board[0][7].pieceOnSquare = new Rook({ x: 0, y: 7 }, Side.WHITE);
         return board;
     }
 

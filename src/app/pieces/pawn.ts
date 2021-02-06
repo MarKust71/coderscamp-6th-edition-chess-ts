@@ -1,11 +1,11 @@
 import { Coordinates, Name, Side } from '../types';
+import { chessBoard } from '../board/board';
 
 import { Piece } from './piece';
 import { Bishop } from './bishop';
 import { Queen } from './queen';
 import { Knight } from './knight';
 import { Rook } from './rook';
-import { chessBoard } from '../board/board';
 
 interface PawnModel {
     name: string;
@@ -33,10 +33,7 @@ export class Pawn extends Piece implements PawnModel {
         const v = this.direction;
         let possibleMoves: Array<Coordinates> = [];
         if (x === (this.side === Side.WHITE ? 6 : 1)) {
-            if (
-                !chessBoard.board[this.coordinates.x + v][this.coordinates.y].pieceOnSquare &&
-                !chessBoard.board[this.coordinates.x + v * 2][this.coordinates.y].pieceOnSquare
-            ) {
+            if (!chessBoard.board[x + v][y].pieceOnSquare && !chessBoard.board[x + v * 2][y].pieceOnSquare) {
                 possibleMoves.push({ x: x + v * 2, y: y });
             }
         }
@@ -50,34 +47,12 @@ export class Pawn extends Piece implements PawnModel {
         possibleMoves = possibleMoves.filter((move) => {
             const piece = chessBoard.board[move.x][move.y].pieceOnSquare;
             if (piece) {
-                if (move.y === this.coordinates.y) return false;
-                if (piece.coordinates.y !== this.coordinates.y) return this.side !== piece.side;
+                if (move.y === y) return false;
+                if (piece.coordinates.y !== y) return this.side !== piece.side;
                 return true;
             }
-            return move.y === this.coordinates.y;
+            return move.y === y;
         });
-        // console.log(enemy);
-        // console.log(ownInFront);
-        // if (!(enemy || ownInFront)) {
-        //     if (x === (this.side === Side.WHITE ? 6 : 1)) {
-        //         if (enemyByTwo) {
-        //             possibleMoves.push(moveByOne);
-        //             } else {
-        //                 possibleMoves.push(moveByOne);
-        //                 possibleMoves.push(moveByTwo);
-        //             }
-        //         }
-        //     } else {
-        //         if (x !== (this.side === Side.WHITE ? 0 : 7)) {
-        //             possibleMoves.push(moveByOne);
-        //     }
-        // }
-        // if (toCaptureOnRight && this.side !== toCaptureOnRight.side) {
-        //     possibleMoves.push(moveCrossRight);
-        // }
-        // if (toCaptureOnLeft && this.side !== toCaptureOnLeft.side) {
-        //     possibleMoves.push(moveCrossLeft);
-        // }
         return possibleMoves;
         // const sameSideKing = this.findKing(this.side);
         // const canMove = gameHistory.whoseTurn() === this.side;
@@ -110,6 +85,7 @@ export class Pawn extends Piece implements PawnModel {
         //     if (checkKingIsSafe(moveCrossLeft)) possibleMoves.push(moveCrossLeft);
         // }
     }
+
     promote(): void {
         const typePiece = [Name.QUEEN, Name.ROOK, Name.KNIGHT, Name.BISHOP];
         const x = this.coordinates.x;
@@ -118,10 +94,10 @@ export class Pawn extends Piece implements PawnModel {
         const wrapper = document.getElementById('wrapper');
         const promotionWindow = document.createElement('div');
         const promoCover = document.createElement('div');
-
         function switchFigures(event: MouseEvent) {
             let newFigure;
             const { id } = event.currentTarget as HTMLAreaElement;
+            // const { x, y } = JSON.parse(id);
             switch (id) {
                 case Name.BISHOP:
                     newFigure = new Bishop({ x: x, y: y }, side);
@@ -139,11 +115,10 @@ export class Pawn extends Piece implements PawnModel {
                     break;
             }
             chessBoard.board[x][y].pieceOnSquare = newFigure;
-            document.querySelector(`[id="${x},${y}"]`).innerHTML = newFigure.display;
+            document.querySelector(`[id='{ x: ${x}, y: ${y} }']`).innerHTML = newFigure.display;
             wrapper.removeChild(promotionWindow);
             wrapper.removeChild(promoCover);
         }
-
         if (x === (side === Side.WHITE ? 0 : 7)) {
             promotionWindow.className = 'promoChoice';
             wrapper.appendChild(promotionWindow);
@@ -154,13 +129,12 @@ export class Pawn extends Piece implements PawnModel {
             promoText.appendChild(text);
             promotionWindow.appendChild(promoText);
 
-            promoCover.className = 'promoCover';
-            wrapper.appendChild(promoCover);
-
             const promotionWindowList = document.createElement('ul');
             promotionWindowList.className = 'promoChoiceList';
             promotionWindow.appendChild(promotionWindowList);
 
+            promoCover.className = 'promoCover';
+            wrapper.appendChild(promoCover);
             for (const piece of typePiece) {
                 const promotionWindowListIcon = document.createElement('li');
                 promotionWindowListIcon.className = 'promoChoiceItem';
@@ -168,13 +142,15 @@ export class Pawn extends Piece implements PawnModel {
 
                 const promoteToNewPiece = document.createElement('i');
                 promoteToNewPiece.className = `fas fa-chess-${piece} ${side}`;
-                promoteToNewPiece.id = `${piece}`;
+                // promoteToNewPiece.id = `${piece}`;
                 promotionWindowListIcon.appendChild(promoteToNewPiece);
+                console.log(promoteToNewPiece);
                 promoteToNewPiece.addEventListener('click', (event) => {
                     switchFigures(event);
                 });
             }
         }
     }
+
     enPassant(): void {}
 }

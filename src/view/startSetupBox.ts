@@ -1,11 +1,11 @@
-import { GameHistory } from '../app/gameHistory/gameHistory';
+// import { GameHistory } from '../app/gameHistory/gameHistory';
+import { runTimer } from '../app/timers/runTimer';
 
-// import { updatePlayerTimer } from './gameplaySidebar';
-// import { runTimer } from './runTimer';
+import { updatePlayerTimer } from './gameplaySidebar';
 
 export const timer = (function () {
-    const clockTimer = 300;
-    const side = GameHistory.whoseTurn();
+    let clockTimer: number = 300;
+    // const side = GameHistory.whoseTurn();
 
     const wrapper = document.getElementById('wrapper');
     const startSetupBox = document.createElement('div');
@@ -49,12 +49,13 @@ export const timer = (function () {
     wrapper.appendChild(startSetupBox);
 
     startGameButton.addEventListener('click', () => {
-        // clockTimer = playTime[document.getElementById('playTimeSelect').value] * 60;
-        // updatePlayerTimer(document.getElementById('whitePlayerTimer'), clockTimer);
-        // updatePlayerTimer(document.getElementById('blackPlayerTimer'), clockTimer);
+        const index = document.getElementById('playTimeSelect') as HTMLInputElement;
+        clockTimer = playTime[index.value] * 60;
+        updatePlayerTimer(document.getElementById('whitePlayerTimer'), clockTimer);
+        updatePlayerTimer(document.getElementById('blackPlayerTimer'), clockTimer);
         wrapper.removeChild(startSetupBox);
         wrapper.removeChild(startCover);
-        // runTimer.runFirstTimer(side, clockTimer);
+        runTimer.runFirstTimer(side, clockTimer);
     });
     return {
         clockTimer,
