@@ -28,6 +28,8 @@ export class Piece implements PieceModel {
     move(coordinates: Coordinates): void {
         const newX = coordinates.x;
         const newY = coordinates.y;
+
+        // clearing previous place
         chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = undefined;
         document.getElementById(JSON.stringify({ x: this.coordinates.x, y: this.coordinates.y })).innerHTML = '';
 

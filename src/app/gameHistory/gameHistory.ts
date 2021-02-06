@@ -1,6 +1,6 @@
 import { Coordinates, Side, Name } from '../types';
 import { Piece } from '../pieces/piece';
-import { Timer } from '../timers/runTimer';
+import { Timer } from '../timers/timers';
 import { chessBoard } from '../board/board';
 export class Movement {
     piece: Piece;
@@ -24,7 +24,6 @@ export class Movement {
         const move: string = String.fromCharCode(97 + destination.y) + String(8 - destination.x);
 
         // Capture
-        // console.log(chessBoard.board[destination.x][destination.y].pieceOnSquare);
         if (chessBoard.board[destination.x][destination.y].pieceOnSquare) {
             capture = piece.name === Name.PAWN ? String.fromCharCode(97 + origin.y) + ':' : ':';
         }

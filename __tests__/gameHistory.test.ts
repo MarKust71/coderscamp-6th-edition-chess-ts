@@ -4,7 +4,7 @@ import { Pawn } from '../src/app/pieces/pawn';
 import { chessBoard } from '../src/app/board/board';
 import { Side } from '../src/app/types';
 
-import { LocalStorageMock } from './localStorageMock';
+import { LocalStorageMock } from './mocks/localStorageMock';
 
 test('Saving basic information.', () => {
     global.localStorage = new LocalStorageMock();
