@@ -1,38 +1,37 @@
-// export class Timer {
-//     init(): void {}
-//     toggle(): void {}
-//     setTimers(): void {}
-// }
-
 import { updatePlayerTimer } from '../../view/gameplaySidebar';
+import { Side } from '../types';
 
 // import { winnerDialogBox } from './winnerDialogBox';
+type RunFirstTimerParams = {
+    side: Side;
+    clockTimer: number;
+};
 
 export const runTimer = (function () {
-    let runTimerSide: string;
+    let runTimerSide: Side;
     let runTimerClockTimerBlack: number;
     let runTimerClockTimerWhite: number;
-    let intervalId: number;
+    let intervalId: NodeJS.Timeout;
 
-    const runFirstTimer = (side: string, clockTimer: number) => {
+    const runFirstTimer = ({ side, clockTimer }: RunFirstTimerParams): void => {
         runTimerSide = side;
         runTimerClockTimerBlack = clockTimer;
         runTimerClockTimerWhite = clockTimer;
-        startInterval(runTimerSide, runTimerClockTimerWhite);
+        startInterval();
     };
 
-    const startInterval = (runTimerSide: string, runTimerClockTimerWhite: number) => {
-        if (runTimerSide === 'white') {
+    const startInterval = () => {
+        if (runTimerSide === Side.WHITE) {
             document.getElementById('whitePlayerTimer').classList.remove('disabledClock');
             document.getElementById('blackPlayerTimer').classList.add('disabledClock');
         } else {
             document.getElementById('blackPlayerTimer').classList.remove('disabledClock');
             document.getElementById('whitePlayerTimer').classList.add('disabledClock');
         }
-        if (runTimerSide === 'white') {
+        if (runTimerSide === Side.WHITE) {
             intervalId = setInterval(() => {
                 runTimerClockTimerWhite--;
-                updatePlayerTimer(document.getElementById('whitePlayerTimer'), runTimerClockTimerWhite);
+                updatePlayerTimer({ id: 'whitePlayerTimer', time: runTimerClockTimerWhite });
                 // if (runTimerClockTimerWhite < 0) {
                 //     winnerDialogBox();
                 // }
@@ -40,7 +39,7 @@ export const runTimer = (function () {
         } else {
             intervalId = setInterval(() => {
                 runTimerClockTimerBlack--;
-                updatePlayerTimer(document.getElementById('blackPlayerTimer'), runTimerClockTimerBlack);
+                updatePlayerTimer({ id: 'blackPlayerTimer', time: runTimerClockTimerBlack });
                 // if (runTimerClockTimerBlack < 0) {
                 //     winnerDialogBox();
                 // }
@@ -50,7 +49,7 @@ export const runTimer = (function () {
 
     const clearAllIntervals = () => {
         clearInterval(intervalId);
-        runTimerSide = runTimerSide === 'white' ? 'black' : 'white';
+        runTimerSide = runTimerSide === Side.WHITE ? Side.BLACK : Side.WHITE;
     };
 
     const setOpponentsTimer = () => {

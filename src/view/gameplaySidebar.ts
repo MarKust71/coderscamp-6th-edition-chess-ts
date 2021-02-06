@@ -1,14 +1,15 @@
+import { setupTimerTime } from '../app/timers/setupTimerTime';
+
 import { timer } from './startSetupBox';
 
-export const setupTimerTime = (clockTimer: number) => {
-    let timeLeft: string;
-    const minutes = Math.floor(clockTimer / 60);
-    const seconds = clockTimer % 60;
-    seconds >= 10 ? (timeLeft = `0${minutes}:${seconds}`) : (timeLeft = `0${minutes}:0${seconds}`);
-    return timeLeft;
+export type UpdatePlayerTimerParams = {
+    id: string;
+    time: number;
 };
 
-export const gameplaySidebar = () => {
+setupTimerTime(timer.clockTimer);
+
+export const gameplaySidebar = (): void => {
     const wrapper = document.getElementById('wrapper');
     const gameplaySidebar = document.createElement('div');
     gameplaySidebar.id = 'gameplaySidebar';
@@ -19,9 +20,9 @@ export const gameplaySidebar = () => {
     blackPlayerTimerContainer.className = 'blackPlayerTimerContainer';
     blackPlayerTimer.className = 'blackPlayerTimer';
     blackPlayerTimer.id = 'blackPlayerTimer';
-    updatePlayerTimer(blackPlayerTimer, timer.clockTimer);
     blackPlayerTimerContainer.appendChild(blackPlayerTimer);
     gameplaySidebar.appendChild(blackPlayerTimerContainer);
+    updatePlayerTimer({ id: 'blackPlayerTimer', time: timer.clockTimer });
 
     const gameHistoryRecording = document.createElement('div');
     const recordingListMoves = document.createElement('ol');
@@ -37,11 +38,11 @@ export const gameplaySidebar = () => {
     whitePlayerTimerContainer.className = 'whitePlayerTimerContainer';
     whitePlayerTimer.className = 'whitePlayerTimer';
     whitePlayerTimer.id = 'whitePlayerTimer';
-    updatePlayerTimer(whitePlayerTimer, timer.clockTimer);
     whitePlayerTimerContainer.appendChild(whitePlayerTimer);
     gameplaySidebar.appendChild(whitePlayerTimerContainer);
+    updatePlayerTimer({ id: 'whitePlayerTimer', time: timer.clockTimer });
 };
 
-export const updatePlayerTimer = (playerTimer, time) => {
-    playerTimer.innerHTML = setupTimerTime(time);
+export const updatePlayerTimer = ({ id, time }: UpdatePlayerTimerParams): void => {
+    document.getElementById(id).innerHTML = setupTimerTime(time);
 };

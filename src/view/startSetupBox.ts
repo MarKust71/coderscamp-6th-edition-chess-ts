@@ -1,12 +1,12 @@
-// import { GameHistory } from '../app/gameHistory/gameHistory';
+import { GameHistory } from '../app/gameHistory/gameHistory';
 import { runTimer } from '../app/timers/runTimer';
 
 import { updatePlayerTimer } from './gameplaySidebar';
+import { PLAYTIME } from '../app/types';
 
 export const timer = (function () {
     let clockTimer: number = 300;
-    // const side = GameHistory.whoseTurn();
-
+    const turn = GameHistory.whoseTurn();
     const wrapper = document.getElementById('wrapper');
     const startSetupBox = document.createElement('div');
     startSetupBox.className = 'startSetupBox';
@@ -21,8 +21,8 @@ export const timer = (function () {
     setupBoxTitle.appendChild(title);
     startSetupBox.appendChild(setupBoxTitle);
 
-    const playTime = [1, 3, 5, 8];
-    const playTimeStringName = ['1 minute', '3 minutes', '5 minutes', '8 minutes'];
+    // const playTime = [1, 3, 5, 8];
+    // const playTimeStringName = ['1 minute', '3 minutes', '5 minutes', '8 minutes'];
     const playTimeForm = document.createElement('div');
     playTimeForm.id = 'playTimeForm';
     const playTimeTitle = document.createTextNode('Round time:  ');
@@ -34,10 +34,10 @@ export const timer = (function () {
     startSetupBox.appendChild(playTimeForm);
     playTimeForm.appendChild(playTimeSelect);
 
-    for (let i = 0; i < playTimeStringName.length; i++) {
+    for (let i = 0; i < PLAYTIME.length; i++) {
         const timeOption = document.createElement('option');
-        timeOption.value = i.toString();
-        timeOption.text = playTimeStringName[i];
+        timeOption.value = PLAYTIME[i].value.toString();
+        timeOption.text = PLAYTIME[i].text;
         playTimeSelect.appendChild(timeOption);
     }
 
@@ -49,13 +49,13 @@ export const timer = (function () {
     wrapper.appendChild(startSetupBox);
 
     startGameButton.addEventListener('click', () => {
-        const index = document.getElementById('playTimeSelect') as HTMLInputElement;
-        clockTimer = playTime[index.value] * 60;
-        updatePlayerTimer(document.getElementById('whitePlayerTimer'), clockTimer);
-        updatePlayerTimer(document.getElementById('blackPlayerTimer'), clockTimer);
+        const { value } = document.getElementById('playTimeSelect') as HTMLInputElement;
+        clockTimer = parseInt(value) * 60;
+        updatePlayerTimer({ id: 'whitePlayerTimer', time: clockTimer });
+        updatePlayerTimer({ id: 'blackPlayerTimer', time: clockTimer });
         wrapper.removeChild(startSetupBox);
         wrapper.removeChild(startCover);
-        runTimer.runFirstTimer(side, clockTimer);
+        runTimer.runFirstTimer({ side: turn, clockTimer });
     });
     return {
         clockTimer,

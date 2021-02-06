@@ -1,5 +1,6 @@
 import { Coordinates, Side, Name } from '../types';
 import { chessBoard } from '../board/board';
+import { runTimer } from '../timers/runTimer';
 
 interface PieceModel {
     coordinates: Coordinates;
@@ -38,5 +39,6 @@ export class Piece implements PieceModel {
         this.coordinates.y = newY;
         chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = this;
         document.getElementById(JSON.stringify({ x: coordinates.x, y: coordinates.y })).innerHTML = this.display;
+        runTimer.setOpponentsTimer();
     }
 }
