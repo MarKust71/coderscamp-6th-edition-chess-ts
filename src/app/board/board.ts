@@ -102,7 +102,6 @@ export class ChessBoard {
         const coordinates = JSON.parse(id);
         const piece = chessBoard.board[originCoords.x][originCoords.y].pieceOnSquare;
 
-        if (piece.side !== GameHistory.whoseTurn()) return 0;
         piece.move(coordinates);
         this.unmarkLegalMoves();
         GameHistory.newMove(new Movement(piece, originCoords, coordinates, [new Timer(), new Timer()]));
