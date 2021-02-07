@@ -4,7 +4,6 @@ import { King } from '../pieces/king';
 import { Coordinates, Side } from '../types';
 import { touched } from '../touched';
 import { GameHistory, Movement } from '../gameHistory/gameHistory';
-import { Rook } from '../pieces/rook';
 
 export class Square {
     coordinates: Coordinates;
@@ -102,6 +101,8 @@ export class ChessBoard {
         const { id } = event.currentTarget as HTMLAreaElement;
         const coordinates = JSON.parse(id);
         const piece = chessBoard.board[originCoords.x][originCoords.y].pieceOnSquare;
+
+        if (piece.side !== GameHistory.whoseTurn()) return 0;
         piece.move(coordinates);
         this.unmarkLegalMoves();
         GameHistory.newMove(new Movement(piece, originCoords, coordinates, [new Timer(), new Timer()]));
