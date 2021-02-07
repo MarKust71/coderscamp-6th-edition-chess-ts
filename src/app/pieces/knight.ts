@@ -2,20 +2,20 @@ import { Coordinates, Side, Name } from '../types';
 
 import { Piece } from './piece';
 
-interface BishopModel {
+interface KnightModel {
     name: string;
     display: string;
     findLegalMoves(): Array<Coordinates>;
     move: (coordinates: Coordinates) => void;
 }
-export class Bishop extends Piece implements BishopModel {
+export class Knight extends Piece implements KnightModel {
     name: Name;
     display: string;
 
     constructor(coordinates: Coordinates, side: Side) {
         super(coordinates, side);
-        this.name = Name.BISHOP;
-        this.display = `<i class="fas fa-chess-bishop ${side}"></i>`;
+        this.name = Name.KNIGHT;
+        this.display = `<i class="fas fa-chess-knight ${side}"></i>`;
     }
 
     findLegalMoves = (): Coordinates[] => {
