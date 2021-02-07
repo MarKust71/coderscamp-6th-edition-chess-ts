@@ -22,9 +22,9 @@ export class Piece implements PieceModel {
         this.hasMoved = false;
     }
 
-    findLegalMoves(): Array<Coordinates> {
+    findLegalMoves = (): Coordinates[] => {
         return [];
-    }
+    };
 
     move(coordinates: Coordinates): void {
         const newX = coordinates.x;

@@ -15,6 +15,7 @@ interface PawnModel {
     enPassant: () => void;
     move: (coordinates: Coordinates) => void;
 }
+
 export class Pawn extends Piece implements PawnModel {
     name: Name;
     display: string;
@@ -27,7 +28,7 @@ export class Pawn extends Piece implements PawnModel {
         this.direction = this.side === Side.WHITE ? -1 : 1;
     }
 
-    findLegalMoves(): Array<Coordinates> {
+    findLegalMoves = (): Coordinates[] => {
         const x = this.coordinates.x;
         const y = this.coordinates.y;
         const v = this.direction;
@@ -54,37 +55,7 @@ export class Pawn extends Piece implements PawnModel {
             return move.y === y;
         });
         return possibleMoves;
-        // const sameSideKing = this.findKing(this.side);
-        // const canMove = gameHistory.whoseTurn() === this.side;
-        //
-        // const checkKingIsSafe = (coords) => {
-        //     if (!(canMove && sameSideKing.moveEndangerKing(this, coords[0], coords[2]))) {
-        //         return true;
-        //     }
-        //     return false;
-        // };
-        //
-        // if (!(enemy || ownInFront)) {
-        //     if (this.x === (this.side === 'white' ? 6 : 1)) {
-        //         if (enemyByTwo) {
-        //             if (checkKingIsSafe(moveByOne)) possibleMoves.push(moveByOne);
-        //         } else {
-        //             if (checkKingIsSafe(moveByOne)) possibleMoves.push(moveByOne);
-        //             if (checkKingIsSafe(moveByTwo)) possibleMoves.push(moveByTwo);
-        //         }
-        //     } else {
-        //         if (this.x !== (this.side === 'white' ? 0 : 7)) {
-        //             if (checkKingIsSafe(moveByOne)) possibleMoves.push(moveByOne);
-        //         }
-        //     }
-        // }
-        // if (toCaptureOnRight && this.side !== toCaptureOnRight.side) {
-        //     if (checkKingIsSafe(moveCrossRight)) possibleMoves.push(moveCrossRight);
-        // }
-        // if (toCaptureOnLeft && this.side !== toCaptureOnLeft.side) {
-        //     if (checkKingIsSafe(moveCrossLeft)) possibleMoves.push(moveCrossLeft);
-        // }
-    }
+    };
 
     promote(): void {
         const typePiece = [Name.QUEEN, Name.ROOK, Name.KNIGHT, Name.BISHOP];
@@ -97,7 +68,6 @@ export class Pawn extends Piece implements PawnModel {
         function switchFigures(event: MouseEvent) {
             let newFigure;
             const { id } = event.currentTarget as HTMLAreaElement;
-            // const { x, y } = JSON.parse(id);
             switch (id) {
                 case Name.BISHOP:
                     newFigure = new Bishop({ x: x, y: y }, side);
@@ -144,7 +114,6 @@ export class Pawn extends Piece implements PawnModel {
                 promoteToNewPiece.className = `fas fa-chess-${piece} ${side}`;
                 // promoteToNewPiece.id = `${piece}`;
                 promotionWindowListIcon.appendChild(promoteToNewPiece);
-                console.log(promoteToNewPiece);
                 promoteToNewPiece.addEventListener('click', (event) => {
                     switchFigures(event);
                 });

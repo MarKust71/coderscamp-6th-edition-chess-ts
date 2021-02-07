@@ -21,8 +21,6 @@ export const timer = (function () {
     setupBoxTitle.appendChild(title);
     startSetupBox.appendChild(setupBoxTitle);
 
-    // const playTime = [1, 3, 5, 8];
-    // const playTimeStringName = ['1 minute', '3 minutes', '5 minutes', '8 minutes'];
     const playTimeForm = document.createElement('div');
     playTimeForm.id = 'playTimeForm';
     const playTimeTitle = document.createTextNode('Round time:  ');
