@@ -4,7 +4,7 @@ import { King } from '../pieces/king';
 import { Coordinates, Side } from '../types';
 import { touched } from '../touched';
 import { GameHistory, Movement } from '../gameHistory/gameHistory';
-import { Timer } from '../timers/timers';
+import { Rook } from '../pieces/rook';
 
 export class Square {
     coordinates: Coordinates;
@@ -62,12 +62,13 @@ export class ChessBoard {
     }
 
     static pieceSetup(board: Array<Array<Square>>): Array<Array<Square>> {
-        board[6][0].pieceOnSquare = new Pawn({ x: 6, y: 0 }, Side.WHITE);
-        board[6][1].pieceOnSquare = new Pawn({ x: 6, y: 1 }, Side.WHITE);
-
         board[7][4].pieceOnSquare = new King({ x: 7, y: 4 }, Side.WHITE);
         board[0][4].pieceOnSquare = new King({ x: 0, y: 4 }, Side.BLACK);
 
+        for (let i = 0; i < 8; i++) {
+            board[6][i].pieceOnSquare = new Pawn({ x: 6, y: i }, Side.WHITE);
+            board[1][i].pieceOnSquare = new Pawn({ x: 1, y: i }, Side.BLACK);
+        }
         return board;
     }
 
