@@ -103,9 +103,9 @@ export class ChessBoard {
         const coordinates = JSON.parse(id);
         const piece = chessBoard.board[originCoords.x][originCoords.y].pieceOnSquare;
 
+        GameHistory.newMove(new Movement(piece, originCoords, coordinates, [{}, {}]));
         piece.move(coordinates);
         this.unmarkLegalMoves();
-        GameHistory.newMove(new Movement(piece, originCoords, coordinates, [new Timer(), new Timer()]));
         GameHistoryView.append(GameHistory.lastMove().notation);
     }
 }

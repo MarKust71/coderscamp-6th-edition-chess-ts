@@ -6,6 +6,7 @@ import { Bishop } from './bishop';
 import { Queen } from './queen';
 import { Knight } from './knight';
 import { Rook } from './rook';
+import { GameHistory } from '../gameHistory/gameHistory';
 
 interface PawnModel {
     name: string;
@@ -89,6 +90,7 @@ export class Pawn extends Piece implements PawnModel {
             document.querySelector(`[id='{"x":${x},"y":${y}}']`).innerHTML = newFigure.display;
             wrapper.removeChild(promotionWindow);
             wrapper.removeChild(promoCover);
+            GameHistory.promotion(newFigure.name);
         }
         const promotionWindowView = () => {
             const typePiece = [Name.QUEEN, Name.ROOK, Name.KNIGHT, Name.BISHOP];
