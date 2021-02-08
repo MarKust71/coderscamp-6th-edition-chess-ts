@@ -1,5 +1,6 @@
-import { Coordinates, Side, Name } from '../types';
+import { Coordinates, Name, Side } from '../types';
 import { chessBoard } from '../board/board';
+import { runTimer } from '../timers/runTimer';
 
 interface PieceModel {
     coordinates: Coordinates;
@@ -7,6 +8,7 @@ interface PieceModel {
     name: Name;
     move: (coordinates: Coordinates) => void;
     findLegalMoves(): void;
+    promote?(): void;
 }
 export class Piece implements PieceModel {
     coordinates: Coordinates;
@@ -21,9 +23,11 @@ export class Piece implements PieceModel {
         this.hasMoved = false;
     }
 
-    findLegalMoves(): Array<Coordinates> {
+    findLegalMoves = (): Coordinates[] => {
         return [];
-    }
+    };
+
+    promote() {}
 
     move(coordinates: Coordinates): void {
         const newX = coordinates.x;
@@ -37,6 +41,8 @@ export class Piece implements PieceModel {
         this.coordinates.x = newX;
         this.coordinates.y = newY;
         chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = this;
+        chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare.promote();
         document.getElementById(JSON.stringify({ x: coordinates.x, y: coordinates.y })).innerHTML = this.display;
+        runTimer.setOpponentsTimer();
     }
 }

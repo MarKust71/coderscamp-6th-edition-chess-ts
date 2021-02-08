@@ -1,6 +1,8 @@
 import { touched } from '../app/touched';
 import { chessBoard } from '../app/board/board';
 
+import { gameplaySidebar } from './gameplaySidebar';
+
 export const setup = (): void => {
     for (let row = 0; row < chessBoard.board.length; row++) {
         for (let column = 0; column < chessBoard.board[row].length; column++) {
@@ -15,5 +17,6 @@ export const setup = (): void => {
             document.getElementById('board').appendChild(square);
         }
     }
+    gameplaySidebar();
     localStorage.setItem('history', '[]');
 };

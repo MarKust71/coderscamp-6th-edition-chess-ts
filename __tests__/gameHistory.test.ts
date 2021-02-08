@@ -1,5 +1,5 @@
 import { GameHistory, Movement } from '../src/app/gameHistory/gameHistory';
-import { Timer } from '../src/app/timers/timers';
+import { Timer } from '../src/app/timers/runTimer';
 import { Pawn } from '../src/app/pieces/pawn';
 import { chessBoard } from '../src/app/board/board';
 import { Side } from '../src/app/types';

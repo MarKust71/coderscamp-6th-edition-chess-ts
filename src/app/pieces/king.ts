@@ -22,7 +22,7 @@ export class King extends Piece {
         }
     }
 
-    findLegalMoves(): Array<Coordinates> {
+    findLegalMoves = (): Array<Coordinates> => {
         let possibleMoves: Array<Coordinates> = [];
         const canMove = GameHistory.whoseTurn() === this.side;
 
@@ -47,7 +47,7 @@ export class King extends Piece {
 
         possibleMoves = canMove ? [...possibleMoves, ...this.detectCastle()] : possibleMoves;
         return possibleMoves;
-    }
+    };
 
     isSafe(coordinates: Coordinates): boolean {
         /*
