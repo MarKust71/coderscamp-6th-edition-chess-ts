@@ -67,5 +67,6 @@
     },
     "eslintConfig": {
         "extends": []
-    }
+    },
+    "dependencies": {}
 }
