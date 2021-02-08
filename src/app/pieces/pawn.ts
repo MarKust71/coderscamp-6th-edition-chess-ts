@@ -3,7 +3,7 @@ import { chessBoard } from '../board/board';
 
 import { Piece } from './piece';
 import { Bishop } from './bishop';
-import { Queen } from './queen';
+// import { Queen } from './queen';
 import { Knight } from './knight';
 import { Rook } from './rook';
 
@@ -55,7 +55,7 @@ export class Pawn extends Piece implements PawnModel {
             return move.y === y;
         });
         return possibleMoves;
-    };
+    }
 
     promote(): void {
         const x = this.coordinates.x;
@@ -74,7 +74,7 @@ export class Pawn extends Piece implements PawnModel {
                     newFigure = new Bishop({ x: x, y: y }, side);
                     break;
                 case Name.QUEEN:
-                    newFigure = new Queen({ x: x, y: y }, side);
+                    // newFigure = new Queen({ x: x, y: y }, side);
                     break;
                 case Name.KNIGHT:
                     newFigure = new Knight({ x: x, y: y }, side);
