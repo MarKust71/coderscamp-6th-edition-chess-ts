@@ -5,7 +5,7 @@ export class Movement {
     piece: Piece;
     origin: Coordinates;
     timers: Array<Timer>;
-    notation: String;
+    notation: string;
 
     constructor(piece: Piece, origin: Coordinates, destination: Coordinates, timers: Array<Timer>) {
         this.piece = piece;
@@ -124,7 +124,7 @@ export class GameHistory {
 
         for (let i = 0; i < history.length; i++) {
             setTimeout(() => {
-                const move: Movement = history.pop();
+                const move: Movement = history.shift();
                 const piece = chessBoard.board[move.origin.x][move.origin.y].pieceOnSquare;
                 piece.move({ x: move.origin.x, y: move.origin.y });
             }, TIME_BETWEEN_MOVES);
