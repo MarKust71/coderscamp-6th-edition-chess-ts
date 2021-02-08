@@ -13,7 +13,7 @@ interface PawnModel {
     display: string;
     findLegalMoves(): Array<Coordinates>;
     promote: () => void;
-    enPassant: () => void;
+    // enPassant: () => void;
     move: (coordinates: Coordinates) => void;
 }
 
@@ -31,6 +31,7 @@ export class Pawn extends Piece implements PawnModel {
 
     findLegalMoves = (): Coordinates[] => {
         const { x, y } = this.coordinates;
+
         const v = this.direction;
         let possibleMoves: Array<Coordinates> = [];
         if (x === (this.side === Side.WHITE ? 6 : 1)) {
@@ -59,6 +60,7 @@ export class Pawn extends Piece implements PawnModel {
 
     promote(): void {
         const { x, y } = this.coordinates;
+
         const { side } = this;
         const wrapper = document.getElementById('wrapper');
         const promotionWindow = document.createElement('div');
@@ -122,7 +124,5 @@ export class Pawn extends Piece implements PawnModel {
         }
     }
 
-    enPassant(): void {
-        console.log(this);
-    }
+    // enPassant(): void {}
 }

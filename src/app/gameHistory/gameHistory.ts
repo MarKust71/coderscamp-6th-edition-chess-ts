@@ -2,6 +2,7 @@ import { Coordinates, Side, Name } from '../types';
 import { Piece } from '../pieces/piece';
 import { chessBoard } from '../board/board';
 import { GameHistoryView } from '../../view/gameHistory';
+
 export class Movement {
     piece: Piece;
     origin: Coordinates;
