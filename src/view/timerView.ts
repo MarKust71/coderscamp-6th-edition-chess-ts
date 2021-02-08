@@ -1,6 +1,5 @@
 export type TimerViewParams = {
     id: string;
-    // clockTimer: number;
 };
 export const timerView = ({ id }: TimerViewParams): HTMLDivElement => {
     const playerTimer = document.createElement('div');

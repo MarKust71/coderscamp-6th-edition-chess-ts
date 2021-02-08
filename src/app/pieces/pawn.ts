@@ -1,6 +1,5 @@
 import { Coordinates, Name, Side } from '../types';
 import { chessBoard } from '../board/board';
-// import { gameHistory } from '../gameHistory/gameHistory';
 
 import { Piece } from './piece';
 import { Bishop } from './bishop';
@@ -29,36 +28,11 @@ export class Pawn extends Piece implements PawnModel {
         this.direction = this.side === Side.WHITE ? -1 : 1;
     }
 
-    //     if (!(enemy || ownInFront)) {
-    //     if (this.x === (this.side === 'white' ? 6 : 1)) {
-    //     if (enemyByTwo) {
-    //         if (checkKingIsSafe(moveByOne)) possibleMoves.push(moveByOne);
-    //     } else {
-    //     if (checkKingIsSafe(moveByOne)) possibleMoves.push(moveByOne);
-    //     if (checkKingIsSafe(moveByTwo)) possibleMoves.push(moveByTwo);
-    // }
-    // } else {
-    //     if (this.x !== (this.side === 'white' ? 0 : 7)) {
-    //         if (checkKingIsSafe(moveByOne)) possibleMoves.push(moveByOne);
-    //     }
-    // }
-    // }
-    // if (toCaptureOnRight && this.side !== toCaptureOnRight.side) {
-    //     if (checkKingIsSafe(moveCrossRight)) possibleMoves.push(moveCrossRight);
-    // }
-    // if (toCaptureOnLeft && this.side !== toCaptureOnLeft.side) {
-    //     if (checkKingIsSafe(moveCrossLeft)) possibleMoves.push(moveCrossLeft);
-    // }
     findLegalMoves = (): Coordinates[] => {
         const x = this.coordinates.x;
         const y = this.coordinates.y;
         const v = this.direction;
         let possibleMoves: Array<Coordinates> = [];
-        // const sameSideKing = this.findKing(this.side);
-        // const canMove = gameHistory.whoseTurn() === this.side;
-        // const checkKingIsSafe = (coords) => {
-        //     return !(canMove && sameSideKing.moveEndangerKing(this, coords[0], coords[2]));
-        // };
         if (x === (this.side === Side.WHITE ? 6 : 1)) {
             if (!chessBoard.board[x + v][y].pieceOnSquare && !chessBoard.board[x + v * 2][y].pieceOnSquare) {
                 possibleMoves.push({ x: x + v * 2, y: y });

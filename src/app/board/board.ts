@@ -68,7 +68,6 @@ export class ChessBoard {
             board[6][i].pieceOnSquare = new Pawn({ x: 6, y: i }, Side.WHITE);
             board[1][i].pieceOnSquare = new Pawn({ x: 1, y: i }, Side.BLACK);
         }
-        board[1][1].pieceOnSquare = new Pawn({ x: 1, y: 1 }, Side.WHITE);
         return board;
     }
 
