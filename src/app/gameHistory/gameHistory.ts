@@ -4,10 +4,10 @@ import { chessBoard } from '../board/board';
 export class Movement {
     piece: Piece;
     origin: Coordinates;
-    timers: Array<{}>;
+    timers: Array<Timer>;
     notation: string;
 
-    constructor(piece: Piece, origin: Coordinates, destination: Coordinates, timers: Array<{}>) {
+    constructor(piece: Piece, origin: Coordinates, destination: Coordinates, timers: Array<Timer>) {
         this.piece = piece;
         this.origin = origin;
         this.timers = timers;

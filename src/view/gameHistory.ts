@@ -10,15 +10,6 @@ export class GameHistoryView {
         }
     }
 
-    static update(): void {
-        const lastMove = GameHistory.lastMove();
-        const list = document.querySelector(`${GameHistoryView.elementSelector} .listOfMoves`);
-        const newListElement = document.createElement('div');
-        newListElement.textContent = lastMove.notation;
-
-        list.append(newListElement);
-    }
-
     static append(notation: string): void {
         const list = document.querySelector(`${GameHistoryView.elementSelector} .listOfMoves`);
         const newListElement = document.createElement('div');

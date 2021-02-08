@@ -105,8 +105,8 @@ export class ChessBoard {
 
         piece.move(coordinates);
         this.unmarkLegalMoves();
-        GameHistory.newMove(new Movement(piece, originCoords, coordinates, [{}, {}]));
-        GameHistoryView.update();
+        GameHistory.newMove(new Movement(piece, originCoords, coordinates, [new Timer(), new Timer()]));
+        GameHistoryView.append(GameHistory.lastMove().notation);
     }
 }
 
