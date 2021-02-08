@@ -23,7 +23,6 @@ html {
     min-width: 80vh;
     min-height: 80vh;
     border: 2px solid black;
-
 }
 .square {
     width: 10vh;
@@ -81,15 +80,26 @@ html {
 
 .gameHistoryRecording {
     height: 60vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    width: 100%;
+    font-size: 4vh;
+    text-align: center;
 }
 
-.recordingListMoves {
-    padding-left: 0;
-    font-size: 4vh;
+.listOfMoves {
+    padding: 10px;
+    width: 100%;
+    height: calc(100% - 4vh);
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 1.8rem;
+    grid-auto-rows: min-content;
 }
+
+.listOfMoves div {
+    margin: 0.3rem auto;
+}
+
 .blackPlayerTimerContainer,
 .whitePlayerTimerContainer {
     width: 15vw;
