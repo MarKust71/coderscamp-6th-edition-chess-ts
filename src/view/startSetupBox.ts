@@ -1,11 +1,11 @@
 import { GameHistory } from '../app/gameHistory/gameHistory';
 import { runTimer } from '../app/timers/runTimer';
-
-import { updatePlayerTimer } from './gameplaySidebar';
 import { PLAYTIME } from '../app/types';
 
+import { updatePlayerTimer } from './gameplaySidebar';
+
 export const timer = (function () {
-    let clockTimer: number = 300;
+    let clockTimer = 300;
     const turn = GameHistory.whoseTurn();
     const wrapper = document.getElementById('wrapper');
     const startSetupBox = document.createElement('div');

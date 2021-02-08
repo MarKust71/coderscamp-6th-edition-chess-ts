@@ -2,9 +2,11 @@ html {
     margin: 0;
     padding: 0;
 }
+
 * {
     box-sizing: border-box;
 }
+
 #wrapper {
     display: flex;
     justify-content: center;
@@ -24,6 +26,7 @@ html {
     min-height: 80vh;
     border: 2px solid black;
 }
+
 .square {
     width: 10vh;
     height: 10vh;
@@ -32,21 +35,27 @@ html {
     font-size: 7.5vh;
     cursor: pointer;
 }
+
 .light {
     background: rgb(215, 235, 243);
 }
+
 .dark {
     background: rgb(107, 65, 3);
 }
+
 .black {
     color: black;
 }
+
 .white {
     color: silver;
 }
+
 .possibleMove {
     background: rgb(238, 238, 36);
 }
+
 /* ======== ostylowanie PAWN ======== */
 .promoChoice {
     width: 10vh;
@@ -55,16 +64,18 @@ html {
     outline: 1px gray solid;
     transform: translate(10px, 2px);
 }
+
 .promoChoiceItem:hover {
     color: white;
 }
+
 .promoChoiceList {
     margin: 0 0;
     list-style: none;
     padding-left: 0;
 }
 
-/*!* ========ostylowanie gameplaySidebar ======== *!*/
+/* !* ========ostylowanie gameplaySidebar ======== *! */
 
 #gameplaySidebar {
     position: relative;
@@ -130,6 +141,7 @@ html {
     position: fixed;
     z-index: 5;
 }
+
 .startSetupBox,
 .promotionWindow {
     width: 60vh;
@@ -200,6 +212,7 @@ html {
 .promotionWindowListIcon {
     font-size: 7.5vh;
 }
+
 .promotionWindowListIcon:hover {
     color: black;
     opacity: 0.8;
@@ -212,7 +225,7 @@ html {
     box-shadow: inset 0 0 5px #3c3c3c;
 }
 
-/*!* ================================== *!*/
+/* !* ================================== *! */
 
 .checkmate-box-wrapper {
     display: none;
@@ -239,7 +252,7 @@ html {
     font-size: 25px;
 }
 
-.checkmate-box > p:first-letter {
+.checkmate-box > p::first-letter {
     text-transform: capitalize;
 }
 
