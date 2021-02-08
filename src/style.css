@@ -22,7 +22,8 @@ html {
     align-items: center;
     min-width: 80vh;
     min-height: 80vh;
-    outline: 3px solid black;
+    border: 2px solid black;
+
 }
 .square {
     width: 10vh;
@@ -72,8 +73,9 @@ html {
     grid-template-rows: 1fr 3fr 1fr;
     justify-content: center;
     align-items: center;
-    height: 80vh;
-    outline: 2px solid black;
+    height: calc(80vh + 4px);
+    border: 2px solid black;
+    border-left: none;
     background: #eee;
 }
 
@@ -119,7 +121,7 @@ html {
     z-index: 5;
 }
 .startSetupBox,
-.promoChoice {
+.promotionWindow {
     width: 60vh;
     height: 30vh;
     display: flex;
@@ -132,9 +134,9 @@ html {
     background-color: #efeaea;
     outline: 2px black solid;
     transform: translate(10px, 2px);
-    padding: 2rem;
+    padding: 1rem;
     margin-right: 1.2rem;
-    z-index: 10;
+    z-index: 1110;
 }
 
 .setupBoxTitle {
@@ -171,7 +173,7 @@ html {
     cursor: pointer;
 }
 
-.promoChoiceList {
+.promotionWindowList {
     margin: 0;
     list-style: none;
     display: flex;
@@ -181,14 +183,14 @@ html {
     width: 70%;
 }
 
-.promoText {
+.promoTitle {
     font-size: 6vh;
 }
 
-.promoChoiceItem {
+.promotionWindowListIcon {
     font-size: 7.5vh;
 }
-.promoChoiceItem:hover {
+.promotionWindowListIcon:hover {
     color: black;
     opacity: 0.8;
 }
@@ -242,164 +244,151 @@ html {
     font-size: 2rem;
 }
 
-/*@media (max-width: 600px) {*/
-/*    #board {*/
-/*        min-width: 50vh;*/
-/*        min-height: 50vh;*/
-/*    }*/
+@media (max-width: 640px) {
+    #board {
+        min-width: 50vh;
+        min-height: 50vh;
+    }
 
-/*    #gameplaySidebar {*/
-/*        height: 50vh;*/
-/*    }*/
+    #gameplaySidebar {
+        height: calc(50vh + 4px);
+    }
 
-/*    #gameplaySidebar {*/
-/*        height: 50vh;*/
-/*    }*/
+    .gameHistoryRecording {
+        height: 38vh;
+    }
 
-/*    .gameHistoryRecording {*/
-/*        height: 38vh;*/
-/*    }*/
+    .recordingListMoves {
+        font-size: 3vh;
+    }
 
-/*    .recordingListMoves {*/
-/*        font-size: 3vh;*/
-/*    }*/
+    .blackPlayerTimerContainer,
+    .whitePlayerTimerContainer {
+        width: 14vw;
+    }
 
-/*    .blackPlayerTimerContainer,*/
-/*    .whitePlayerTimerContainer {*/
-/*        width: 14vw;*/
-/*    }*/
+    .blackPlayerTimer,
+    .whitePlayerTimer {
+        border-radius: 3px;
+        font-size: 3vh;
+    }
 
-/*    .blackPlayerTimer,*/
-/*    .whitePlayerTimer {*/
-/*        border-radius: 3px;*/
-/*        font-size: 3vh;*/
-/*    }*/
+    .square {
+        width: 6.25vh;
+        height: 6.25vh;
+        font-size: 4.5vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-/*    .square {*/
-/*        width: 6.25vh;*/
-/*        height: 6.25vh;*/
-/*        font-size: 4.5vh;*/
-/*        display: flex;*/
-/*        justify-content: center;*/
-/*        align-items: center;*/
-/*    }*/
+    .square i {
+        display: block;
+    }
 
-/*    .square i {*/
-/*        display: block;*/
-/*    }*/
+    .startSetupBox,
+    .promoChoice {
+        width: 40vh;
+        height: 25vh;
+        padding: 0.5rem;
+    }
 
-/*    .startSetupBox,*/
-/*    .promoChoice {*/
-/*        width: 40vh;*/
-/*        height: 20vh;*/
-/*        padding: 1rem;*/
-/*    }*/
+    .setupBoxTitle {
+        font-size: 4vh;
+    }
 
-/*    .setupBoxTitle {*/
-/*        font-size: 4vh;*/
-/*    }*/
+    #playTimeForm div {
+        font-size: 2.5vh;
+    }
 
-/*    #playTimeForm div {*/
-/*        font-size: 2.5vh;*/
-/*    }*/
+    #playTimeSelect {
+        width: 25vw;
+        margin-top: 1vh;
+    }
 
-/*    #playTimeSelect {*/
-/*        width: 25vw;*/
-/*        margin-top: 1vh;*/
-/*    }*/
+    .startGameButton {
+        border-radius: 3px;
+        font-size: 3vh;
+    }
 
-/*    .startGameButton {*/
-/*        border-radius: 3px;*/
-/*        font-size: 3vh;*/
-/*    }*/
+    .promoText {
+        font-size: 3vh;
+    }
 
-/*    .promoText {*/
-/*        font-size: 3vh;*/
-/*    }*/
+    .promoChoiceItem {
+        font-size: 5.5vh;
+        display: block;
+    }
+}
 
-/*    .promoChoiceItem {*/
-/*        font-size: 5.5vh;*/
-/*        display: block;*/
-/*    }*/
-/*}*/
+@media (max-width: 400px) {
+    #board {
+        min-width: 35vh;
+        min-height: 35vh;
+    }
 
-/*@media (max-width: 400px) {*/
-/*    #board {*/
-/*        min-width: 35vh;*/
-/*        min-height: 35vh;*/
-/*    }*/
+    #gameplaySidebar {
+        height: calc(35vh + 4px);
+    }
 
-/*    #gameplaySidebar {*/
-/*        height: 35vh;*/
-/*    }*/
+    .gameHistoryRecording {
+        height: 26.6vh;
+    }
 
-/*    #gameplaySidebar {*/
-/*        height: 35vh;*/
-/*    }*/
+    .recordingListMoves {
+        font-size: 2vh;
+    }
 
-/*    .gameHistoryRecording {*/
-/*        height: 26.6vh;*/
-/*    }*/
+    .blackPlayerTimerContainer,
+    .whitePlayerTimerContainer {
+        width: 12vw;
+    }
 
-/*    .recordingListMoves {*/
-/*        font-size: 2vh;*/
-/*    }*/
+    .blackPlayerTimer,
+    .whitePlayerTimer {
+        border-radius: 2px;
+        font-size: 2vh;
+    }
 
-/*    .blackPlayerTimerContainer,*/
-/*    .whitePlayerTimerContainer {*/
-/*        width: 12vw;*/
-/*    }*/
+    .square {
+        width: 4.375vh;
+        height: 4.375vh;
+        font-size: 3.2vh;
+    }
 
-/*    .blackPlayerTimer,*/
-/*    .whitePlayerTimer {*/
-/*        border-radius: 2px;*/
-/*        font-size: 2vh;*/
-/*    }*/
+    .startSetupBox,
+    .promoChoice {
+        width: 26vh;
+        height: 18vh;
+    }
 
-/*    .square {*/
-/*        width: 4.375vh;*/
-/*        height: 4.375vh;*/
-/*        font-size: 3.2vh;*/
-/*    }*/
+    .setupBoxTitle {
+        font-size: 2.5vh;
+    }
 
-/*    .startSetupBox,*/
-/*    .promoChoice {*/
-/*        width: 26vh;*/
-/*        height: 13vh;*/
-/*    }*/
+    #playTimeForm {
+        height: 8vh;
+    }
 
-/*    .startSetupBox {*/
-/*        width: 43%;*/
-/*        height: 15%;*/
-/*    }*/
+    #playTimeForm div {
+        font-size: 2vh;
+    }
 
-/*    .setupBoxTitle {*/
-/*        font-size: 2.5vh;*/
-/*    }*/
+    #playTimeSelect {
+        width: 25vw;
+    }
 
-/*    #playTimeForm {*/
-/*        height: 8vh;*/
-/*    }*/
+    .startGameButton {
+        border-radius: 2px;
+        font-size: 2vh;
+    }
 
-/*    #playTimeForm div {*/
-/*        font-size: 2vh;*/
-/*    }*/
+    .promoText {
+        font-size: 2vh;
+        padding-bottom: 0.5rem;
+    }
 
-/*    #playTimeSelect {*/
-/*        width: 25vw;*/
-/*    }*/
-
-/*    .startGameButton {*/
-/*        border-radius: 2px;*/
-/*        font-size: 2vh;*/
-/*    }*/
-
-/*    .promoText {*/
-/*        font-size: 2vh;*/
-/*        padding-bottom: 0.5rem;*/
-/*    }*/
-
-/*    .promoChoiceItem {*/
-/*        font-size: 4vh;*/
-/*    }*/
-/*}*/
+    .promoChoiceItem {
+        font-size: 4vh;
+    }
+}
