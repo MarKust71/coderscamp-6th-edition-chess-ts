@@ -105,7 +105,7 @@ export class GameHistory {
 
     static undoMove(): void {
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
-        const lastMove: Movement = history.shift();
+        const lastMove: Movement = history.pop();
 
         lastMove.piece.coordinates.x = lastMove.origin.x;
         lastMove.piece.coordinates.y = lastMove.origin.y;
@@ -114,7 +114,7 @@ export class GameHistory {
     }
 
     static lastMove(): Movement {
-        return GameHistory.getHistory().shift();
+        return GameHistory.getHistory().pop();
     }
 
     static playFromTheStart(): void {
@@ -123,7 +123,7 @@ export class GameHistory {
 
         for (let i = 0; i < history.length; i++) {
             setTimeout(() => {
-                const move: Movement = history.pop();
+                const move: Movement = history.shift();
                 const piece = chessBoard.board[move.origin.x][move.origin.y].pieceOnSquare;
                 piece.move({ x: move.origin.x, y: move.origin.y });
             }, TIME_BETWEEN_MOVES);

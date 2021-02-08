@@ -1,5 +1,6 @@
 import { setupTimerTime } from '../app/timers/setupTimerTime';
 
+import { GameHistoryView } from './gameHistory';
 import { timer } from './startSetupBox';
 import { timerView } from './timerView';
 
@@ -17,16 +18,8 @@ export const gameplaySidebar = (): void => {
     gameplaySidebar.id = 'gameplaySidebar';
     wrapper.appendChild(gameplaySidebar);
 
-    const recordingMovesHistory = document.createTextNode('Title');
-    const recordingListMoves = document.createElement('ol');
-    recordingListMoves.className = 'recordingListMoves';
-    recordingListMoves.appendChild(recordingMovesHistory);
-    const gameHistoryRecording = document.createElement('div');
-    gameHistoryRecording.className = 'gameHistoryRecording';
-    gameHistoryRecording.appendChild(recordingListMoves);
-
     gameplaySidebar.appendChild(timerView({ id: 'blackPlayerTimer' }));
-    gameplaySidebar.appendChild(gameHistoryRecording);
+    gameplaySidebar.appendChild(GameHistoryView.create());
     gameplaySidebar.appendChild(timerView({ id: 'whitePlayerTimer' }));
 
     updatePlayerTimer({ id: 'blackPlayerTimer', time: timer.clockTimer });
