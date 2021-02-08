@@ -55,7 +55,7 @@ export class Pawn extends Piece implements PawnModel {
             return move.y === y;
         });
         return possibleMoves;
-    }
+    };
 
     promote(): void {
         const x = this.coordinates.x;
