@@ -1,4 +1,11 @@
 module.exports = {
+    env: {
+        browser: true,
+        node: true,
+    },
+    globals: {
+        document: false,
+    },
     plugins: ['import', 'jest', 'html', 'css-modules'],
     settings: {
         'import/resolver': {
@@ -55,6 +62,8 @@ module.exports = {
         'no-nested-ternary': 2,
         'css-modules/no-unused-class': [2, { camelCase: true }],
         'css-modules/no-undef-class': [2, { camelCase: true }],
+        'no-extra-semi': 'off',
+        '@typescript-eslint/no-extra-semi': ['off'],
     },
     parserOptions: {
         sourceType: 'module',

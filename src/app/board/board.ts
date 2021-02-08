@@ -1,10 +1,11 @@
-import { GameHistoryView } from './../../view/gameHistory';
+import { GameHistoryView } from '../../view/gameHistory';
 import { Pawn } from '../pieces/pawn';
 import { Piece } from '../pieces/piece';
 import { King } from '../pieces/king';
 import { Coordinates, Side } from '../types';
 import { touched } from '../touched';
 import { GameHistory, Movement } from '../gameHistory/gameHistory';
+import { Timer } from '../timers/timers';
 
 export class Square {
     coordinates: Coordinates;
