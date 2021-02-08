@@ -1,5 +1,6 @@
-body {
+html {
     margin: 0;
+    padding: 0;
 }
 
 * {
@@ -14,20 +15,25 @@ body {
 }
 
 #board {
-    display: flex;
-    flex-wrap: wrap;
-    outline: 5px black solid;
-    width: 80vh;
-    height: 80vh;
+    padding: 0;
+    position: relative;
+    display: grid;
+    grid-template-rows: repeat(8, 1fr);
+    grid-template-columns: repeat(8, 1fr);
+    justify-content: center;
+    align-items: center;
+    min-width: 80vh;
+    min-height: 80vh;
+    border: 2px solid black;
 }
 
 .square {
-    /* border: 1px darkslategrey solid; */
     width: 10vh;
     height: 10vh;
     text-align: center;
     line-height: 10vh;
     font-size: 7.5vh;
+    cursor: pointer;
 }
 
 .light {
@@ -36,8 +42,6 @@ body {
 
 .dark {
     background: rgb(107, 65, 3);
-
-    /* background:rgb(43, 43, 43); */
 }
 
 .black {
@@ -49,10 +53,11 @@ body {
 }
 
 .possibleMove {
-    background: rgba(222, 247, 2, 0.6);
+    background: rgb(238, 238, 36);
 }
 
 /* ======== ostylowanie PAWN ======== */
+
 .promoChoice {
     width: 10vh;
     height: 40vh;
@@ -71,7 +76,147 @@ body {
     padding-left: 0;
 }
 
-/* ================================== */
+/* !* ========ostylowanie gameplaySidebar ======== *! */
+
+#gameplaySidebar {
+    position: relative;
+    display: grid;
+    grid-template-rows: 1fr 3fr 1fr;
+    justify-content: center;
+    align-items: center;
+    height: calc(80vh + 4px);
+    border: 2px solid black;
+    border-left: none;
+    background: #eee;
+}
+
+.gameHistoryRecording {
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.recordingListMoves {
+    padding-left: 0;
+    font-size: 4vh;
+}
+
+.blackPlayerTimerContainer,
+.whitePlayerTimerContainer {
+    width: 15vw;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blackPlayerTimer,
+.whitePlayerTimer {
+    background: #ddd;
+    min-width: 80%;
+    min-height: 80%;
+    border: 1px solid rgb(238, 238, 36);
+    border-radius: 5px;
+    box-shadow: inset 0 0 5px rgb(238, 238, 36);
+    font-size: 5vh;
+}
+
+/* ======== ostylowanie promocja oraz start gry ======== */
+.startCover,
+.promoCover {
+    width: calc(100vh + 15vw);
+    height: 100vh;
+    background: #fff;
+    opacity: 0.4;
+    position: fixed;
+    z-index: 5;
+}
+
+.startSetupBox,
+.promotionWindow {
+    width: 60vh;
+    height: 30vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    background-color: #efeaea;
+    outline: 2px black solid;
+    transform: translate(10px, 2px);
+    padding: 1rem;
+    margin-right: 1.2rem;
+    z-index: 1110;
+}
+
+.setupBoxTitle {
+    font-size: 5vh;
+}
+
+#playTimeForm {
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+#playTimeForm div {
+    font-size: 3vh;
+}
+
+#playTimeSelect {
+    margin-top: 1vh;
+    width: 15vw;
+}
+
+.startGameButton {
+    border: 1px solid rgb(205, 205, 23);
+    border-radius: 5px;
+    box-shadow: inset 0 0 5px rgb(205, 205, 23);
+    font-size: 4vh;
+}
+
+.startGameButton:hover,
+.startGameButton:active {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.promotionWindowList {
+    margin: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 0;
+    width: 70%;
+}
+
+.promoTitle {
+    font-size: 6vh;
+}
+
+.promotionWindowListIcon {
+    font-size: 7.5vh;
+}
+
+.promotionWindowListIcon:hover {
+    color: black;
+    opacity: 0.8;
+}
+
+.disabledClock {
+    background-color: #8a8a8a;
+    opacity: 0.5;
+    border: 2px solid #3c3c3c;
+    box-shadow: inset 0 0 5px #3c3c3c;
+}
+
+/* !* ================================== *! */
 
 .checkmate-box-wrapper {
     display: none;
@@ -108,674 +253,156 @@ body {
     margin: 0;
 }
 
-/* html { */
-
-/*    margin: 0; */
-
-/*    padding: 0; */
-
-/*    box-sizing: border-box; */
-
-/* } */
-
-/* body { */
-
-/*    margin: 0; */
-
-/* } */
-
-/* #wrapper { */
-
-/*    display: flex; */
-
-/*    justify-content: center; */
-
-/*    align-items: center; */
-
-/*    height: 100vh; */
-
-/*    margin: 0; */
-
-/* } */
-
-/* #board { */
-
-/*    padding: 0; */
-
-/*    position: relative; */
-
-/*    display: grid; */
-
-/*    grid-template-rows: repeat(8, 1fr); */
-
-/*    grid-template-columns: repeat(8, 1fr); */
-
-/*    justify-content: center; */
-
-/*    align-items: center; */
-
-/*    min-width: 80vh; */
-
-/*    min-height: 80vh; */
-
-/*    outline: 2px solid black; */
-
-/* } */
-
-/* .square { */
-
-/*    width: 10vh; */
-
-/*    height: 10vh; */
-
-/*    text-align: center; */
-
-/*    line-height: 10vh; */
-
-/*    font-size: 7.5vh; */
-
-/*    cursor: pointer; */
-
-/* } */
-
-/* .light { */
-
-/*    background: rgb(215, 235, 243); */
-
-/* } */
-
-/* .dark { */
-
-/*    background: rgb(107, 65, 3); */
-
-/* } */
-
-/* .black { */
-
-/*    color: black; */
-
-/* } */
-
-/* .white { */
-
-/*    color: silver; */
-
-/* } */
-
-/* .possibleMove { */
-
-/*    background: rgb(238, 238, 36); */
-
-/*    !*transition: background-color 1s;*! */
-
-/* } */
-
-/* !* ========ostylowanie gameplaySidebar ======== *! */
-
-/* #gameplaySidebar { */
-
-/*    position: relative; */
-
-/*    display: grid; */
-
-/*    grid-template-rows: 1fr 3fr 1fr; */
-
-/*    justify-content: center; */
-
-/*    align-items: center; */
-
-/*    height: 80vh; */
-
-/*    outline: 2px solid black; */
-
-/*    background: #eee; */
-
-/* } */
-
-/* .gameHistoryRecording { */
-
-/*    height: 60vh; */
-
-/*    display: flex; */
-
-/*    justify-content: center; */
-
-/*    align-items: flex-start; */
-
-/* } */
-
-/* .recordingListMoves { */
-
-/*    padding-left: 0; */
-
-/*    font-size: 4vh; */
-
-/* } */
-
-/* .blackPlayerTimerContainer, */
-
-/* .whitePlayerTimerContainer { */
-
-/*    width: 15vw; */
-
-/*    text-align: center; */
-
-/*    display: flex; */
-
-/*    justify-content: center; */
-
-/*    align-items: center; */
-
-/* } */
-
-/* .blackPlayerTimer, */
-
-/* .whitePlayerTimer { */
-
-/*    background: #ddd; */
-
-/*    min-width: 80%; */
-
-/*    min-height: 80%; */
-
-/*    border: 1px solid rgb(238, 238, 36); */
-
-/*    border-radius: 5px; */
-
-/*    box-shadow: inset 0 0 5px rgb(238, 238, 36); */
-
-/*    font-size: 5vh; */
-
-/* } */
-
-/* !* ======== ostylowanie promocja oraz start gry ======== *! */
-
-/* .startCover, */
-
-/* .promoCover { */
-
-/*    width: calc(100vh + 15vw); */
-
-/*    height: 100vh; */
-
-/*    background: #fff; */
-
-/*    opacity: 0.4; */
-
-/*    position: fixed; */
-
-/*    z-index: 5; */
-
-/* } */
-
-/* .startSetupBox, */
-
-/* .promoChoice { */
-
-/*    width: 60vh; */
-
-/*    height: 30vh; */
-
-/*    display: flex; */
-
-/*    flex-wrap: wrap; */
-
-/*    align-content: center; */
-
-/*    justify-content: space-evenly; */
-
-/*    flex-direction: column; */
-
-/*    align-items: center; */
-
-/*    position: fixed; */
-
-/*    background-color: #efeaea; */
-
-/*    outline: 2px black solid; */
-
-/*    transform: translate(10px, 2px); */
-
-/*    padding: 2rem; */
-
-/*    margin-right: 1.2rem; */
-
-/*    z-index: 10; */
-
-/* } */
-
-/* .setupBoxTitle { */
-
-/*    font-size: 5vh; */
-
-/* } */
-
-/* #playTimeForm { */
-
-/*    height: 10vh; */
-
-/*    display: flex; */
-
-/*    flex-direction: column; */
-
-/*    justify-content: center; */
-
-/*    align-items: flex-start; */
-
-/* } */
-
-/* #playTimeForm div { */
-
-/*    font-size: 3vh; */
-
-/* } */
-
-/* #playTimeSelect { */
-
-/*    margin-top: 1vh; */
-
-/*    width: 15vw; */
-
-/* } */
-
-/* .startGameButton { */
-
-/*    border: 1px solid rgb(205, 205, 23); */
-
-/*    border-radius: 5px; */
-
-/*    box-shadow: inset 0 0 5px rgb(205, 205, 23); */
-
-/*    font-size: 4vh; */
-
-/* } */
-
-/* .startGameButton:hover, */
-
-/* .startGameButton:active { */
-
-/*    opacity: 0.8; */
-
-/*    cursor: pointer; */
-
-/* } */
-
-/* .promoChoiceList { */
-
-/*    margin: 0; */
-
-/*    list-style: none; */
-
-/*    display: flex; */
-
-/*    align-items: center; */
-
-/*    justify-content: space-between; */
-
-/*    padding-left: 0; */
-
-/*    width: 70%; */
-
-/* } */
-
-/* .promoText { */
-
-/*    font-size: 6vh; */
-
-/* } */
-
-/* .promoChoiceItem { */
-
-/*    font-size: 7.5vh; */
-
-/* } */
-
-/* .promoChoiceItem:hover { */
-
-/*    color: black; */
-
-/*    opacity: 0.8; */
-
-/* } */
-
-/* .disabledClock { */
-
-/*    background-color: #8a8a8a; */
-
-/*    opacity: 0.5; */
-
-/*    border: 2px solid #3c3c3c; */
-
-/*    box-shadow: inset 0 0 5px #3c3c3c; */
-
-/* } */
-
-/* !* ================================== *! */
-
-/* .checkmate-box-wrapper { */
-
-/*    display: block; */
-
-/*    position: fixed; */
-
-/*    width: 100%; */
-
-/*    height: 100%; */
-
-/*    background: rgba(0, 0, 0, 0.8); */
-
-/* } */
-
-/* .checkmate-box { */
-
-/*    display: flex; */
-
-/*    flex-flow: column nowrap; */
-
-/*    align-content: center; */
-
-/*    justify-content: center; */
-
-/*    align-items: center; */
-
-/*    position: fixed; */
-
-/*    left: 50%; */
-
-/*    top: 50%; */
-
-/*    transform: translate(-50%, -50%); */
-
-/*    width: 500px; */
-
-/*    height: 240px; */
-
-/*    font-size: 25px; */
-
-/*    border: solid 2px black; */
-
-/*    background-color: #efeaea; */
-
-/* } */
-
-/* .checkmate-box > p:first-letter { */
-
-/*    text-transform: capitalize; */
-
-/* } */
-
-/* .checkmate-box > p:first-of-type { */
-
-/*    font-size: 1.5em; */
-
-/*    border: 0; */
-
-/*    margin: 0; */
-
-/* } */
-
-/* .checkmate-box > button { */
-
-/*    margin-top: 1.5rem; */
-
-/*    font-size: 2rem; */
-
-/* } */
-
-/* @media (max-width: 600px) { */
-
-/*    #board { */
-
-/*        min-width: 50vh; */
-
-/*        min-height: 50vh; */
-
-/*    } */
-
-/*    #gameplaySidebar { */
-
-/*        height: 50vh; */
-
-/*    } */
-
-/*    #gameplaySidebar { */
-
-/*        height: 50vh; */
-
-/*    } */
-
-/*    .gameHistoryRecording { */
-
-/*        height: 38vh; */
-
-/*    } */
-
-/*    .recordingListMoves { */
-
-/*        font-size: 3vh; */
-
-/*    } */
-
-/*    .blackPlayerTimerContainer, */
-
-/*    .whitePlayerTimerContainer { */
-
-/*        width: 14vw; */
-
-/*    } */
-
-/*    .blackPlayerTimer, */
-
-/*    .whitePlayerTimer { */
-
-/*        border-radius: 3px; */
-
-/*        font-size: 3vh; */
-
-/*    } */
-
-/*    .square { */
-
-/*        width: 6.25vh; */
-
-/*        height: 6.25vh; */
-
-/*        font-size: 4.5vh; */
-
-/*        display: flex; */
-
-/*        justify-content: center; */
-
-/*        align-items: center; */
-
-/*    } */
-
-/*    .square i { */
-
-/*        display: block; */
-
-/*    } */
-
-/*    .startSetupBox, */
-
-/*    .promoChoice { */
-
-/*        width: 40vh; */
-
-/*        height: 20vh; */
-
-/*        padding: 1rem; */
-
-/*    } */
-
-/*    .setupBoxTitle { */
-
-/*        font-size: 4vh; */
-
-/*    } */
-
-/*    #playTimeForm div { */
-
-/*        font-size: 2.5vh; */
-
-/*    } */
-
-/*    #playTimeSelect { */
-
-/*        width: 25vw; */
-
-/*        margin-top: 1vh; */
-
-/*    } */
-
-/*    .startGameButton { */
-
-/*        border-radius: 3px; */
-
-/*        font-size: 3vh; */
-
-/*    } */
-
-/*    .promoText { */
-
-/*        font-size: 3vh; */
-
-/*    } */
-
-/*    .promoChoiceItem { */
-
-/*        font-size: 5.5vh; */
-
-/*        display: block; */
-
-/*    } */
-
-/* } */
-
-/* @media (max-width: 400px) { */
-
-/*    #board { */
-
-/*        min-width: 35vh; */
-
-/*        min-height: 35vh; */
-
-/*    } */
-
-/*    #gameplaySidebar { */
-
-/*        height: 35vh; */
-
-/*    } */
-
-/*    #gameplaySidebar { */
-
-/*        height: 35vh; */
-
-/*    } */
-
-/*    .gameHistoryRecording { */
-
-/*        height: 26.6vh; */
-
-/*    } */
-
-/*    .recordingListMoves { */
-
-/*        font-size: 2vh; */
-
-/*    } */
-
-/*    .blackPlayerTimerContainer, */
-
-/*    .whitePlayerTimerContainer { */
-
-/*        width: 12vw; */
-
-/*    } */
-
-/*    .blackPlayerTimer, */
-
-/*    .whitePlayerTimer { */
-
-/*        border-radius: 2px; */
-
-/*        font-size: 2vh; */
-
-/*    } */
-
-/*    .square { */
-
-/*        width: 4.375vh; */
-
-/*        height: 4.375vh; */
-
-/*        font-size: 3.2vh; */
-
-/*    } */
-
-/*    .startSetupBox, */
-
-/*    .promoChoice { */
-
-/*        width: 26vh; */
-
-/*        height: 13vh; */
-
-/*    } */
-
-/*    .startSetupBox { */
-
-/*        width: 43%; */
-
-/*        height: 15%; */
-
-/*    } */
-
-/*    .setupBoxTitle { */
-
-/*        font-size: 2.5vh; */
-
-/*    } */
-
-/*    #playTimeForm { */
-
-/*        height: 8vh; */
-
-/*    } */
-
-/*    #playTimeForm div { */
-
-/*        font-size: 2vh; */
-
-/*    } */
-
-/*    #playTimeSelect { */
-
-/*        width: 25vw; */
-
-/*    } */
-
-/*    .startGameButton { */
-
-/*        border-radius: 2px; */
-
-/*        font-size: 2vh; */
-
-/*    } */
-
-/*    .promoText { */
-
-/*        font-size: 2vh; */
-
-/*        padding-bottom: 0.5rem; */
-
-/*    } */
-
-/*    .promoChoiceItem { */
-
-/*        font-size: 4vh; */
-
-/*    } */
-
-/* } */
+.checkmate-box > button {
+    margin-top: 1.5rem;
+    font-size: 2rem;
+}
+
+@media (max-width: 640px) {
+    #board {
+        min-width: 50vh;
+        min-height: 50vh;
+    }
+
+    #gameplaySidebar {
+        height: calc(50vh + 4px);
+    }
+
+    .gameHistoryRecording {
+        height: 38vh;
+    }
+
+    .recordingListMoves {
+        font-size: 3vh;
+    }
+
+    .blackPlayerTimerContainer,
+    .whitePlayerTimerContainer {
+        width: 14vw;
+    }
+
+    .blackPlayerTimer,
+    .whitePlayerTimer {
+        border-radius: 3px;
+        font-size: 3vh;
+    }
+
+    .square {
+        width: 6.25vh;
+        height: 6.25vh;
+        font-size: 4.5vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .square i {
+        display: block;
+    }
+
+    .startSetupBox,
+    .promoChoice {
+        width: 40vh;
+        height: 25vh;
+        padding: 0.5rem;
+    }
+
+    .setupBoxTitle {
+        font-size: 4vh;
+    }
+
+    #playTimeForm div {
+        font-size: 2.5vh;
+    }
+
+    #playTimeSelect {
+        width: 25vw;
+        margin-top: 1vh;
+    }
+
+    .startGameButton {
+        border-radius: 3px;
+        font-size: 3vh;
+    }
+
+    .promoText {
+        font-size: 3vh;
+    }
+
+    .promoChoiceItem {
+        font-size: 5.5vh;
+        display: block;
+    }
+}
+
+@media (max-width: 400px) {
+    #board {
+        min-width: 35vh;
+        min-height: 35vh;
+    }
+
+    #gameplaySidebar {
+        height: calc(35vh + 4px);
+    }
+
+    .gameHistoryRecording {
+        height: 26.6vh;
+    }
+
+    .recordingListMoves {
+        font-size: 2vh;
+    }
+
+    .blackPlayerTimerContainer,
+    .whitePlayerTimerContainer {
+        width: 12vw;
+    }
+
+    .blackPlayerTimer,
+    .whitePlayerTimer {
+        border-radius: 2px;
+        font-size: 2vh;
+    }
+
+    .square {
+        width: 4.375vh;
+        height: 4.375vh;
+        font-size: 3.2vh;
+    }
+
+    .startSetupBox,
+    .promoChoice {
+        width: 26vh;
+        height: 18vh;
+    }
+
+    .setupBoxTitle {
+        font-size: 2.5vh;
+    }
+
+    #playTimeForm {
+        height: 8vh;
+    }
+
+    #playTimeForm div {
+        font-size: 2vh;
+    }
+
+    #playTimeSelect {
+        width: 25vw;
+    }
+
+    .startGameButton {
+        border-radius: 2px;
+        font-size: 2vh;
+    }
+
+    .promoText {
+        font-size: 2vh;
+        padding-bottom: 0.5rem;
+    }
+
+    .promoChoiceItem {
+        font-size: 4vh;
+    }
+}
