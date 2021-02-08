@@ -8,6 +8,7 @@ interface BishopModel {
     findLegalMoves(): Array<Coordinates>;
     move: (coordinates: Coordinates) => void;
 }
+
 export class Bishop extends Piece implements BishopModel {
     name: Name;
     display: string;
