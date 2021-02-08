@@ -5,10 +5,10 @@ import { GameHistoryView } from '../../view/gameHistory';
 export class Movement {
     piece: Piece;
     origin: Coordinates;
-    timers: Array<Timer>;
+    timers: Array<number>;
     notation: string;
 
-    constructor(piece: Piece, origin: Coordinates, destination: Coordinates, timers: Array<Timer>) {
+    constructor(piece: Piece, origin: Coordinates, destination: Coordinates, timers: Array<number>) {
         this.piece = piece;
         this.origin = origin;
         this.timers = timers;

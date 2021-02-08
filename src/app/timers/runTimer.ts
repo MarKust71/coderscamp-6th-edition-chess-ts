@@ -45,5 +45,7 @@ export const runTimer = (function () {
     return {
         runFirstTimer,
         setOpponentsTimer,
+        runTimerClockTimerBlack,
+        runTimerClockTimerWhite,
     };
 })();

@@ -5,6 +5,7 @@ import { King } from '../pieces/king';
 import { Coordinates, Side } from '../types';
 import { touched } from '../touched';
 import { GameHistory, Movement } from '../gameHistory/gameHistory';
+import { runTimerClockTimerBlack, runTimerClockTimerWhite } from '../timers/runTimer';
 
 export class Square {
     coordinates: Coordinates;
@@ -103,7 +104,9 @@ export class ChessBoard {
         const coordinates = JSON.parse(id);
         const piece = chessBoard.board[originCoords.x][originCoords.y].pieceOnSquare;
 
-        GameHistory.newMove(new Movement(piece, originCoords, coordinates, [{}, {}]));
+        GameHistory.newMove(
+            new Movement(piece, originCoords, coordinates, [runTimerClockTimerBlack, runTimerClockTimerWhite]),
+        );
         piece.move(coordinates);
         this.unmarkLegalMoves();
         GameHistoryView.append(GameHistory.lastMove().notation);
