@@ -16,3 +16,10 @@ export enum Name {
     QUEEN = 'queen',
     KING = 'king',
 }
+
+export const PLAYTIME = [
+    { value: 1, text: '1 minute' },
+    { value: 3, text: '3 minutes' },
+    { value: 5, text: '5 minutes' },
+    { value: 8, text: '8 minutes' },
+];
