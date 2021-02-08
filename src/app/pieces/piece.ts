@@ -27,7 +27,9 @@ export class Piece implements PieceModel {
         return [];
     };
 
-    promote() {}
+    promote() {
+        console.log('promote entered');
+    }
 
     move(coordinates: Coordinates): void {
         const newX = coordinates.x;
