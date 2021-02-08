@@ -1,14 +1,14 @@
 import { Coordinates, Side, Name } from '../types';
 import { Piece } from '../pieces/piece';
 import { chessBoard } from '../board/board';
-import { Timer } from '../timers/timers';
+import { GameHistoryView } from '../../view/gameHistory';
 export class Movement {
     piece: Piece;
     origin: Coordinates;
-    timers: Array<Timer>;
+    timers: Array<number>;
     notation: string;
 
-    constructor(piece: Piece, origin: Coordinates, destination: Coordinates, timers: Array<Timer>) {
+    constructor(piece: Piece, origin: Coordinates, destination: Coordinates, timers: Array<number>) {
         this.piece = piece;
         this.origin = origin;
         this.timers = timers;
@@ -52,20 +52,12 @@ export class Movement {
             }
         }
 
-        // Promotion
-        // f8H - move f8 then promote to Hetman
-
         // Castle
         if (piece.name === Name.KING && Math.abs(origin.y - destination.y) === 2) {
             if (destination.y === 2) {
                 return 'O-O-O';
             } else return 'O-O';
         }
-
-        // Check and checkmate
-        // Check: +
-        // Mate: #
-        // Stalemate:
 
         return figure + columnOrRowSymbol + capture + move + special;
 
@@ -75,7 +67,7 @@ export class Movement {
                     const secondPiece = square.pieceOnSquare;
                     if (secondPiece && secondPiece.name === piece.name && secondPiece.side === piece.side)
                         for (const coordinates of secondPiece.findLegalMoves()) {
-                            if (coordinates.x === destination.x && coordinates.y === destination.y)
+                            if (coordinates.x === origin.x && coordinates.y === origin.y)
                                 return secondPiece.coordinates;
                         }
                 }
@@ -87,6 +79,27 @@ export class Movement {
 export class GameHistory {
     static getHistory(): Array<Movement> {
         return JSON.parse(localStorage.getItem('history'));
+    }
+
+    static promotion(newName: Name): void {
+        const history = GameHistory.getHistory();
+        history[history.length - 1].notation += newName[0].toUpperCase();
+        GameHistory.setHistory(history);
+        GameHistoryView.updateLast(history[history.length - 1].notation);
+    }
+
+    static gameStatus(check: boolean, stall: boolean): void {
+        const history = GameHistory.getHistory();
+        let status = '';
+        if (check) {
+            if (stall) {
+                status = '#';
+            } else status = '+';
+        } else status = 'SS';
+        // There is no official notation for stalemate as for any other draw.
+        history[history.length - 1].notation += status;
+        GameHistory.setHistory(history);
+        GameHistoryView.updateLast(history[history.length - 1].notation);
     }
 
     static setHistory(history: Array<Movement>): void {

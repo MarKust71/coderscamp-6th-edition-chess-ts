@@ -6,6 +6,7 @@ import { Bishop } from './bishop';
 import { Queen } from './queen';
 import { Knight } from './knight';
 import { Rook } from './rook';
+import { GameHistory } from '../gameHistory/gameHistory';
 
 interface PawnModel {
     name: string;
@@ -29,8 +30,7 @@ export class Pawn extends Piece implements PawnModel {
     }
 
     findLegalMoves = (): Coordinates[] => {
-        const x = this.coordinates.x;
-        const y = this.coordinates.y;
+        const { x, y } = this.coordinates;
         const v = this.direction;
         let possibleMoves: Array<Coordinates> = [];
         if (x === (this.side === Side.WHITE ? 6 : 1)) {
@@ -58,9 +58,8 @@ export class Pawn extends Piece implements PawnModel {
     };
 
     promote(): void {
-        const x = this.coordinates.x;
-        const y = this.coordinates.y;
-        const side = this.side;
+        const { x, y } = this.coordinates;
+        const { side } = this;
         const wrapper = document.getElementById('wrapper');
         const promotionWindow = document.createElement('div');
         const promoCover = document.createElement('div');
@@ -89,6 +88,7 @@ export class Pawn extends Piece implements PawnModel {
             document.querySelector(`[id='{"x":${x},"y":${y}}']`).innerHTML = newFigure.display;
             wrapper.removeChild(promotionWindow);
             wrapper.removeChild(promoCover);
+            GameHistory.promotion(newFigure.name);
         }
         const promotionWindowView = () => {
             const typePiece = [Name.QUEEN, Name.ROOK, Name.KNIGHT, Name.BISHOP];
@@ -122,5 +122,7 @@ export class Pawn extends Piece implements PawnModel {
         }
     }
 
-    enPassant(): void {}
+    enPassant(): void {
+        console.log(this);
+    }
 }
