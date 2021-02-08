@@ -1,4 +1,4 @@
-import { GameHistoryView } from './../../view/gameHistory';
+import { GameHistoryView } from '../../view/gameHistory';
 import { Pawn } from '../pieces/pawn';
 import { Piece } from '../pieces/piece';
 import { King } from '../pieces/king';
@@ -22,11 +22,11 @@ export class ChessBoard {
         this.board = this.pieceSetup();
     }
 
-    pieceSetup() {
+    pieceSetup(): Square[][] {
         return ChessBoard.pieceSetup(ChessBoard.boardSetup());
     }
 
-    paintPieces() {
+    paintPieces(): void {
         for (const row of this.board) {
             for (const square of row) {
                 const squareElement = document.getElementById(
@@ -73,7 +73,7 @@ export class ChessBoard {
         return board;
     }
 
-    markLegalMoves(coordinates: Array<Coordinates>, originCoords: Coordinates) {
+    markLegalMoves(coordinates: Array<Coordinates>, originCoords: Coordinates): void {
         for (const coords of coordinates) {
             const squareElement = document.getElementById(JSON.stringify({ x: coords.x, y: coords.y }));
             squareElement.classList.add('possibleMove');
@@ -83,7 +83,7 @@ export class ChessBoard {
         }
     }
 
-    unmarkLegalMoves() {
+    unmarkLegalMoves(): void {
         for (const row of this.board) {
             for (const square of row) {
                 const originalElement = document.getElementById(
@@ -99,8 +99,9 @@ export class ChessBoard {
         }
     }
 
-    makeMove(event: MouseEvent, originCoords: Coordinates) {
-        const { id } = event.currentTarget as HTMLAreaElement;
+    makeMove(event: MouseEvent, originCoords: Coordinates): void {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { id }: any = event.currentTarget; // as HTMLAreaElement;
         const coordinates = JSON.parse(id);
         const piece = chessBoard.board[originCoords.x][originCoords.y].pieceOnSquare;
 
