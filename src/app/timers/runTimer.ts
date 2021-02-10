@@ -1,6 +1,7 @@
 import { updatePlayerTimer } from '../../view/gameplaySidebar';
 import { Side } from '../types';
 import { playerTimerClockSwitch } from '../../view/playerTimerClockSwitch';
+import winnerDialogBox from '../../view/winnerDialogBoxView';
 
 type RunFirstTimerParams = {
     side: Side;
@@ -24,11 +25,18 @@ export const runTimer = (function () {
             intervalId = setInterval(() => {
                 runTimerClockTimerWhite--;
                 updatePlayerTimer({ id: 'whitePlayerTimer', time: runTimerClockTimerWhite });
+                if (runTimerClockTimerWhite < 0) {
+                    console.log('jestem');
+                    winnerDialogBox();
+                }
             }, 1000);
         } else {
             intervalId = setInterval(() => {
                 runTimerClockTimerBlack--;
                 updatePlayerTimer({ id: 'blackPlayerTimer', time: runTimerClockTimerBlack });
+                if (runTimerClockTimerBlack < 0) {
+                    winnerDialogBox();
+                }
             }, 1000);
         }
     };
