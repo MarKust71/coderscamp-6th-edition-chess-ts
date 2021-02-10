@@ -5,7 +5,11 @@ import { King } from '../pieces/king';
 import { Coordinates, Side } from '../types';
 import { touched } from '../touched';
 import { GameHistory, Movement } from '../gameHistory/gameHistory';
-import { Timer } from '../timers/timers';
+import { runTimer } from '../timers/runTimer';
+import { Rook } from '../pieces/rook';
+import { Bishop } from '../pieces/bishop';
+import { Knight } from '../pieces/knight';
+import { Queen } from '../pieces/queen';
 
 export class Square {
     coordinates: Coordinates;
@@ -63,8 +67,23 @@ export class ChessBoard {
     }
 
     static pieceSetup(board: Array<Array<Square>>): Array<Array<Square>> {
+        board[7][0].pieceOnSquare = new Rook({ x: 7, y: 0 }, Side.WHITE);
+        board[7][1].pieceOnSquare = new Bishop({ x: 7, y: 1 }, Side.WHITE);
+        board[7][2].pieceOnSquare = new Knight({ x: 7, y: 2 }, Side.WHITE);
+        board[7][3].pieceOnSquare = new Queen({ x: 7, y: 3 }, Side.WHITE);
         board[7][4].pieceOnSquare = new King({ x: 7, y: 4 }, Side.WHITE);
+        board[7][5].pieceOnSquare = new Knight({ x: 7, y: 5 }, Side.WHITE);
+        board[7][6].pieceOnSquare = new Bishop({ x: 7, y: 6 }, Side.WHITE);
+        board[7][7].pieceOnSquare = new Rook({ x: 7, y: 7 }, Side.WHITE);
+
+        board[0][0].pieceOnSquare = new Rook({ x: 0, y: 0 }, Side.BLACK);
+        board[0][1].pieceOnSquare = new Bishop({ x: 0, y: 1 }, Side.BLACK);
+        board[0][2].pieceOnSquare = new Knight({ x: 0, y: 2 }, Side.BLACK);
+        board[0][3].pieceOnSquare = new Queen({ x: 0, y: 3 }, Side.BLACK);
         board[0][4].pieceOnSquare = new King({ x: 0, y: 4 }, Side.BLACK);
+        board[0][5].pieceOnSquare = new Knight({ x: 0, y: 5 }, Side.BLACK);
+        board[0][6].pieceOnSquare = new Bishop({ x: 0, y: 6 }, Side.BLACK);
+        board[0][7].pieceOnSquare = new Rook({ x: 0, y: 7 }, Side.BLACK);
 
         for (let i = 0; i < 8; i++) {
             board[6][i].pieceOnSquare = new Pawn({ x: 6, y: i }, Side.WHITE);
@@ -105,9 +124,15 @@ export class ChessBoard {
         const coordinates = JSON.parse(id);
         const piece = chessBoard.board[originCoords.x][originCoords.y].pieceOnSquare;
 
-        piece.move(coordinates);
         this.unmarkLegalMoves();
-        GameHistory.newMove(new Movement(piece, originCoords, coordinates, [new Timer(), new Timer()]));
+        GameHistory.newMove(
+            new Movement(piece, originCoords, coordinates, [
+                runTimer.runTimerClockTimerWhite,
+                runTimer.runTimerClockTimerBlack,
+            ]),
+        );
+        piece.move(coordinates);
+        console.log(GameHistory.getHistory(), GameHistory.whoseTurn());
         GameHistoryView.append(GameHistory.lastMove().notation);
     }
 }

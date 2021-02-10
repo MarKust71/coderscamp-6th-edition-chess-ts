@@ -76,7 +76,7 @@ html {
     padding-left: 0;
 }
 
-/* !* ========ostylowanie gameplaySidebar ======== *! */
+/* ========ostylowanie gameplaySidebar ======== */
 
 #gameplaySidebar {
     position: relative;
@@ -133,6 +133,7 @@ html {
 }
 
 /* ======== ostylowanie promocja oraz start gry ======== */
+
 .startCover,
 .promoCover {
     width: calc(100vh + 15vw);
@@ -226,7 +227,7 @@ html {
     box-shadow: inset 0 0 5px #3c3c3c;
 }
 
-/* !* ================================== *! */
+/* ================================== */
 
 .checkmate-box-wrapper {
     display: none;

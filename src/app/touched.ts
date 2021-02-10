@@ -3,7 +3,7 @@ import { GameHistory } from './gameHistory/gameHistory';
 
 export const touched = (event: MouseEvent): void => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { id }: any = event.currentTarget; //as HTMLAreaElement;
+    const { id }: any = event.currentTarget; // as HTMLAreaElement;
     const { x, y } = JSON.parse(id);
     const piece = chessBoard.board[x][y].pieceOnSquare;
 

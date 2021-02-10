@@ -18,6 +18,11 @@ export class GameHistoryView {
         list.append(newListElement);
     }
 
+    static updateLast(notation: string): void {
+        GameHistoryView.removeLast();
+        GameHistoryView.append(notation);
+    }
+
     static removeLast(): void {
         const list = document.querySelector(`${GameHistoryView.elementSelector} .listOfMoves`);
         list.querySelector('div:last-child').remove();
