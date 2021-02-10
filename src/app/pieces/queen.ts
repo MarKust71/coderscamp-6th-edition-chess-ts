@@ -40,7 +40,7 @@ export class Queen extends Piece implements QueenModel {
         });
 
         return possibleMoves;
-    }
+    };
 
     checkLine(dx: number, dy: number, possibleMoves: Array<Coordinates>) {
         for (let i = 1; i < 8; i++) {

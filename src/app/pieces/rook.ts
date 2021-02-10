@@ -72,5 +72,5 @@ export class Rook extends Piece implements RookModel {
             }
         }
         return possibleMoves;
-    }
+    };
 }

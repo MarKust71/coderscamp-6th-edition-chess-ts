@@ -84,5 +84,5 @@ export class Bishop extends Piece implements BishopModel {
             }
         }
         return possibleMoves;
-    }
+    };
 }
