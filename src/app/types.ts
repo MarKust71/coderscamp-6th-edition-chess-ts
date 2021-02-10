@@ -23,3 +23,8 @@ export const PLAYTIME = [
     { value: 5, text: '5 minutes' },
     { value: 8, text: '8 minutes' },
 ];
+
+export type Timers = {
+    whiteTimer: number;
+    blackTimer: number;
+};
