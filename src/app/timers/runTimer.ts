@@ -53,6 +53,7 @@ export const runTimer = (function () {
     return {
         runFirstTimer,
         setOpponentsTimer,
+        clearAllIntervals,
         timers: {
             whiteTimer: runTimerClockTimerBlack,
             blackTimer: runTimerClockTimerWhite,
