@@ -254,7 +254,7 @@ html {
     font-size: 25px;
 }
 
-.checkmate-box > p:first-letter {
+.checkmate-box > p::first-letter {
     text-transform: capitalize;
 }
 

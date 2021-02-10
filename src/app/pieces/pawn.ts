@@ -1,12 +1,12 @@
 import { Coordinates, Name, Side } from '../types';
 import { chessBoard } from '../board/board';
+import { GameHistory } from '../gameHistory/gameHistory';
 
 import { Piece } from './piece';
 import { Bishop } from './bishop';
 import { Queen } from './queen';
 import { Knight } from './knight';
 import { Rook } from './rook';
-import { GameHistory } from '../gameHistory/gameHistory';
 
 interface PawnModel {
     name: string;
@@ -56,7 +56,7 @@ export class Pawn extends Piece implements PawnModel {
             return move.y === y;
         });
         return possibleMoves;
-    };
+    }
 
     promote(): void {
         const { x, y } = this.coordinates;

@@ -1,4 +1,5 @@
 import { Coordinates, Side, Name } from '../types';
+import { chessBoard } from '../board/board';
 
 import { Piece } from './piece';
 
@@ -20,7 +21,68 @@ export class Bishop extends Piece implements BishopModel {
     }
 
     findLegalMoves = (): Coordinates[] => {
+        const { x, y } = this.coordinates;
         const possibleMoves: Array<Coordinates> = [];
+        for (let i = 1; i <= 7; i++) {
+            if (x + i <= 7) {
+                const expectedX = x + i >= 0 && x + i < 8 ? x + i : undefined;
+                if (y + i <= 7) {
+                    const expectedY = y + i >= 0 && y + i < 8 ? y + i : undefined;
+                    if (typeof expectedX === 'number' && typeof expectedY === 'number') {
+                        const move = chessBoard.board[expectedX][expectedY].pieceOnSquare;
+                        if (move) {
+                            if (move.side !== this.side) possibleMoves.push({ x: expectedX, y: expectedY });
+                            break;
+                        } else possibleMoves.push({ x: expectedX, y: expectedY });
+                    }
+                }
+            }
+        }
+        for (let i = 1; i <= 7; i++) {
+            if (x + i <= 7) {
+                const expectedX = x + i >= 0 && x + i < 8 ? x + i : undefined;
+                if (y - i >= 0) {
+                    const expectedY = y - i >= 0 && y - i < 8 ? y - i : undefined;
+                    if (typeof expectedX === 'number' && typeof expectedY === 'number') {
+                        const move = chessBoard.board[expectedX][expectedY].pieceOnSquare;
+                        if (move) {
+                            if (move.side !== this.side) possibleMoves.push({ x: expectedX, y: expectedY });
+                            break;
+                        } else possibleMoves.push({ x: expectedX, y: expectedY });
+                    }
+                }
+            }
+        }
+        for (let i = 1; i <= 7; i++) {
+            if (x - i >= 0) {
+                const expectedX = x - i >= 0 && x - i < 8 ? x - i : undefined;
+                if (y + i <= 7) {
+                    const expectedY = y + i >= 0 && y + i < 8 ? y + i : undefined;
+                    if (typeof expectedX === 'number' && typeof expectedY === 'number') {
+                        const move = chessBoard.board[expectedX][expectedY].pieceOnSquare;
+                        if (move) {
+                            if (move.side !== this.side) possibleMoves.push({ x: expectedX, y: expectedY });
+                            break;
+                        } else possibleMoves.push({ x: expectedX, y: expectedY });
+                    }
+                }
+            }
+        }
+        for (let i = 1; i <= 7; i++) {
+            if (x - i >= 0) {
+                const expectedX = x - i >= 0 && x - i < 8 ? x - i : undefined;
+                if (y - i >= 0) {
+                    const expectedY = y - i >= 0 && y - i < 8 ? y - i : undefined;
+                    if (typeof expectedX === 'number' && typeof expectedY === 'number') {
+                        const move = chessBoard.board[expectedX][expectedY].pieceOnSquare;
+                        if (move) {
+                            if (move.side !== this.side) possibleMoves.push({ x: expectedX, y: expectedY });
+                            break;
+                        } else possibleMoves.push({ x: expectedX, y: expectedY });
+                    }
+                }
+            }
+        }
         return possibleMoves;
-    };
+    }
 }
