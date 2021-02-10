@@ -1,4 +1,4 @@
-import { Coordinates, Side, Name } from '../types';
+import { Coordinates, Side, Name, Timers } from '../types';
 import { Piece } from '../pieces/piece';
 import { chessBoard } from '../board/board';
 import { GameHistoryView } from '../../view/gameHistory';
@@ -6,10 +6,10 @@ import { GameHistoryView } from '../../view/gameHistory';
 export class Movement {
     piece: Piece;
     origin: Coordinates;
-    timers: Array<number>;
+    timers: Timers;
     notation: string;
 
-    constructor(piece: Piece, origin: Coordinates, destination: Coordinates, timers: Array<number>) {
+    constructor(piece: Piece, origin: Coordinates, destination: Coordinates, timers: Timers) {
         this.piece = piece;
         this.origin = origin;
         this.timers = timers;
