@@ -127,7 +127,6 @@ export class ChessBoard {
         this.unmarkLegalMoves();
         GameHistory.newMove(new Movement(piece, originCoords, coordinates, runTimer.timers));
         piece.move(coordinates);
-        console.log(GameHistory.getHistory(), GameHistory.whoseTurn());
         GameHistoryView.append(GameHistory.lastMove().notation);
     }
 }

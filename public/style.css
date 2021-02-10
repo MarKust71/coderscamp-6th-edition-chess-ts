@@ -133,17 +133,19 @@ html {
 }
 
 /* ======== ostylowanie promocja oraz start gry ======== */
-.startCover,
+.endGameCover,
+.startGameCover,
 .promoCover {
     width: calc(100vh + 15vw);
     height: 100vh;
     background: #fff;
     opacity: 0.4;
     position: fixed;
-    z-index: 5;
+    z-index: 10;
 }
 
 .startSetupBox,
+.endGameBox,
 .promotionWindow {
     width: 60vh;
     height: 30vh;
@@ -159,7 +161,7 @@ html {
     transform: translate(10px, 2px);
     padding: 1rem;
     margin-right: 1.2rem;
-    z-index: 1110;
+    z-index: 100;
 }
 
 .setupBoxTitle {
@@ -228,42 +230,17 @@ html {
 
 /* !* ================================== *! */
 
-.checkmate-box-wrapper {
-    display: none;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-}
-
-.checkmate-box {
-    display: flex;
-    flex-flow: column nowrap;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 500px;
-    height: 200px;
-    background: black;
-    color: white;
-    font-size: 25px;
-}
-
-.checkmate-box > p::first-letter {
+.endGameBox > p::first-letter {
     text-transform: capitalize;
 }
 
-.checkmate-box > p:first-of-type {
+.endGameBox > p:first-of-type {
     font-size: 1.5em;
     border: 0;
     margin: 0;
 }
 
-.checkmate-box > button {
+.endGameBox > button {
     margin-top: 1.5rem;
     font-size: 2rem;
 }

@@ -11,9 +11,9 @@ export const timer = (function () {
     const startSetupBox = document.createElement('div');
     startSetupBox.className = 'startSetupBox';
 
-    const startCover = document.createElement('div');
-    startCover.className = 'startCover';
-    wrapper.appendChild(startCover);
+    const startGameCover = document.createElement('div');
+    startGameCover.className = 'startGameCover';
+    wrapper.appendChild(startGameCover);
 
     const title = document.createTextNode('Chose start options:');
     const setupBoxTitle = document.createElement('div');
@@ -52,7 +52,7 @@ export const timer = (function () {
         updatePlayerTimer({ id: 'whitePlayerTimer', time: clockTimer });
         updatePlayerTimer({ id: 'blackPlayerTimer', time: clockTimer });
         wrapper.removeChild(startSetupBox);
-        wrapper.removeChild(startCover);
+        wrapper.removeChild(startGameCover);
         runTimer.runFirstTimer({ side: turn, clockTimer });
     });
     return {

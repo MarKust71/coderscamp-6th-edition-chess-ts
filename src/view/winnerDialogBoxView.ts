@@ -1,34 +1,38 @@
 import { GameHistory } from '../app/gameHistory/gameHistory';
 import { ChessBoard } from '../app/board/board';
+import { runTimer } from '../app/timers/runTimer';
 
 import { setup } from './setup';
 
 export const winnerDialogBox = () => {
-    const wrapper = document.createElement('div');
-    const dialogBox = document.createElement('div');
+    runTimer.clearAllIntervals();
+    const wrapper = document.getElementById('wrapper');
+
+    const endGameCover = document.createElement('div');
+    endGameCover.className = 'endGameCover';
+    wrapper.appendChild(endGameCover);
+
     const message = document.createElement('p');
     const newGameButton = document.createElement('button');
-
-    dialogBox.append(message);
-    dialogBox.append(newGameButton);
-    wrapper.append(dialogBox);
-
-    dialogBox.classList.add('checkmate-box');
-    newGameButton.classList.add('startGameButton');
-    wrapper.classList.add('checkmate-box-wrapper');
+    const dialogBox = document.createElement('div');
 
     message.textContent = `${GameHistory.getHistory()[GameHistory.getHistory().length - 1].piece.side} is a winner!`;
+    newGameButton.classList.add('startGameButton');
     newGameButton.textContent = 'New game';
-    newGameButton.addEventListener('click', newGame);
+    dialogBox.classList.add('endGameBox');
 
-    document.getElementById('wrapper').append(wrapper);
+    dialogBox.appendChild(message);
+    dialogBox.appendChild(newGameButton);
+    wrapper.appendChild(dialogBox);
+
+    newGameButton.addEventListener('click', newGame);
 
     function newGame() {
         const newBoard = document.createElement('div');
         const gameWrapper = document.getElementById('wrapper');
         newBoard.setAttribute('id', 'board');
         gameWrapper.innerHTML = '';
-        gameWrapper.append(newBoard);
+        gameWrapper.appendChild(newBoard);
 
         GameHistory.setHistory([]);
         ChessBoard.boardSetup();
