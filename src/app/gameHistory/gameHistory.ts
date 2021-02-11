@@ -100,7 +100,6 @@ export class GameHistory {
         // There is no official notation for stalemate as for any other draw.
         history[history.length - 1].notation += status;
         GameHistory.setHistory(history);
-        GameHistoryView.updateLast(history[history.length - 1].notation);
     }
 
     static setHistory(history: Array<Movement>): void {

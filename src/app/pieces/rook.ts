@@ -1,5 +1,6 @@
-import { Coordinates, Side, Name } from '../types';
 import { chessBoard } from '../board/board';
+import { GameHistory } from '../gameHistory/gameHistory';
+import { Coordinates, Name, Side } from '../types';
 
 import { Piece } from './piece';
 
@@ -22,10 +23,15 @@ export class Rook extends Piece implements RookModel {
     findLegalMoves = (): Coordinates[] => {
         const { x, y } = this.coordinates;
         const possibleMoves: Array<Coordinates> = [];
+
+        const sameSideKing = Piece.findKing(this.side);
+        const canMove = GameHistory.whoseTurn() === this.side;
+
         for (let i = 1; i <= 7; i++) {
             if (x + i <= 7) {
                 const expectedX = x + i >= 0 && x + i < 8 ? x + i : undefined;
                 if (typeof expectedX === 'number') {
+                    if (canMove && sameSideKing.moveEndangerKing(this, { x: expectedX, y: y })) continue;
                     const move = chessBoard.board[expectedX][y].pieceOnSquare;
                     if (move) {
                         if (move.side !== this.side) possibleMoves.push({ x: expectedX, y: y });
@@ -38,6 +44,7 @@ export class Rook extends Piece implements RookModel {
             if (x - i <= 7) {
                 const expectedX = x - i >= 0 && x - i < 8 ? x - i : undefined;
                 if (typeof expectedX === 'number') {
+                    if (canMove && sameSideKing.moveEndangerKing(this, { x: expectedX, y: y })) continue;
                     const move = chessBoard.board[expectedX][y].pieceOnSquare;
 
                     if (move) {
@@ -51,6 +58,7 @@ export class Rook extends Piece implements RookModel {
             if (y + i <= 7) {
                 const expectedY = y + i >= 0 && y + i < 8 ? y + i : undefined;
                 if (typeof expectedY === 'number') {
+                    if (canMove && sameSideKing.moveEndangerKing(this, { x: x, y: expectedY })) continue;
                     const piece = chessBoard.board[x][expectedY].pieceOnSquare;
                     if (piece) {
                         if (piece.side !== this.side) possibleMoves.push({ x: x, y: expectedY });
@@ -63,6 +71,7 @@ export class Rook extends Piece implements RookModel {
             if (y - i <= 7) {
                 const expectedY = y - i >= 0 && y - i < 8 ? y - i : undefined;
                 if (typeof expectedY === 'number') {
+                    if (canMove && sameSideKing.moveEndangerKing(this, { x: x, y: expectedY })) continue;
                     const piece = chessBoard.board[x][expectedY].pieceOnSquare;
                     if (piece) {
                         if (piece.side !== this.side) possibleMoves.push({ x: x, y: expectedY });

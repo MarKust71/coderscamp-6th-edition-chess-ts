@@ -1,16 +1,15 @@
+import { Coordinates, Side, Name } from '../types';
 import { chessBoard } from '../board/board';
 import { GameHistory } from '../gameHistory/gameHistory';
-import { Coordinates, Side, Name } from '../types';
 
 import { Piece } from './piece';
+import { Rook } from './rook';
 
 export class King extends Piece {
     constructor(coordinates: Coordinates = { x: -1, y: -1 }, side: Side) {
         super(coordinates, side);
         this.validateInput(coordinates, side);
-
         this.name = Name.KING;
-
         this.display = `<i class="fas fa-chess-king ${side}"></i>`; // fontawesome king
 
         if (coordinates.x === -1 || coordinates.y === -1) {
@@ -96,12 +95,12 @@ export class King extends Piece {
     }
 
     moveEndangerKing(piece: Piece, destination: Coordinates): boolean {
-        chessBoard.board[piece.coordinates.x][piece.coordinates.y] = undefined;
-        const pieceOnDestination = chessBoard.board[destination.x][destination.y];
+        chessBoard.board[piece.coordinates.x][piece.coordinates.y].pieceOnSquare = undefined;
+        const pieceOnDestination = chessBoard.board[destination.x][destination.y].pieceOnSquare;
         chessBoard.board[destination.x][destination.y].pieceOnSquare = piece;
         const willBeCheck = !this.isSafe(this.coordinates);
         chessBoard.board[piece.coordinates.x][piece.coordinates.y].pieceOnSquare = piece;
-        chessBoard.board[destination.x][destination.y] = pieceOnDestination;
+        chessBoard.board[destination.x][destination.y].pieceOnSquare = pieceOnDestination;
         return willBeCheck;
     }
 
@@ -138,11 +137,11 @@ export class King extends Piece {
 
         return possibleMoves;
 
-        function pathClear(piece: Piece, king: King) {
-            const direction = piece.coordinates.y < king.coordinates.y ? -1 : 1;
+        function pathClear(rook: Rook, king: King) {
+            const direction = rook.coordinates.y < king.coordinates.y ? -1 : 1;
             let y = king.coordinates.y + direction;
 
-            while (y !== piece.coordinates.y) {
+            while (y !== rook.coordinates.y) {
                 if (
                     chessBoard.board[king.coordinates.x][y].pieceOnSquare &&
                     king.isSafe({ x: king.coordinates.x, y: y })
@@ -154,7 +153,7 @@ export class King extends Piece {
             return true;
         }
 
-        function findRooks(king: King): Array<Piece> {
+        function findRooks(king: King): Array<Rook> {
             const rooks = [];
             for (const row of chessBoard.board) {
                 for (const square of row) {
@@ -181,7 +180,7 @@ export class King extends Piece {
         return false;
     }
 
-    castle(rook: Piece, rookNewY: number): void {
+    castle(rook: Rook, rookNewY: number): void {
         chessBoard.board[rook.coordinates.x][rook.coordinates.y] = null;
         document.getElementById(JSON.stringify(rook.coordinates)).innerHTML = '';
         rook.coordinates.x = this.coordinates.x;
