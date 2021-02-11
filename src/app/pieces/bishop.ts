@@ -48,7 +48,8 @@ export class Bishop extends Piece implements BishopModel {
         //                         possibleMoves.push({ x: expectedX, y: expectedY });
         //                 }
         //             } else {
-        //                 if (checkKingIsSafe(expectedX, expectedY)) possibleMoves.push({ x: expectedX, y: expectedY });
+        //                 if (checkKingIsSafe(expectedX, expectedY))
+        //                 possibleMoves.push({ x: expectedX, y: expectedY });
         //             }
         //         }
         //     }
