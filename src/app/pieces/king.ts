@@ -1,6 +1,6 @@
+import { Coordinates, Side, Name } from '../types';
 import { chessBoard } from '../board/board';
 import { GameHistory } from '../gameHistory/gameHistory';
-import { Coordinates, Side, Name } from '../types';
 
 import { Piece } from './piece';
 
@@ -8,9 +8,7 @@ export class King extends Piece {
     constructor(coordinates: Coordinates = { x: -1, y: -1 }, side: Side) {
         super(coordinates, side);
         this.validateInput(coordinates, side);
-
         this.name = Name.KING;
-
         this.display = `<i class="fas fa-chess-king ${side}"></i>`; // fontawesome king
 
         if (coordinates.x === -1 || coordinates.y === -1) {

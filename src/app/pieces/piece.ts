@@ -1,6 +1,9 @@
-import { Coordinates, Name, Side } from '../types';
 import { chessBoard } from '../board/board';
 import { runTimer } from '../timers/runTimer';
+import { Coordinates, Name, Side } from '../types';
+import { GameHistory } from '../gameHistory/gameHistory';
+
+import { King } from './king';
 
 interface PieceModel {
     coordinates: Coordinates;
@@ -43,6 +46,22 @@ export class Piece implements PieceModel {
         chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = this;
         chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare.promote();
 
+        const enemyKingCoordinates = this.findKing(this.side === Side.WHITE ? Side.BLACK : Side.WHITE);
+        const check = enemyKingCoordinates.underCheck();
+        const stall = !enemyKingCoordinates.hasAnyAvailableMove();
+        if (check || stall) GameHistory.gameStatus(check, stall);
+
         runTimer.setOpponentsTimer();
+    }
+
+    findKing(side: Side): King {
+        for (const row of chessBoard.board) {
+            for (const square of row) {
+                const piece = square.pieceOnSquare;
+                if (piece && piece.side === side && piece instanceof King) {
+                    return piece;
+                }
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 import { GameHistoryView } from '../../view/gameHistory';
+import { King } from '../pieces/king';
 import { Pawn } from '../pieces/pawn';
 import { Piece } from '../pieces/piece';
-import { King } from '../pieces/king';
 import { Coordinates, Side } from '../types';
 import { touched } from '../touched';
 import { GameHistory, Movement } from '../gameHistory/gameHistory';
