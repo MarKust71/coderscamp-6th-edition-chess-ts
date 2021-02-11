@@ -46,15 +46,15 @@ export class Piece implements PieceModel {
         chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = this;
         chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare.promote();
 
-        const enemyKingCoordinates = this.findKing(this.side === Side.WHITE ? Side.BLACK : Side.WHITE);
-        const check = enemyKingCoordinates.underCheck();
-        const stall = !enemyKingCoordinates.hasAnyAvailableMove();
+        const enemyKing = Piece.findKing(this.side === Side.WHITE ? Side.BLACK : Side.WHITE);
+        const check = enemyKing.underCheck();
+        const stall = !enemyKing.hasAnyAvailableMove();
         if (check || stall) GameHistory.gameStatus(check, stall);
 
         runTimer.setOpponentsTimer();
     }
 
-    findKing(side: Side): King {
+    static findKing(side: Side): King {
         for (const row of chessBoard.board) {
             for (const square of row) {
                 const piece = square.pieceOnSquare;

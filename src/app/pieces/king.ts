@@ -94,12 +94,12 @@ export class King extends Piece {
     }
 
     moveEndangerKing(piece: Piece, destination: Coordinates): boolean {
-        chessBoard.board[piece.coordinates.x][piece.coordinates.y] = undefined;
-        const pieceOnDestination = chessBoard.board[destination.x][destination.y];
+        chessBoard.board[piece.coordinates.x][piece.coordinates.y].pieceOnSquare = undefined;
+        const pieceOnDestination = chessBoard.board[destination.x][destination.y].pieceOnSquare;
         chessBoard.board[destination.x][destination.y].pieceOnSquare = piece;
         const willBeCheck = !this.isSafe(this.coordinates);
         chessBoard.board[piece.coordinates.x][piece.coordinates.y].pieceOnSquare = piece;
-        chessBoard.board[destination.x][destination.y] = pieceOnDestination;
+        chessBoard.board[destination.x][destination.y].pieceOnSquare = pieceOnDestination;
         return willBeCheck;
     }
 
