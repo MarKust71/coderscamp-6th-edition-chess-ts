@@ -11,6 +11,6 @@ export const touched = (event: MouseEvent): void => {
 
     if (!piece || piece.side !== GameHistory.whoseTurn()) return;
 
-    unmarkLegalMoves(chessBoard.board, this);
+    unmarkLegalMoves(chessBoard.board, touched);
     markLegalMoves(chessBoard.board[x][y].pieceOnSquare.findLegalMoves(), { x, y });
 };
