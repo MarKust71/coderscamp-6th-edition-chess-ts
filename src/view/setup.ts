@@ -1,6 +1,5 @@
 import { touched } from '../app/touched';
 import { chessBoard } from '../app/board/board';
-import { runTimer } from '../app/timers/runTimer';
 
 import { gameplaySidebar } from './gameplaySidebar';
 
@@ -18,7 +17,6 @@ export const setup = (): void => {
             document.getElementById('board').appendChild(square);
         }
     }
-    runTimer.clearAllIntervals();
     gameplaySidebar();
     localStorage.setItem('history', '[]');
 };

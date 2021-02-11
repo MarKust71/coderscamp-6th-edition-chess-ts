@@ -3,15 +3,22 @@ import { runTimer } from '../app/timers/runTimer';
 import { PLAYTIME } from '../app/types';
 
 import { updatePlayerTimer } from './gameplaySidebar';
+// import { renderStartSetupBox } from './startSetupBoxView';
 
 export const timer = (function () {
     let clockTimer = 300;
-    const turn = GameHistory.whoseTurn();
+    const startGameButton = document.createElement('input');
     const wrapper = document.getElementById('wrapper');
+    const startGameCover = document.createElement('div');
     const startSetupBox = document.createElement('div');
+    const turn = GameHistory.whoseTurn();
+
+    // const startSetupBoxView = () => {
+    // const wrapper = document.getElementById('wrapper');
+    // const startSetupBox = document.createElement('div');
     startSetupBox.className = 'startSetupBox';
 
-    const startGameCover = document.createElement('div');
+    // const startGameCover = document.createElement('div');
     startGameCover.className = 'startGameCover';
     wrapper.appendChild(startGameCover);
 
@@ -39,12 +46,13 @@ export const timer = (function () {
         playTimeSelect.appendChild(timeOption);
     }
 
-    const startGameButton = document.createElement('input');
+    // const startGameButton = document.createElement('input');
     startGameButton.setAttribute('type', 'submit');
     startGameButton.className = 'startGameButton';
     startGameButton.value = 'Start game';
     startSetupBox.appendChild(startGameButton);
     wrapper.appendChild(startSetupBox);
+    // };
 
     startGameButton.addEventListener('click', () => {
         const { value } = document.getElementById('playTimeSelect') as HTMLInputElement;
@@ -57,5 +65,8 @@ export const timer = (function () {
     });
     return {
         clockTimer,
+        startSetupBox,
+        startGameCover,
+        // startSetupBoxView,
     };
 })();

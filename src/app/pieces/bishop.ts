@@ -1,5 +1,6 @@
 import { Coordinates, Side, Name } from '../types';
 import { chessBoard } from '../board/board';
+import { GameHistory } from '../gameHistory/gameHistory';
 
 import { Piece } from './piece';
 
@@ -23,6 +24,12 @@ export class Bishop extends Piece implements BishopModel {
     findLegalMoves = (): Coordinates[] => {
         const { x, y } = this.coordinates;
         const possibleMoves: Array<Coordinates> = [];
+        const sameSideKing = Piece.findKing(this.side);
+        const canMove = GameHistory.whoseTurn() === this.side;
+
+        const checkKingIsSafe = (expectedX: number, expectedY: number) => {
+            return !(canMove && sameSideKing.moveEndangerKing(this, { x: expectedX, y: expectedY }));
+        };
         for (let i = 1; i <= 7; i++) {
             if (x + i <= 7) {
                 const expectedX = x + i >= 0 && x + i < 8 ? x + i : undefined;
@@ -31,9 +38,15 @@ export class Bishop extends Piece implements BishopModel {
                     if (typeof expectedX === 'number' && typeof expectedY === 'number') {
                         const move = chessBoard.board[expectedX][expectedY].pieceOnSquare;
                         if (move) {
-                            if (move.side !== this.side) possibleMoves.push({ x: expectedX, y: expectedY });
+                            if (move.side !== this.side) {
+                                if (checkKingIsSafe(expectedX, expectedY))
+                                    possibleMoves.push({ x: expectedX, y: expectedY });
+                            }
                             break;
-                        } else possibleMoves.push({ x: expectedX, y: expectedY });
+                        } else {
+                            if (checkKingIsSafe(expectedX, expectedY))
+                                possibleMoves.push({ x: expectedX, y: expectedY });
+                        }
                     }
                 }
             }
@@ -46,9 +59,15 @@ export class Bishop extends Piece implements BishopModel {
                     if (typeof expectedX === 'number' && typeof expectedY === 'number') {
                         const move = chessBoard.board[expectedX][expectedY].pieceOnSquare;
                         if (move) {
-                            if (move.side !== this.side) possibleMoves.push({ x: expectedX, y: expectedY });
+                            if (move.side !== this.side) {
+                                if (checkKingIsSafe(expectedX, expectedY))
+                                    possibleMoves.push({ x: expectedX, y: expectedY });
+                            }
                             break;
-                        } else possibleMoves.push({ x: expectedX, y: expectedY });
+                        } else {
+                            if (checkKingIsSafe(expectedX, expectedY))
+                                possibleMoves.push({ x: expectedX, y: expectedY });
+                        }
                     }
                 }
             }
@@ -61,9 +80,15 @@ export class Bishop extends Piece implements BishopModel {
                     if (typeof expectedX === 'number' && typeof expectedY === 'number') {
                         const move = chessBoard.board[expectedX][expectedY].pieceOnSquare;
                         if (move) {
-                            if (move.side !== this.side) possibleMoves.push({ x: expectedX, y: expectedY });
+                            if (move.side !== this.side) {
+                                if (checkKingIsSafe(expectedX, expectedY))
+                                    possibleMoves.push({ x: expectedX, y: expectedY });
+                            }
                             break;
-                        } else possibleMoves.push({ x: expectedX, y: expectedY });
+                        } else {
+                            if (checkKingIsSafe(expectedX, expectedY))
+                                possibleMoves.push({ x: expectedX, y: expectedY });
+                        }
                     }
                 }
             }
@@ -76,9 +101,15 @@ export class Bishop extends Piece implements BishopModel {
                     if (typeof expectedX === 'number' && typeof expectedY === 'number') {
                         const move = chessBoard.board[expectedX][expectedY].pieceOnSquare;
                         if (move) {
-                            if (move.side !== this.side) possibleMoves.push({ x: expectedX, y: expectedY });
+                            if (move.side !== this.side) {
+                                if (checkKingIsSafe(expectedX, expectedY))
+                                    possibleMoves.push({ x: expectedX, y: expectedY });
+                            }
                             break;
-                        } else possibleMoves.push({ x: expectedX, y: expectedY });
+                        } else {
+                            if (checkKingIsSafe(expectedX, expectedY))
+                                possibleMoves.push({ x: expectedX, y: expectedY });
+                        }
                     }
                 }
             }

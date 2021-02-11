@@ -1,5 +1,6 @@
 import { Coordinates, Side, Name } from '../types';
 import { chessBoard } from '../board/board';
+import { GameHistory } from '../gameHistory/gameHistory';
 
 import { Piece } from './piece';
 
@@ -31,16 +32,22 @@ export class Knight extends Piece implements KnightModel {
             [1, 2],
             [1, -2],
         ];
+        const sameSideKing = Piece.findKing(this.side);
+        const canMove = GameHistory.whoseTurn() === this.side;
+
+        const checkKingIsSafe = (expectedX: number, expectedY: number) => {
+            return !(canMove && sameSideKing.moveEndangerKing(this, { x: expectedX, y: expectedY }));
+        };
         movesRelatedToKnightsPosition.map((item) => {
             if (x + item[0] > -1 && x + item[0] < 8 && y + item[1] > -1 && y + item[1] < 8) {
                 const expectedX = x + item[0] >= 0 && x + item[0] < 8 ? x + item[0] : undefined;
                 const expectedY = y + item[1] >= 0 && y + item[1] < 8 ? y + item[1] : undefined;
                 if (chessBoard.board[x + item[0]][y + item[1]].pieceOnSquare) {
                     if (this.side !== chessBoard.board[x + item[0]][y + item[1]].pieceOnSquare.side) {
-                        possibleMoves.push({ x: expectedX, y: expectedY });
+                        if (checkKingIsSafe(expectedX, expectedY)) possibleMoves.push({ x: expectedX, y: expectedY });
                     }
                 } else {
-                    possibleMoves.push({ x: expectedX, y: expectedY });
+                    if (checkKingIsSafe(expectedX, expectedY)) possibleMoves.push({ x: expectedX, y: expectedY });
                 }
             }
         });
