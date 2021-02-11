@@ -3,6 +3,7 @@ import { chessBoard } from '../board/board';
 import { GameHistory } from '../gameHistory/gameHistory';
 
 import { Piece } from './piece';
+import { Rook } from './rook';
 
 export class King extends Piece {
     constructor(coordinates: Coordinates = { x: -1, y: -1 }, side: Side) {
@@ -136,7 +137,7 @@ export class King extends Piece {
 
         return possibleMoves;
 
-        function pathClear(rook: Piece, king: King) {
+        function pathClear(rook: Rook, king: King) {
             const direction = rook.coordinates.y < king.coordinates.y ? -1 : 1;
             let y = king.coordinates.y + direction;
 
@@ -152,7 +153,7 @@ export class King extends Piece {
             return true;
         }
 
-        function findRooks(king: King): Array<Piece> {
+        function findRooks(king: King): Array<Rook> {
             const rooks = [];
             for (const row of chessBoard.board) {
                 for (const square of row) {
@@ -179,7 +180,7 @@ export class King extends Piece {
         return false;
     }
 
-    castle(rook: Piece, rookNewY: number): void {
+    castle(rook: Rook, rookNewY: number): void {
         chessBoard.board[rook.coordinates.x][rook.coordinates.y] = null;
         document.getElementById(JSON.stringify(rook.coordinates)).innerHTML = '';
         rook.coordinates.x = this.coordinates.x;
