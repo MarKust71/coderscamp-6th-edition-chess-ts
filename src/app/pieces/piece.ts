@@ -1,6 +1,9 @@
-import { Coordinates, Name, Side } from '../types';
 import { chessBoard } from '../board/board';
 import { runTimer } from '../timers/runTimer';
+import { Coordinates, Name, Side } from '../types';
+import { GameHistory } from '../gameHistory/gameHistory';
+
+import { King } from './king';
 
 interface PieceModel {
     coordinates: Coordinates;
@@ -32,19 +35,33 @@ export class Piece implements PieceModel {
     }
 
     move(coordinates: Coordinates): void {
-        const newX = coordinates.x;
-        const newY = coordinates.y;
+        chessBoard.movePiece(this.coordinates, coordinates, this.display);
+        this.hasMoved = true;
 
         // clearing previous place
         chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = undefined;
-        document.getElementById(JSON.stringify({ x: this.coordinates.x, y: this.coordinates.y })).innerHTML = '';
 
         // setting new
-        this.coordinates.x = newX;
-        this.coordinates.y = newY;
+        this.coordinates = coordinates;
         chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = this;
         chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare.promote();
-        document.getElementById(JSON.stringify({ x: coordinates.x, y: coordinates.y })).innerHTML = this.display;
+
+        const enemyKing = Piece.findKing(this.side === Side.WHITE ? Side.BLACK : Side.WHITE);
+        const check = enemyKing.underCheck();
+        const stall = !enemyKing.hasAnyAvailableMove();
+        if (check || stall) GameHistory.gameStatus(check, stall);
+
         runTimer.setOpponentsTimer();
+    }
+
+    static findKing(side: Side): King {
+        for (const row of chessBoard.board) {
+            for (const square of row) {
+                const piece = square.pieceOnSquare;
+                if (piece && piece.side === side && piece instanceof King) {
+                    return piece;
+                }
+            }
+        }
     }
 }

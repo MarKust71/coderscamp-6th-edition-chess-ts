@@ -1,7 +1,7 @@
 import { GameHistoryView } from '../../view/gameHistory';
+import { King } from '../pieces/king';
 import { Pawn } from '../pieces/pawn';
 import { Piece } from '../pieces/piece';
-import { King } from '../pieces/king';
 import { Coordinates, Side } from '../types';
 import { touched } from '../touched';
 import { GameHistory, Movement } from '../gameHistory/gameHistory';
@@ -128,6 +128,11 @@ export class ChessBoard {
         GameHistory.newMove(new Movement(piece, originCoords, coordinates, runTimer.timers));
         piece.move(coordinates);
         GameHistoryView.append(GameHistory.lastMove().notation);
+    }
+
+    movePiece(origin: Coordinates, destination: Coordinates, display: string) {
+        document.getElementById(JSON.stringify(origin)).innerHTML = '';
+        document.getElementById(JSON.stringify(destination)).innerHTML = display;
     }
 }
 
