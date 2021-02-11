@@ -14,8 +14,6 @@ export const timer = (function () {
     const turn = GameHistory.whoseTurn();
 
     // const startSetupBoxView = () => {
-    // const wrapper = document.getElementById('wrapper');
-    // const startSetupBox = document.createElement('div');
     startSetupBox.className = 'startSetupBox';
     startSetupBox.id = 'startSetupBox';
 

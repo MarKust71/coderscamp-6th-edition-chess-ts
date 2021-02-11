@@ -54,9 +54,9 @@ export class Pawn extends Piece implements PawnModel {
         ];
 
         probablyMoves.map((move) => {
-            if (checkKingIsSafe(move.x, move.y)) {
-                possibleMoves.push(move);
-            }
+            // if (checkKingIsSafe(move.x, move.y)) {
+            possibleMoves.push(move);
+            // }
         });
 
         possibleMoves = possibleMoves.filter((move) => move.x >= 0 && move.x <= 7 && move.y >= 0 && move.y <= 7);
