@@ -1,5 +1,5 @@
 import { GameHistory } from '../app/gameHistory/gameHistory';
-import { ChessBoard } from '../app/board/board';
+import { chessBoard, ChessBoard } from '../app/board/board';
 import { runTimer } from '../app/timers/runTimer';
 
 import { setup } from './setup';
@@ -28,14 +28,10 @@ export const winnerDialogBox = () => {
     newGameButton.addEventListener('click', newGame);
 
     function newGame() {
-        const newBoard = document.createElement('div');
-        const gameWrapper = document.getElementById('wrapper');
-        newBoard.setAttribute('id', 'board');
-        gameWrapper.innerHTML = '';
-        gameWrapper.appendChild(newBoard);
-
+        wrapper.removeChild(endGameCover);
+        wrapper.removeChild(dialogBox);
+        ChessBoard.pieceSetup(chessBoard.board);
         GameHistory.setHistory([]);
-        ChessBoard.boardSetup();
         setup();
     }
 };

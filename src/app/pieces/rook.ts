@@ -23,9 +23,12 @@ export class Rook extends Piece implements RookModel {
     findLegalMoves = (): Coordinates[] => {
         const { x, y } = this.coordinates;
         const possibleMoves: Array<Coordinates> = [];
-
         const sameSideKing = Piece.findKing(this.side);
         const canMove = GameHistory.whoseTurn() === this.side;
+
+        const checkKingIsSafe = (expectedX: number, expectedY: number) => {
+            return !(canMove && sameSideKing.moveEndangerKing(this, { x: expectedX, y: expectedY }));
+        };
 
         for (let i = 1; i <= 7; i++) {
             if (x + i <= 7) {
@@ -34,9 +37,13 @@ export class Rook extends Piece implements RookModel {
                     if (canMove && sameSideKing.moveEndangerKing(this, { x: expectedX, y: y })) continue;
                     const move = chessBoard.board[expectedX][y].pieceOnSquare;
                     if (move) {
-                        if (move.side !== this.side) possibleMoves.push({ x: expectedX, y: y });
+                        if (move.side !== this.side) {
+                            if (checkKingIsSafe(expectedX, y)) possibleMoves.push({ x: expectedX, y: y });
+                        }
                         break;
-                    } else possibleMoves.push({ x: expectedX, y: y });
+                    } else {
+                        if (checkKingIsSafe(expectedX, y)) possibleMoves.push({ x: expectedX, y: y });
+                    }
                 }
             }
         }
@@ -48,9 +55,13 @@ export class Rook extends Piece implements RookModel {
                     const move = chessBoard.board[expectedX][y].pieceOnSquare;
 
                     if (move) {
-                        if (move.side !== this.side) possibleMoves.push({ x: expectedX, y: y });
+                        if (move.side !== this.side) {
+                            if (checkKingIsSafe(expectedX, y)) possibleMoves.push({ x: expectedX, y: y });
+                        }
                         break;
-                    } else possibleMoves.push({ x: expectedX, y: y });
+                    } else {
+                        if (checkKingIsSafe(expectedX, y)) possibleMoves.push({ x: expectedX, y: y });
+                    }
                 }
             }
         }
@@ -61,9 +72,13 @@ export class Rook extends Piece implements RookModel {
                     if (canMove && sameSideKing.moveEndangerKing(this, { x: x, y: expectedY })) continue;
                     const piece = chessBoard.board[x][expectedY].pieceOnSquare;
                     if (piece) {
-                        if (piece.side !== this.side) possibleMoves.push({ x: x, y: expectedY });
+                        if (piece.side !== this.side) {
+                            if (checkKingIsSafe(x, expectedY)) possibleMoves.push({ x: x, y: expectedY });
+                        }
                         break;
-                    } else possibleMoves.push({ x: x, y: expectedY });
+                    } else {
+                        if (checkKingIsSafe(x, expectedY)) possibleMoves.push({ x: x, y: expectedY });
+                    }
                 }
             }
         }
@@ -74,9 +89,13 @@ export class Rook extends Piece implements RookModel {
                     if (canMove && sameSideKing.moveEndangerKing(this, { x: x, y: expectedY })) continue;
                     const piece = chessBoard.board[x][expectedY].pieceOnSquare;
                     if (piece) {
-                        if (piece.side !== this.side) possibleMoves.push({ x: x, y: expectedY });
+                        if (piece.side !== this.side) {
+                            if (checkKingIsSafe(x, expectedY)) possibleMoves.push({ x: x, y: expectedY });
+                        }
                         break;
-                    } else possibleMoves.push({ x: x, y: expectedY });
+                    } else {
+                        if (checkKingIsSafe(x, expectedY)) possibleMoves.push({ x: x, y: expectedY });
+                    }
                 }
             }
         }
