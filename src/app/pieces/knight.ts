@@ -1,6 +1,5 @@
 import { Coordinates, Side, Name } from '../types';
 import { chessBoard } from '../board/board';
-import { GameHistory } from '../gameHistory/gameHistory';
 
 import { Piece } from './piece';
 
@@ -9,6 +8,7 @@ interface KnightModel {
     display: string;
     findLegalMoves(): Array<Coordinates>;
     // move: (coordinates: Coordinates) => void;
+    checkKingIsSafe(expectedX: number, expectedY: number): boolean;
 }
 export class Knight extends Piece implements KnightModel {
     name: Name;
@@ -22,7 +22,7 @@ export class Knight extends Piece implements KnightModel {
     findLegalMoves = (): Coordinates[] => {
         const { x, y } = this.coordinates;
         const possibleMoves: Array<Coordinates> = [];
-        const movesRelatedToKnightsPosition = [
+        const movesRelatedToKnightsPosition: Array<Array<number>> = [
             [-2, -1],
             [-2, 1],
             [2, 1],
@@ -32,22 +32,18 @@ export class Knight extends Piece implements KnightModel {
             [1, 2],
             [1, -2],
         ];
-        const sameSideKing = Piece.findKing(this.side);
-        const canMove = GameHistory.whoseTurn() === this.side;
 
-        const checkKingIsSafe = (expectedX: number, expectedY: number) => {
-            return !(canMove && sameSideKing.moveEndangerKing(this, { x: expectedX, y: expectedY }));
-        };
         movesRelatedToKnightsPosition.map((item) => {
             if (x + item[0] > -1 && x + item[0] < 8 && y + item[1] > -1 && y + item[1] < 8) {
                 const expectedX = x + item[0] >= 0 && x + item[0] < 8 ? x + item[0] : undefined;
                 const expectedY = y + item[1] >= 0 && y + item[1] < 8 ? y + item[1] : undefined;
                 if (chessBoard.board[x + item[0]][y + item[1]].pieceOnSquare) {
                     if (this.side !== chessBoard.board[x + item[0]][y + item[1]].pieceOnSquare.side) {
-                        if (checkKingIsSafe(expectedX, expectedY)) possibleMoves.push({ x: expectedX, y: expectedY });
+                        if (this.checkKingIsSafe(expectedX, expectedY))
+                            possibleMoves.push({ x: expectedX, y: expectedY });
                     }
                 } else {
-                    if (checkKingIsSafe(expectedX, expectedY)) possibleMoves.push({ x: expectedX, y: expectedY });
+                    if (this.checkKingIsSafe(expectedX, expectedY)) possibleMoves.push({ x: expectedX, y: expectedY });
                 }
             }
         });

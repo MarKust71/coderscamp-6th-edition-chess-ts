@@ -40,7 +40,7 @@ export class King extends Piece {
                         if (piece.side !== this.side && isDestinationSafe)
                             possibleMoves.push({ x: expectedX, y: expectedY });
                     } else if (isDestinationSafe) possibleMoves.push({ x: expectedX, y: expectedY });
-                } else continue;
+                }
             }
         }
 

@@ -33,28 +33,29 @@ export class Pawn extends Piece implements PawnModel {
         const { x, y } = this.coordinates;
         const v = this.direction;
         let possibleMoves: Array<Coordinates> = [];
-        const sameSideKing = Piece.findKing(this.side);
-        const canMove = GameHistory.whoseTurn() === this.side;
-
-        const checkKingIsSafe = (expectedX: number, expectedY: number) => {
-            return !(canMove && sameSideKing.moveEndangerKing(this, { x: expectedX, y: expectedY }));
-        };
 
         if (x === (this.side === Side.WHITE ? 6 : 1)) {
             if (!chessBoard.board[x + v][y].pieceOnSquare && !chessBoard.board[x + v * 2][y].pieceOnSquare) {
-                if (checkKingIsSafe(x + v * 2, y)) {
-                    possibleMoves.push({ x: x + v * 2, y: y });
+                if (this.checkKingIsSafe(x + v * 2, y)) {
+                    possibleMoves.push({ x: x + v * 2, y: y }, { x: x + v, y: y });
                 }
             }
         }
+        // else if (this.checkKingIsSafe(x + v, y)) {
+        //     possibleMoves.push({ x: x + v, y: y });
+        // } else if (this.checkKingIsSafe(x + v, y + 1)) {
+        //     possibleMoves.push({ x: x + v, y: y + 1 });
+        // } else if (this.checkKingIsSafe(x + v, y - 1)) {
+        //     possibleMoves.push({ x: x + v, y: y - 1 });
+        // }
+
         const probablyMoves = [
             { x: x + v, y: y },
             { x: x + v, y: y + 1 },
             { x: x + v, y: y - 1 },
         ];
-
         probablyMoves.map((move) => {
-            // if (checkKingIsSafe(move.x, move.y)) {
+            // if (this.checkKingIsSafe(move.x, move.y)) {
             possibleMoves.push(move);
             // }
         });
@@ -80,7 +81,6 @@ export class Pawn extends Piece implements PawnModel {
 
     promote(): void {
         const { x, y } = this.coordinates;
-
         const { side } = this;
         const wrapper = document.getElementById('wrapper');
         const promotionWindow = document.createElement('div');

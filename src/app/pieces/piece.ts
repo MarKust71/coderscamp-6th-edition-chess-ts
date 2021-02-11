@@ -12,6 +12,7 @@ interface PieceModel {
     move: (coordinates: Coordinates) => void;
     findLegalMoves(): void;
     promote?(): void;
+    checkKingIsSafe(expectedX: number, expectedY: number): boolean;
 }
 export class Piece implements PieceModel {
     coordinates: Coordinates;
@@ -64,4 +65,9 @@ export class Piece implements PieceModel {
             }
         }
     }
+    checkKingIsSafe = (expectedX: number, expectedY: number) => {
+        const sameSideKing = Piece.findKing(this.side);
+        const canMove = GameHistory.whoseTurn() === this.side;
+        return !(canMove && sameSideKing.moveEndangerKing(this, { x: expectedX, y: expectedY }));
+    };
 }
