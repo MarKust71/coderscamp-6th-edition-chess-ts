@@ -25,7 +25,7 @@ export const runTimer = (function () {
             intervalId = setInterval(() => {
                 runTimerClockTimerWhite--;
                 updatePlayerTimer({ id: 'whitePlayerTimer', time: runTimerClockTimerWhite });
-                if (runTimerClockTimerWhite < 0) {
+                if (runTimerClockTimerWhite <= 0) {
                     console.log('jestem');
                     winnerDialogBox();
                 }
@@ -34,7 +34,7 @@ export const runTimer = (function () {
             intervalId = setInterval(() => {
                 runTimerClockTimerBlack--;
                 updatePlayerTimer({ id: 'blackPlayerTimer', time: runTimerClockTimerBlack });
-                if (runTimerClockTimerBlack < 0) {
+                if (runTimerClockTimerBlack <= 0) {
                     winnerDialogBox();
                 }
             }, 1000);
