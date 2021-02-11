@@ -3,16 +3,23 @@ import { runTimer } from '../app/timers/runTimer';
 import { PLAYTIME } from '../app/types';
 
 import { updatePlayerTimer } from './gameplaySidebar';
+// import { renderStartSetupBox } from './startSetupBoxView';
 
 export const timer = (function () {
     let clockTimer = 300;
-    const turn = GameHistory.whoseTurn();
+    const startGameButton = document.createElement('input');
     const wrapper = document.getElementById('wrapper');
-    const startSetupBox = document.createElement('div');
-    startSetupBox.className = 'startSetupBox';
-
     const startGameCover = document.createElement('div');
+    const startSetupBox = document.createElement('div');
+    const turn = GameHistory.whoseTurn();
+
+    // const startSetupBoxView = () => {
+    startSetupBox.className = 'startSetupBox';
+    startSetupBox.id = 'startSetupBox';
+
+    // const startGameCover = document.createElement('div');
     startGameCover.className = 'startGameCover';
+    startGameCover.id = 'startGameCover';
     wrapper.appendChild(startGameCover);
 
     const title = document.createTextNode('Chose start options:');
@@ -39,23 +46,26 @@ export const timer = (function () {
         playTimeSelect.appendChild(timeOption);
     }
 
-    const startGameButton = document.createElement('input');
     startGameButton.setAttribute('type', 'submit');
     startGameButton.className = 'startGameButton';
     startGameButton.value = 'Start game';
     startSetupBox.appendChild(startGameButton);
     wrapper.appendChild(startSetupBox);
+    // };
 
     startGameButton.addEventListener('click', () => {
         const { value } = document.getElementById('playTimeSelect') as HTMLInputElement;
         clockTimer = parseInt(value) * 60;
         updatePlayerTimer({ id: 'whitePlayerTimer', time: clockTimer });
         updatePlayerTimer({ id: 'blackPlayerTimer', time: clockTimer });
-        wrapper.removeChild(startSetupBox);
-        wrapper.removeChild(startGameCover);
+        wrapper.removeChild(document.getElementById('startSetupBox'));
+        wrapper.removeChild(document.getElementById('startGameCover'));
         runTimer.runFirstTimer({ side: turn, clockTimer });
     });
     return {
         clockTimer,
+        startSetupBox,
+        startGameCover,
+        // startSetupBoxView,
     };
 })();

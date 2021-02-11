@@ -67,6 +67,11 @@ export class ChessBoard {
     }
 
     static pieceSetup(board: Array<Array<Square>>): Array<Array<Square>> {
+        for (let row = 0; row <= 7; row++) {
+            for (let column = 0; column <= 7; column++) {
+                board[row][column].pieceOnSquare = undefined;
+            }
+        }
         board[7][0].pieceOnSquare = new Rook({ x: 7, y: 0 }, Side.WHITE);
         board[7][1].pieceOnSquare = new Bishop({ x: 7, y: 1 }, Side.WHITE);
         board[7][2].pieceOnSquare = new Knight({ x: 7, y: 2 }, Side.WHITE);

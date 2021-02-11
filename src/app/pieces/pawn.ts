@@ -31,15 +31,34 @@ export class Pawn extends Piece implements PawnModel {
 
     findLegalMoves = (): Coordinates[] => {
         const { x, y } = this.coordinates;
-
         const v = this.direction;
         let possibleMoves: Array<Coordinates> = [];
+        const sameSideKing = Piece.findKing(this.side);
+        const canMove = GameHistory.whoseTurn() === this.side;
+
+        const checkKingIsSafe = (expectedX: number, expectedY: number) => {
+            return !(canMove && sameSideKing.moveEndangerKing(this, { x: expectedX, y: expectedY }));
+        };
+
         if (x === (this.side === Side.WHITE ? 6 : 1)) {
             if (!chessBoard.board[x + v][y].pieceOnSquare && !chessBoard.board[x + v * 2][y].pieceOnSquare) {
-                possibleMoves.push({ x: x + v * 2, y: y });
+                if (checkKingIsSafe(x + v * 2, y)) {
+                    possibleMoves.push({ x: x + v * 2, y: y });
+                }
             }
         }
-        possibleMoves.push({ x: x + v, y: y }, { x: x + v, y: y + 1 }, { x: x + v, y: y - 1 });
+        const probablyMoves = [
+            { x: x + v, y: y },
+            { x: x + v, y: y + 1 },
+            { x: x + v, y: y - 1 },
+        ];
+
+        probablyMoves.map((move) => {
+            // if (checkKingIsSafe(move.x, move.y)) {
+            possibleMoves.push(move);
+            // }
+        });
+
         possibleMoves = possibleMoves.filter((move) => move.x >= 0 && move.x <= 7 && move.y >= 0 && move.y <= 7);
         possibleMoves = possibleMoves.filter((move) => {
             const piece = chessBoard.board[move.x][move.y].pieceOnSquare;
