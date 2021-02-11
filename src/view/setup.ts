@@ -3,21 +3,11 @@ import { chessBoard } from '../app/board/board';
 import { runTimer } from '../app/timers/runTimer';
 
 import { gameplaySidebar } from './gameplaySidebar';
+import { paintBoard, paintPieces } from './boardView';
 
 export const setup = (): void => {
-    for (let row = 0; row < chessBoard.board.length; row++) {
-        for (let column = 0; column < chessBoard.board[row].length; column++) {
-            const square = document.createElement('div');
-            square.id = JSON.stringify({ x: row, y: column });
-            square.innerHTML = chessBoard.board[row][column].pieceOnSquare
-                ? chessBoard.board[row][column].pieceOnSquare.display
-                : '';
-            square.className = 'square';
-            square.className += row % 2 === column % 2 ? ' light' : ' dark';
-            square.addEventListener('click', touched);
-            document.getElementById('board').appendChild(square);
-        }
-    }
+    paintBoard(touched);
+    paintPieces(chessBoard.board);
     runTimer.clearAllIntervals();
     gameplaySidebar();
     localStorage.setItem('history', '[]');
