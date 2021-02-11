@@ -32,19 +32,17 @@ export class Piece implements PieceModel {
     }
 
     move(coordinates: Coordinates): void {
-        const newX = coordinates.x;
-        const newY = coordinates.y;
+        chessBoard.movePiece(this.coordinates, coordinates, this.display);
+        this.hasMoved = true;
 
         // clearing previous place
         chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = undefined;
-        document.getElementById(JSON.stringify({ x: this.coordinates.x, y: this.coordinates.y })).innerHTML = '';
 
         // setting new
-        this.coordinates.x = newX;
-        this.coordinates.y = newY;
+        this.coordinates = coordinates;
         chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = this;
         chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare.promote();
-        document.getElementById(JSON.stringify({ x: coordinates.x, y: coordinates.y })).innerHTML = this.display;
+
         runTimer.setOpponentsTimer();
     }
 }

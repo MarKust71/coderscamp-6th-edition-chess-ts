@@ -26,7 +26,6 @@ export const runTimer = (function () {
                 runTimerClockTimerWhite--;
                 updatePlayerTimer({ id: 'whitePlayerTimer', time: runTimerClockTimerWhite });
                 if (runTimerClockTimerWhite < 0) {
-                    console.log('jestem');
                     winnerDialogBox();
                 }
             }, 1000);

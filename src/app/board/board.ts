@@ -129,6 +129,11 @@ export class ChessBoard {
         piece.move(coordinates);
         GameHistoryView.append(GameHistory.lastMove().notation);
     }
+
+    movePiece(origin: Coordinates, destination: Coordinates, display: string) {
+        document.getElementById(JSON.stringify(origin)).innerHTML = '';
+        document.getElementById(JSON.stringify(destination)).innerHTML = display;
+    }
 }
 
 export const chessBoard = new ChessBoard();

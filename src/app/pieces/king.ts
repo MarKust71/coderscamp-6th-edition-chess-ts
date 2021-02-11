@@ -138,11 +138,11 @@ export class King extends Piece {
 
         return possibleMoves;
 
-        function pathClear(piece: Piece, king: King) {
-            const direction = piece.coordinates.y < king.coordinates.y ? -1 : 1;
+        function pathClear(rook: Piece, king: King) {
+            const direction = rook.coordinates.y < king.coordinates.y ? -1 : 1;
             let y = king.coordinates.y + direction;
 
-            while (y !== piece.coordinates.y) {
+            while (y !== rook.coordinates.y) {
                 if (
                     chessBoard.board[king.coordinates.x][y].pieceOnSquare &&
                     king.isSafe({ x: king.coordinates.x, y: y })
