@@ -17,9 +17,11 @@ export const timer = (function () {
     // const wrapper = document.getElementById('wrapper');
     // const startSetupBox = document.createElement('div');
     startSetupBox.className = 'startSetupBox';
+    startSetupBox.id = 'startSetupBox';
 
     // const startGameCover = document.createElement('div');
     startGameCover.className = 'startGameCover';
+    startGameCover.id = 'startGameCover';
     wrapper.appendChild(startGameCover);
 
     const title = document.createTextNode('Chose start options:');
@@ -46,7 +48,6 @@ export const timer = (function () {
         playTimeSelect.appendChild(timeOption);
     }
 
-    // const startGameButton = document.createElement('input');
     startGameButton.setAttribute('type', 'submit');
     startGameButton.className = 'startGameButton';
     startGameButton.value = 'Start game';
@@ -59,8 +60,8 @@ export const timer = (function () {
         clockTimer = parseInt(value) * 60;
         updatePlayerTimer({ id: 'whitePlayerTimer', time: clockTimer });
         updatePlayerTimer({ id: 'blackPlayerTimer', time: clockTimer });
-        wrapper.removeChild(startSetupBox);
-        wrapper.removeChild(startGameCover);
+        wrapper.removeChild(document.getElementById('startSetupBox'));
+        wrapper.removeChild(document.getElementById('startGameCover'));
         runTimer.runFirstTimer({ side: turn, clockTimer });
     });
     return {

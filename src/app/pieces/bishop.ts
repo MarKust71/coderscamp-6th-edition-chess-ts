@@ -8,7 +8,7 @@ interface BishopModel {
     name: string;
     display: string;
     findLegalMoves(): Array<Coordinates>;
-    move: (coordinates: Coordinates) => void;
+    // move: (coordinates: Coordinates) => void;
 }
 
 export class Bishop extends Piece implements BishopModel {
@@ -22,6 +22,12 @@ export class Bishop extends Piece implements BishopModel {
     }
 
     findLegalMoves = (): Coordinates[] => {
+        // const movesRelatedToKnightsPosition = [
+        //     [-1, -1],
+        //     [-1, 1],
+        //     [1, 1],
+        //     [1, -1],
+        // ];
         const { x, y } = this.coordinates;
         const possibleMoves: Array<Coordinates> = [];
         const sameSideKing = Piece.findKing(this.side);
@@ -30,6 +36,24 @@ export class Bishop extends Piece implements BishopModel {
         const checkKingIsSafe = (expectedX: number, expectedY: number) => {
             return !(canMove && sameSideKing.moveEndangerKing(this, { x: expectedX, y: expectedY }));
         };
+
+        // movesRelatedToKnightsPosition.map((item) => {
+        //     for (let i = 1; i < 8; i++) {
+        //         if (x + item[0] > -1 && x + item[0] < 8 && y + item[1] > -1 && y + item[1] < 8) {
+        //             const expectedX = x + item[0] >= 0 && x + item[0] < 8 ? x + item[0] : undefined;
+        //             const expectedY = y + item[1] >= 0 && y + item[1] < 8 ? y + item[1] : undefined;
+        //             if (chessBoard.board[x + item[0]][y + item[1]].pieceOnSquare) {
+        //                 if (this.side !== chessBoard.board[x + item[0]][y + item[1]].pieceOnSquare.side) {
+        //                     if (checkKingIsSafe(expectedX, expectedY))
+        //                         possibleMoves.push({ x: expectedX, y: expectedY });
+        //                 }
+        //             } else {
+        //                 if (checkKingIsSafe(expectedX, expectedY)) possibleMoves.push({ x: expectedX, y: expectedY });
+        //             }
+        //         }
+        //     }
+        // });
+
         for (let i = 1; i <= 7; i++) {
             if (x + i <= 7) {
                 const expectedX = x + i >= 0 && x + i < 8 ? x + i : undefined;

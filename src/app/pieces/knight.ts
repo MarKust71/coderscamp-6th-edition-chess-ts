@@ -8,7 +8,7 @@ interface KnightModel {
     name: string;
     display: string;
     findLegalMoves(): Array<Coordinates>;
-    move: (coordinates: Coordinates) => void;
+    // move: (coordinates: Coordinates) => void;
 }
 export class Knight extends Piece implements KnightModel {
     name: Name;
