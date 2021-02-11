@@ -36,6 +36,11 @@ export class Piece implements PieceModel {
     }
 
     move(coordinates: Coordinates): void {
+        // castle
+        if (this instanceof King && Math.abs(this.coordinates.y - coordinates.y) == 2) {
+            this.castle(coordinates);
+        }
+
         this.hasMoved = true;
         movePiece(this.coordinates, coordinates, this.display);
         chessBoard.movePiece(this.coordinates, coordinates, this);

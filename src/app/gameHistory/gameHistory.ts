@@ -107,7 +107,11 @@ export class GameHistory {
     }
 
     static whoseTurn(): Side {
-        return GameHistory.getHistory().length % 2 === 0 ? Side.WHITE : Side.BLACK;
+        const history = GameHistory.getHistory();
+
+        if (history) {
+            return history.length % 2 === 0 ? Side.WHITE : Side.BLACK;
+        } else return Side.WHITE;
     }
 
     static newMove(move: Movement): void {
