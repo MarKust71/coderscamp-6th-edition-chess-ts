@@ -5,7 +5,16 @@ import { GameHistory } from '../gameHistory/gameHistory';
 import { movePiece } from '../../view/boardView';
 
 import { King } from './king';
-import { PieceModel } from './types';
+
+interface PieceModel {
+    coordinates: Coordinates;
+    side: Side;
+    name: Name;
+    move: (coordinates: Coordinates) => void;
+    findLegalMoves(): Coordinates[];
+    promote?(): void;
+    checkKingIsSafe(expectedCoordinates: Coordinates): boolean;
+}
 
 export class Piece implements PieceModel {
     coordinates: Coordinates;

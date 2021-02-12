@@ -8,7 +8,7 @@ interface BishopModel {
     display: string;
     findLegalMoves(): Array<Coordinates>;
     // move: (coordinates: Coordinates) => void;
-    checkKingIsSafe(expectedCoordiates: Coordinates): boolean;
+    checkKingIsSafe(expectedCoordinates: Coordinates): boolean;
 }
 
 export class Bishop extends Piece implements BishopModel {

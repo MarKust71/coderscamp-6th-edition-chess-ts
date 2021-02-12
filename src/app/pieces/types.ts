@@ -1,20 +1,10 @@
-import { Coordinates, Name, Side } from '../types';
-
-export interface PieceModel {
-    coordinates: Coordinates;
-    side: Side;
-    name: Name;
-    move: (coordinates: Coordinates) => void;
-    findLegalMoves(): void;
-    promote?(): void;
-    checkKingIsSafe(expectedCoordiates: Coordinates): boolean;
-}
+import { Coordinates, Side } from '../types';
 
 export type getMovesRelatedToPiecePositionParams = {
     origin: Coordinates;
     side: Side;
     moves: Coordinates[];
-    checkKingIsSafe(expectedCoordiates: Coordinates): boolean;
+    checkKingIsSafe(expectedCoordinates: Coordinates): boolean;
 };
 
 export type CheckKingIsSafeParams = Coordinates;
