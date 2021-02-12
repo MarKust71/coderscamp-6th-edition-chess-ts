@@ -28,7 +28,7 @@ export const runTimer = (function () {
                 if (runTimerClockTimerWhite === 0) {
                     winnerDialogBox();
                 }
-            }, 1000);
+            }, 100);
         } else {
             intervalId = setInterval(() => {
                 runTimerClockTimerBlack--;
@@ -36,7 +36,7 @@ export const runTimer = (function () {
                 if (runTimerClockTimerBlack === 0) {
                     winnerDialogBox();
                 }
-            }, 1000);
+            }, 100);
         }
     };
 

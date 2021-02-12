@@ -8,8 +8,7 @@ export type UpdatePlayerTimerParams = {
     id: string;
     time: number;
 };
-
-setupTimerTime(timer.clockTimer);
+setupTimerTime(timer().clockTimer);
 
 export const gameplaySidebar = (): void => {
     const wrapper = document.getElementById('wrapper');
@@ -22,8 +21,8 @@ export const gameplaySidebar = (): void => {
     gameplaySidebar.appendChild(GameHistoryView.create());
     gameplaySidebar.appendChild(timerView({ id: 'whitePlayerTimer' }));
 
-    updatePlayerTimer({ id: 'blackPlayerTimer', time: timer.clockTimer });
-    updatePlayerTimer({ id: 'whitePlayerTimer', time: timer.clockTimer });
+    // updatePlayerTimer({ id: 'blackPlayerTimer', time: timer().clockTimer });
+    // updatePlayerTimer({ id: 'whitePlayerTimer', time: timer().clockTimer });
 };
 
 export const updatePlayerTimer = ({ id, time }: UpdatePlayerTimerParams): void => {

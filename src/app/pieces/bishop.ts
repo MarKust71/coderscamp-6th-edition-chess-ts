@@ -22,7 +22,7 @@ export class Bishop extends Piece implements BishopModel {
     }
 
     findLegalMoves = (): Coordinates[] => {
-        const movesRelatedToKnightsPosition: Array<Array<number>> = [
+        const movesRelatedToPiecePosition: Array<Array<number>> = [
             [-1, -1],
             [-1, 1],
             [1, 1],
@@ -31,7 +31,7 @@ export class Bishop extends Piece implements BishopModel {
         const { x, y } = this.coordinates;
         const possibleMoves: Array<Coordinates> = [];
 
-        movesRelatedToKnightsPosition.map((item) => {
+        movesRelatedToPiecePosition.map((item) => {
             for (let i = 1; i <= 7; i++) {
                 if (x + item[0] * i > -1 && x + item[0] * i < 8 && y + item[1] * i > -1 && y + item[1] * i < 8) {
                     const expectedX = x + item[0] * i >= 0 && x + item[0] * i < 8 ? x + item[0] * i : undefined;

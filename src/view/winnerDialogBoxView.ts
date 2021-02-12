@@ -3,6 +3,7 @@ import { chessBoard, ChessBoard } from '../app/board/board';
 import { runTimer } from '../app/timers/runTimer';
 
 import { setup } from './setup';
+import { timer } from './startSetupBox';
 
 export const winnerDialogBox = () => {
     runTimer.clearAllIntervals();
@@ -32,6 +33,7 @@ export const winnerDialogBox = () => {
         wrapper.removeChild(dialogBox);
         ChessBoard.pieceSetup(chessBoard.board);
         GameHistory.setHistory([]);
+        timer();
         setup();
     }
 };
