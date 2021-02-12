@@ -13,7 +13,16 @@ export const movesRelated: MovesRelatedToPiecePosition = {
     KING: [],
     PAWN: [],
     QUEEN: [],
-    KNIGHT: [],
+    KNIGHT: [
+        { x: -2, y: -1 },
+        { x: -2, y: 1 },
+        { x: 2, y: 1 },
+        { x: 2, y: -1 },
+        { x: -1, y: -2 },
+        { x: -1, y: 2 },
+        { x: 1, y: 2 },
+        { x: 1, y: -2 },
+    ],
 };
 
 export const INTERVAL_MS = 100;
