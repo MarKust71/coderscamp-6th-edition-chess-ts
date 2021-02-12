@@ -13,5 +13,8 @@ export const touched = ({ currentTarget }: MouseEvent): void => {
     if (!piece || piece.side !== GameHistory.whoseTurn()) return;
 
     unmarkLegalMoves(chessBoard.board, touched);
-    markLegalMoves(chessBoard.board[x][y].pieceOnSquare.findLegalMoves(), { x, y });
+    markLegalMoves({
+        coordinates: chessBoard.board[x][y].pieceOnSquare.findLegalMoves(),
+        originCoords: { x, y },
+    });
 };

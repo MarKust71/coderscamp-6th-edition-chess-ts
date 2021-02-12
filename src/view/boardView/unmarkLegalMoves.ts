@@ -1,6 +1,6 @@
-import { Square } from '../../app/square/square';
+import { Board } from '../../app/types';
 
-export function unmarkLegalMoves(board: Array<Array<Square>>, touchedListener: (event: MouseEvent) => void) {
+export function unmarkLegalMoves(board: Board, touchedListener: (event: MouseEvent) => void) {
     for (const row of board) {
         for (const square of row) {
             const originalElement = document.getElementById(

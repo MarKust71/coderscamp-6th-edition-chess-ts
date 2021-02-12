@@ -1,6 +1,6 @@
-import { Square } from '../../app/square/square';
+import { Board } from '../../app/types';
 
-export function paintPieces(board: Array<Array<Square>>): void {
+export function paintPieces(board: Board) {
     for (const row of board) {
         for (const square of row) {
             const squareElement = document.getElementById(

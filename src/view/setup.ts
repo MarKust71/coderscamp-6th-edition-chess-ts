@@ -13,7 +13,7 @@ export const setup = (): void => {
     board.id = 'board';
     wrapper.appendChild(board);
 
-    paintBoard(touched);
+    paintBoard(touched, chessBoard);
     paintPieces(chessBoard.board);
     gameplaySidebar();
     localStorage.setItem('history', '[]');

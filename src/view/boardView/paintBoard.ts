@@ -1,6 +1,6 @@
-import { chessBoard } from '../../app/board/chessBoard';
+import { ChessBoard } from '../../app/board/chessBoard';
 
-export function paintBoard(touchedListener: (event: MouseEvent) => void) {
+export function paintBoard(touchedListener: (event: MouseEvent) => void, chessBoard: ChessBoard) {
     for (let row = 0; row < chessBoard.board.length; row++) {
         for (let column = 0; column < chessBoard.board[row].length; column++) {
             const square = document.createElement('div');
