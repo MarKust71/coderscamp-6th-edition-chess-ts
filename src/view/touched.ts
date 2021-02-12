@@ -1,7 +1,8 @@
 import { chessBoard } from '../app/board/chessBoard';
 import { GameHistory } from '../app/gameHistory/gameHistory';
 
-import { unmarkLegalMoves, markLegalMoves } from './boardView';
+import { unmarkLegalMoves } from './boardView/unmarkLegalMoves';
+import { markLegalMoves } from './boardView/markLegalMoves';
 
 export const touched = ({ currentTarget }: MouseEvent): void => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

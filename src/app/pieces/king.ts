@@ -1,7 +1,7 @@
 import { Coordinates, Side, Name } from '../types';
 import { chessBoard } from '../board/chessBoard';
 import { GameHistory } from '../gameHistory/gameHistory';
-import { movePiece } from '../../view/boardView';
+import { movePiece } from '../../view/boardView/movePiece';
 
 import { Piece } from './piece';
 import { Rook } from './rook';
