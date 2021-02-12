@@ -5,16 +5,8 @@ import { GameHistory } from '../gameHistory/gameHistory';
 import { movePiece } from '../../view/boardView';
 
 import { King } from './king';
+import { PieceModel } from './types';
 
-interface PieceModel {
-    coordinates: Coordinates;
-    side: Side;
-    name: Name;
-    move: (coordinates: Coordinates) => void;
-    findLegalMoves(): void;
-    promote?(): void;
-    checkKingIsSafe(expectedX: number, expectedY: number): boolean;
-}
 export class Piece implements PieceModel {
     coordinates: Coordinates;
     side: Side;
@@ -65,9 +57,10 @@ export class Piece implements PieceModel {
             }
         }
     }
-    checkKingIsSafe = (expectedX: number, expectedY: number) => {
+
+    checkKingIsSafe = (expectedXY: Coordinates): boolean => {
         const sameSideKing = Piece.findKing(this.side);
         const canMove = GameHistory.whoseTurn() === this.side;
-        return !(canMove && sameSideKing.moveEndangerKing(this, { x: expectedX, y: expectedY }));
+        return !(canMove && sameSideKing.moveEndangerKing(this, expectedXY));
     };
 }

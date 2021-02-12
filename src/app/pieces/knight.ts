@@ -8,7 +8,7 @@ interface KnightModel {
     display: string;
     findLegalMoves(): Array<Coordinates>;
     // move: (coordinates: Coordinates) => void;
-    checkKingIsSafe(expectedX: number, expectedY: number): boolean;
+    checkKingIsSafe(expectedCoordiates: Coordinates): boolean;
 }
 export class Knight extends Piece implements KnightModel {
     name: Name;
@@ -39,11 +39,12 @@ export class Knight extends Piece implements KnightModel {
                 const expectedY = y + item[1] >= 0 && y + item[1] < 8 ? y + item[1] : undefined;
                 if (chessBoard.board[x + item[0]][y + item[1]].pieceOnSquare) {
                     if (this.side !== chessBoard.board[x + item[0]][y + item[1]].pieceOnSquare.side) {
-                        if (this.checkKingIsSafe(expectedX, expectedY))
+                        if (this.checkKingIsSafe({ x: expectedX, y: expectedY }))
                             possibleMoves.push({ x: expectedX, y: expectedY });
                     }
                 } else {
-                    if (this.checkKingIsSafe(expectedX, expectedY)) possibleMoves.push({ x: expectedX, y: expectedY });
+                    if (this.checkKingIsSafe({ x: expectedX, y: expectedY }))
+                        possibleMoves.push({ x: expectedX, y: expectedY });
                 }
             }
         });

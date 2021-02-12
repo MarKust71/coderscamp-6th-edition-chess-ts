@@ -8,7 +8,7 @@ interface BishopModel {
     display: string;
     findLegalMoves(): Array<Coordinates>;
     // move: (coordinates: Coordinates) => void;
-    checkKingIsSafe(expectedX: number, expectedY: number): boolean;
+    checkKingIsSafe(expectedCoordiates: Coordinates): boolean;
 }
 
 export class Bishop extends Piece implements BishopModel {
@@ -40,12 +40,12 @@ export class Bishop extends Piece implements BishopModel {
                         const move = chessBoard.board[expectedX][expectedY].pieceOnSquare;
                         if (move) {
                             if (move.side !== this.side) {
-                                if (this.checkKingIsSafe(expectedX, expectedY))
+                                if (this.checkKingIsSafe({ x: expectedX, y: expectedY }))
                                     possibleMoves.push({ x: expectedX, y: expectedY });
                             }
                             break;
                         } else {
-                            if (this.checkKingIsSafe(expectedX, expectedY))
+                            if (this.checkKingIsSafe({ x: expectedX, y: expectedY }))
                                 possibleMoves.push({ x: expectedX, y: expectedY });
                         }
                     }

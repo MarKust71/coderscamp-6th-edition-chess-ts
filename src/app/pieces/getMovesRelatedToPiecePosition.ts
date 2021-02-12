@@ -21,12 +21,13 @@ export const getMovesRelatedToPiecePosition = ({
                     const move = chessBoard.board[expectedX][expectedY].pieceOnSquare;
                     if (move) {
                         if (move.side !== side) {
-                            if (checkKingIsSafe(expectedX, expectedY))
+                            if (checkKingIsSafe({ x: expectedX, y: expectedY }))
                                 possibleMoves.push({ x: expectedX, y: expectedY });
                         }
                         break;
                     } else {
-                        if (checkKingIsSafe(expectedX, expectedY)) possibleMoves.push({ x: expectedX, y: expectedY });
+                        if (checkKingIsSafe({ x: expectedX, y: expectedY }))
+                            possibleMoves.push({ x: expectedX, y: expectedY });
                     }
                 }
             }
