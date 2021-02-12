@@ -29,11 +29,6 @@ export const PLAYTIME = [
     { value: 8, text: '8 minutes' },
 ];
 
-export type Timers = {
-    whiteTimer: number;
-    blackTimer: number;
-};
-
 export type MovesRelatedToPiecePosition = {
     [name in keyof typeof Name]: Coordinates[];
 };
