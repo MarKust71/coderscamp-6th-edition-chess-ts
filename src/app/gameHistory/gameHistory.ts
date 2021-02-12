@@ -1,6 +1,6 @@
 import { Coordinates, Side, Name, Timers } from '../types';
 import { Piece } from '../pieces/piece';
-import { chessBoard } from '../board/board';
+import { chessBoard } from '../board/chessBoard';
 import { GameHistoryView } from '../../view/gameHistory';
 
 export class Movement {

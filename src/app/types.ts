@@ -1,3 +1,8 @@
+import { Square } from './square/square';
+
+export type BoardRow = Square[];
+export type Board = BoardRow[];
+
 export type Coordinates = {
     x: number;
     y: number;
@@ -27,4 +32,8 @@ export const PLAYTIME = [
 export type Timers = {
     whiteTimer: number;
     blackTimer: number;
+};
+
+export type MovesRelatedToPiecePosition = {
+    [name in keyof typeof Name]: Coordinates[];
 };

@@ -1,5 +1,6 @@
 import { Coordinates } from '../app/types';
-import { chessBoard, Square } from '../app/board/board';
+import { chessBoard } from '../app/board/chessBoard';
+import { Square } from '../app/square/square';
 
 export function movePiece(origin: Coordinates, destination: Coordinates, display: string) {
     document.getElementById(JSON.stringify(origin)).innerHTML = '';

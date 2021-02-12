@@ -1,6 +1,6 @@
-import { touched } from '../app/touched';
-import { chessBoard } from '../app/board/board';
+import { chessBoard } from '../app/board/chessBoard';
 
+import { touched } from './touched';
 import { gameplaySidebar } from './gameplaySidebar';
 import { paintBoard, paintPieces } from './boardView';
 

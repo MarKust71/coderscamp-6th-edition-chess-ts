@@ -2,7 +2,7 @@ import { GameHistoryView } from '../../view/gameHistory';
 import { King } from '../pieces/king';
 import { Pawn } from '../pieces/pawn';
 import { Piece } from '../pieces/piece';
-import { Coordinates, Side } from '../types';
+import { Board, Coordinates, Side } from '../types';
 import { GameHistory, Movement } from '../gameHistory/gameHistory';
 import { runTimer } from '../timers/runTimer';
 import { Rook } from '../pieces/rook';
@@ -10,18 +10,12 @@ import { Bishop } from '../pieces/bishop';
 import { Knight } from '../pieces/knight';
 import { Queen } from '../pieces/queen';
 import { unmarkLegalMoves } from '../../view/boardView';
-import { touched } from '../touched';
+import { touched } from '../../view/touched';
+import { Square } from '../square/square';
+import { BOARD_SIDE_LENGTH } from '../globals';
 
-export class Square {
-    coordinates: Coordinates;
-    pieceOnSquare: Piece | undefined;
-
-    constructor(x: number, y: number) {
-        this.coordinates = { x: x, y: y };
-    }
-}
 export class ChessBoard {
-    board: Array<Array<Square>>;
+    board: Board;
 
     constructor() {
         this.board = ChessBoard.pieceSetup(ChessBoard.boardSetup());
@@ -35,8 +29,7 @@ export class ChessBoard {
         }
     }
 
-    static boardSetup(): Array<Array<Square>> {
-        const BOARD_SIDE_LENGTH = 8;
+    static boardSetup(): Board {
         const board = [];
 
         for (let row = 0; row < BOARD_SIDE_LENGTH; row++) {
@@ -49,7 +42,7 @@ export class ChessBoard {
         return board;
     }
 
-    static pieceSetup(board: Array<Array<Square>>): Array<Array<Square>> {
+    static pieceSetup(board: Board): Board {
         for (let row = 0; row <= 7; row++) {
             for (let column = 0; column <= 7; column++) {
                 board[row][column].pieceOnSquare = undefined;
@@ -80,9 +73,9 @@ export class ChessBoard {
         return board;
     }
 
-    moveEvent(event: MouseEvent, originCoords: Coordinates): void {
+    moveEvent({ currentTarget }: MouseEvent, originCoords: Coordinates): void {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { id }: any = event.currentTarget; // as HTMLAreaElement;
+        const { id }: any = currentTarget;
         const coordinates = JSON.parse(id);
         const piece = chessBoard.board[originCoords.x][originCoords.y].pieceOnSquare;
 
@@ -95,6 +88,7 @@ export class ChessBoard {
     movePiece(origin: Coordinates, destination: Coordinates, piece: Piece) {
         chessBoard.board[origin.x][origin.y].pieceOnSquare = undefined;
         this.board[destination.x][destination.y].pieceOnSquare = piece;
+        // TODO: should it be fired for every piece? Maybe some condition for Pawn?
         this.board[destination.x][destination.y].pieceOnSquare.promote();
     }
 }

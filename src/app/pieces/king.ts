@@ -1,5 +1,5 @@
 import { Coordinates, Side, Name } from '../types';
-import { chessBoard } from '../board/board';
+import { chessBoard } from '../board/chessBoard';
 import { GameHistory } from '../gameHistory/gameHistory';
 import { movePiece } from '../../view/boardView';
 

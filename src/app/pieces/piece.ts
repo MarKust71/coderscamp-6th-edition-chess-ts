@@ -1,4 +1,4 @@
-import { chessBoard } from '../board/board';
+import { chessBoard } from '../board/chessBoard';
 import { runTimer } from '../timers/runTimer';
 import { Coordinates, Name, Side } from '../types';
 import { GameHistory } from '../gameHistory/gameHistory';
