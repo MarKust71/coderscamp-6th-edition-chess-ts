@@ -74,7 +74,7 @@ export class Pawn extends Piece implements PawnModel {
         const { side } = this;
         const { x } = this.coordinates;
 
-        // TODO: dono why x i still 1 or 6 when in 'this' object it is correct (0 or 7)
+        // TODO: dono why 'x' is still 1 or 6 when in 'this' object it is correct (0 or 7)
         if (x === (side === Side.WHITE ? 1 : 6)) {
             console.log('promote from pawn entered', this.coordinates);
             const promotionWindow = createPromotionWindowView(switchPieces, this.coordinates, side);
