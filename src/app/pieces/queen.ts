@@ -24,7 +24,7 @@ export class Queen extends Piece implements QueenModel {
     findLegalMoves = (): Coordinates[] => {
         const { x, y } = this.coordinates;
         const possibleMoves: Array<Coordinates> = [];
-        const movesRelatedToKnightsPosition: Array<Array<number>> = [
+        const movesRelatedToPiecePosition: Array<Array<number>> = [
             [1, 0],
             [-1, 0],
             [0, 1],
@@ -34,7 +34,7 @@ export class Queen extends Piece implements QueenModel {
             [-1, 1],
             [-1, -1],
         ];
-        movesRelatedToKnightsPosition.map((item) => {
+        movesRelatedToPiecePosition.map((item) => {
             for (let i = 1; i <= 7; i++) {
                 if (x + item[0] * i > -1 && x + item[0] * i < 8 && y + item[1] * i > -1 && y + item[1] * i < 8) {
                     const expectedX = x + item[0] * i >= 0 && x + item[0] * i < 8 ? x + item[0] * i : undefined;

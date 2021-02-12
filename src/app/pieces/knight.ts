@@ -22,7 +22,7 @@ export class Knight extends Piece implements KnightModel {
     findLegalMoves = (): Coordinates[] => {
         const { x, y } = this.coordinates;
         const possibleMoves: Array<Coordinates> = [];
-        const movesRelatedToKnightsPosition: Array<Array<number>> = [
+        const movesRelatedToPiecePosition: Array<Array<number>> = [
             [-2, -1],
             [-2, 1],
             [2, 1],
@@ -33,7 +33,7 @@ export class Knight extends Piece implements KnightModel {
             [1, -2],
         ];
 
-        movesRelatedToKnightsPosition.map((item) => {
+        movesRelatedToPiecePosition.map((item) => {
             if (x + item[0] > -1 && x + item[0] < 8 && y + item[1] > -1 && y + item[1] < 8) {
                 const expectedX = x + item[0] >= 0 && x + item[0] < 8 ? x + item[0] : undefined;
                 const expectedY = y + item[1] >= 0 && y + item[1] < 8 ? y + item[1] : undefined;
