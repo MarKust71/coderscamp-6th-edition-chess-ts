@@ -1,6 +1,7 @@
 import { Coordinates, Side, Name } from '../types';
 import { chessBoard } from '../board/board';
 import { GameHistory } from '../gameHistory/gameHistory';
+import { movePiece } from '../../view/boardView';
 
 import { Piece } from './piece';
 import { Rook } from './rook';
@@ -180,12 +181,12 @@ export class King extends Piece {
         return false;
     }
 
-    castle(rook: Rook, rookNewY: number): void {
-        chessBoard.board[rook.coordinates.x][rook.coordinates.y] = null;
-        document.getElementById(JSON.stringify(rook.coordinates)).innerHTML = '';
-        rook.coordinates.x = this.coordinates.x;
-        rook.coordinates.y = rookNewY;
-        chessBoard.board[rook.coordinates.x][rook.coordinates.y].pieceOnSquare = rook;
-        document.getElementById(JSON.stringify(rook.coordinates)).innerHTML = rook.display;
+    castle(coordinates: Coordinates): void {
+        const rookOrigin = { x: this.coordinates.x, y: this.coordinates.y - coordinates.y < 0 ? 7 : 0 };
+        const rookDestination = { x: this.coordinates.x, y: rookOrigin.y === 0 ? 3 : 5 };
+        const rook = chessBoard.board[this.coordinates.x][rookOrigin.y].pieceOnSquare;
+
+        chessBoard.movePiece(rookOrigin, rookDestination, rook);
+        movePiece(rookOrigin, rookDestination, rook.display);
     }
 }

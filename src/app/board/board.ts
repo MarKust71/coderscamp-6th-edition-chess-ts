@@ -3,13 +3,14 @@ import { King } from '../pieces/king';
 import { Pawn } from '../pieces/pawn';
 import { Piece } from '../pieces/piece';
 import { Coordinates, Side } from '../types';
-import { touched } from '../touched';
 import { GameHistory, Movement } from '../gameHistory/gameHistory';
 import { runTimer } from '../timers/runTimer';
 import { Rook } from '../pieces/rook';
 import { Bishop } from '../pieces/bishop';
 import { Knight } from '../pieces/knight';
 import { Queen } from '../pieces/queen';
+import { unmarkLegalMoves } from '../../view/boardView';
+import { touched } from '../touched';
 
 export class Square {
     coordinates: Coordinates;
@@ -23,25 +24,7 @@ export class ChessBoard {
     board: Array<Array<Square>>;
 
     constructor() {
-        this.board = this.pieceSetup();
-    }
-
-    pieceSetup(): Square[][] {
-        return ChessBoard.pieceSetup(ChessBoard.boardSetup());
-    }
-
-    paintPieces(): void {
-        for (const row of this.board) {
-            for (const square of row) {
-                const squareElement = document.getElementById(
-                    JSON.stringify({ x: square.coordinates.x, y: square.coordinates.y }),
-                );
-
-                squareElement.innerHTML = chessBoard.board[square.coordinates.x][square.coordinates.y].pieceOnSquare
-                    ? chessBoard.board[square.coordinates.x][square.coordinates.y].pieceOnSquare.display
-                    : '';
-            }
-        }
+        this.board = ChessBoard.pieceSetup(ChessBoard.boardSetup());
     }
 
     clearPieces() {
@@ -97,47 +80,22 @@ export class ChessBoard {
         return board;
     }
 
-    markLegalMoves(coordinates: Array<Coordinates>, originCoords: Coordinates): void {
-        for (const coords of coordinates) {
-            const squareElement = document.getElementById(JSON.stringify({ x: coords.x, y: coords.y }));
-            squareElement.classList.add('possibleMove');
-            squareElement.addEventListener('click', (event: MouseEvent) => {
-                this.makeMove(event, originCoords);
-            });
-        }
-    }
-
-    unmarkLegalMoves(): void {
-        for (const row of this.board) {
-            for (const square of row) {
-                const originalElement = document.getElementById(
-                    JSON.stringify({ x: square.coordinates.x, y: square.coordinates.y }),
-                );
-                originalElement.classList.remove('possibleMove');
-
-                // Removing eventListener by cloning and replacing node
-                const newElement = originalElement.cloneNode(true);
-                originalElement.parentNode.replaceChild(newElement, originalElement);
-                newElement.addEventListener('click', touched);
-            }
-        }
-    }
-
-    makeMove(event: MouseEvent, originCoords: Coordinates): void {
+    moveEvent(event: MouseEvent, originCoords: Coordinates): void {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const { id }: any = event.currentTarget; // as HTMLAreaElement;
         const coordinates = JSON.parse(id);
         const piece = chessBoard.board[originCoords.x][originCoords.y].pieceOnSquare;
 
-        this.unmarkLegalMoves();
+        unmarkLegalMoves(this.board, touched);
         GameHistory.newMove(new Movement(piece, originCoords, coordinates, runTimer.timers));
         piece.move(coordinates);
         GameHistoryView.append(GameHistory.lastMove().notation);
     }
 
-    movePiece(origin: Coordinates, destination: Coordinates, display: string) {
-        document.getElementById(JSON.stringify(origin)).innerHTML = '';
-        document.getElementById(JSON.stringify(destination)).innerHTML = display;
+    movePiece(origin: Coordinates, destination: Coordinates, piece: Piece) {
+        chessBoard.board[origin.x][origin.y].pieceOnSquare = undefined;
+        this.board[destination.x][destination.y].pieceOnSquare = piece;
+        this.board[destination.x][destination.y].pieceOnSquare.promote();
     }
 }
 

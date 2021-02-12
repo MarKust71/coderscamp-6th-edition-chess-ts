@@ -2,6 +2,7 @@ import { chessBoard } from '../board/board';
 import { runTimer } from '../timers/runTimer';
 import { Coordinates, Name, Side } from '../types';
 import { GameHistory } from '../gameHistory/gameHistory';
+import { movePiece } from '../../view/boardView';
 
 import { King } from './king';
 
@@ -36,16 +37,15 @@ export class Piece implements PieceModel {
     }
 
     move(coordinates: Coordinates): void {
-        chessBoard.movePiece(this.coordinates, coordinates, this.display);
+        // castle
+        if (this instanceof King && Math.abs(this.coordinates.y - coordinates.y) == 2) {
+            this.castle(coordinates);
+        }
+
         this.hasMoved = true;
-
-        // clearing previous place
-        chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = undefined;
-
-        // setting new
+        movePiece(this.coordinates, coordinates, this.display);
+        chessBoard.movePiece(this.coordinates, coordinates, this);
         this.coordinates = coordinates;
-        chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare = this;
-        chessBoard.board[this.coordinates.x][this.coordinates.y].pieceOnSquare.promote();
 
         const enemyKing = Piece.findKing(this.side === Side.WHITE ? Side.BLACK : Side.WHITE);
         const check = enemyKing.underCheck();
