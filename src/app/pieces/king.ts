@@ -1,7 +1,7 @@
 import { Coordinates, Side, Name } from '../types';
-import { chessBoard } from '../board/board';
+import { chessBoard } from '../board/chessBoard';
 import { GameHistory } from '../gameHistory/gameHistory';
-import { movePiece } from '../../view/boardView';
+import { movePiece } from '../../view/boardView/movePiece';
 
 import { Piece } from './piece';
 import { Rook } from './rook';
@@ -98,7 +98,6 @@ export class King extends Piece {
     moveEndangerKing(piece: Piece, destination: Coordinates): boolean {
         chessBoard.board[piece.coordinates.x][piece.coordinates.y].pieceOnSquare = undefined;
         const pieceOnDestination = chessBoard.board[destination.x][destination.y].pieceOnSquare;
-        console.log(pieceOnDestination);
         chessBoard.board[destination.x][destination.y].pieceOnSquare = piece;
         const willBeCheck = !this.isSafe(this.coordinates);
         chessBoard.board[piece.coordinates.x][piece.coordinates.y].pieceOnSquare = piece;

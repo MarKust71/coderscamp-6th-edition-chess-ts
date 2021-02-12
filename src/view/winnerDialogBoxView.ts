@@ -1,5 +1,5 @@
 import { GameHistory } from '../app/gameHistory/gameHistory';
-import { chessBoard, ChessBoard } from '../app/board/board';
+import { chessBoard, ChessBoard } from '../app/board/chessBoard';
 import { runTimer } from '../app/timers/runTimer';
 
 import { setup } from './setup';

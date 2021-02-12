@@ -2,6 +2,7 @@ import { updatePlayerTimer } from '../../view/gameplaySidebar';
 import { Side } from '../types';
 import { playerTimerClockSwitch } from '../../view/playerTimerClockSwitch';
 import winnerDialogBox from '../../view/winnerDialogBoxView';
+import { INTERVAL_MS } from '../globals';
 
 type RunFirstTimerParams = {
     side: Side;
@@ -28,7 +29,7 @@ export const runTimer = (function () {
                 if (runTimerClockTimerWhite === 0) {
                     winnerDialogBox();
                 }
-            }, 100);
+            }, INTERVAL_MS);
         } else {
             intervalId = setInterval(() => {
                 runTimerClockTimerBlack--;
@@ -36,7 +37,7 @@ export const runTimer = (function () {
                 if (runTimerClockTimerBlack === 0) {
                     winnerDialogBox();
                 }
-            }, 100);
+            }, INTERVAL_MS);
         }
     };
 

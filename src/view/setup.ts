@@ -1,8 +1,9 @@
-import { touched } from '../app/touched';
-import { chessBoard } from '../app/board/board';
+import { chessBoard } from '../app/board/chessBoard';
 
+import { touched } from './touched';
 import { gameplaySidebar } from './gameplaySidebar';
-import { paintBoard, paintPieces } from './boardView';
+import { paintBoard } from './boardView/paintBoard';
+import { paintPieces } from './boardView/paintPieces';
 
 export const setup = (): void => {
     const wrapper = document.getElementById('wrapper');
@@ -12,7 +13,7 @@ export const setup = (): void => {
     board.id = 'board';
     wrapper.appendChild(board);
 
-    paintBoard(touched);
+    paintBoard(touched, chessBoard);
     paintPieces(chessBoard.board);
     gameplaySidebar();
     localStorage.setItem('history', '[]');

@@ -1,14 +1,15 @@
-import { chessBoard } from '../board/board';
 import { Coordinates, Name, Side } from '../types';
+import { movesRelated } from '../globals';
+import { chessBoard } from '../board/chessBoard';
 
 import { Piece } from './piece';
 
 interface RookModel {
     name: string;
     display: string;
-    findLegalMoves(): Array<Coordinates>;
+    findLegalMoves(): Coordinates[];
     // move: (coordinates: Coordinates) => void;
-    checkKingIsSafe(expectedX: number, expectedY: number): boolean;
+    // checkKingIsSafe(expectedCoordinates: Coordinates): boolean;
 }
 export class Rook extends Piece implements RookModel {
     name: Name;
@@ -22,35 +23,30 @@ export class Rook extends Piece implements RookModel {
 
     findLegalMoves = (): Coordinates[] => {
         const { x, y } = this.coordinates;
-        const possibleMoves: Array<Coordinates> = [];
-        const movesRelatedToPiecePosition: Array<Array<number>> = [
-            [-1, 0],
-            [0, -1],
-            [1, 0],
-            [0, 1],
-        ];
+        const possibleMoves: Coordinates[] = [];
 
-        movesRelatedToPiecePosition.map((item) => {
+        movesRelated.ROOK.map((item) => {
             for (let i = 1; i <= 7; i++) {
-                if (x + item[0] * i > -1 && x + item[0] * i < 8 && y + item[1] * i > -1 && y + item[1] * i < 8) {
-                    const expectedX = x + item[0] * i >= 0 && x + item[0] * i < 8 ? x + item[0] * i : undefined;
-                    const expectedY = y + item[1] * i >= 0 && y + item[1] * i < 8 ? y + item[1] * i : undefined;
+                if (x + item.x * i > -1 && x + item.x * i < 8 && y + item.y * i > -1 && y + item.y * i < 8) {
+                    const expectedX = x + item.x * i >= 0 && x + item.x * i < 8 ? x + item.x * i : undefined;
+                    const expectedY = y + item.y * i >= 0 && y + item.y * i < 8 ? y + item.y * i : undefined;
                     if (typeof expectedX === 'number' && typeof expectedY === 'number') {
                         const move = chessBoard.board[expectedX][expectedY].pieceOnSquare;
                         if (move) {
                             if (move.side !== this.side) {
-                                if (this.checkKingIsSafe(expectedX, expectedY))
+                                if (this.checkKingIsSafe({ x: expectedX, y: expectedY }))
                                     possibleMoves.push({ x: expectedX, y: expectedY });
                             }
                             break;
                         } else {
-                            if (this.checkKingIsSafe(expectedX, expectedY))
+                            if (this.checkKingIsSafe({ x: expectedX, y: expectedY }))
                                 possibleMoves.push({ x: expectedX, y: expectedY });
                         }
                     }
                 }
             }
         });
+
         return possibleMoves;
     };
 }

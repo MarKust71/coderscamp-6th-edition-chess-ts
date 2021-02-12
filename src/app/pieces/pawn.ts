@@ -1,12 +1,10 @@
 import { Coordinates, Name, Side } from '../types';
-import { chessBoard } from '../board/board';
-import { GameHistory } from '../gameHistory/gameHistory';
+import { chessBoard } from '../board/chessBoard';
+import { createPromotionWindowView } from '../../view/pawnPromotion/createPromotionWindowView';
+import { switchPieces } from '../../view/pawnPromotion/switchPieces';
+import { showPromotionWindow } from '../../view/pawnPromotion/showPromotionWindow';
 
 import { Piece } from './piece';
-import { Bishop } from './bishop';
-import { Queen } from './queen';
-import { Knight } from './knight';
-import { Rook } from './rook';
 
 interface PawnModel {
     name: string;
@@ -36,8 +34,8 @@ export class Pawn extends Piece implements PawnModel {
 
         if (x === (this.side === Side.WHITE ? 6 : 1)) {
             if (!chessBoard.board[x + v][y].pieceOnSquare && !chessBoard.board[x + v * 2][y].pieceOnSquare) {
-                if (this.checkKingIsSafe(x + v * 2, y)) {
-                    possibleMoves.push({ x: x + v * 2, y: y });
+                if (this.checkKingIsSafe({ x: x + v * 2, y })) {
+                    possibleMoves.push({ x: x + v * 2, y });
                 }
             }
         }
@@ -73,67 +71,14 @@ export class Pawn extends Piece implements PawnModel {
     };
 
     promote(): void {
-        const { x, y } = this.coordinates;
         const { side } = this;
-        const wrapper = document.getElementById('wrapper');
-        const promotionWindow = document.createElement('div');
-        const promoCover = document.createElement('div');
-        promoCover.className = 'promoCover';
+        const { x } = this.coordinates;
 
-        function switchFigures(event: MouseEvent) {
-            let newFigure;
-            const { id } = event.currentTarget as HTMLAreaElement;
-            switch (id) {
-                case Name.BISHOP:
-                    newFigure = new Bishop({ x: x, y: y }, side);
-                    break;
-                case Name.QUEEN:
-                    newFigure = new Queen({ x: x, y: y }, side);
-                    break;
-                case Name.KNIGHT:
-                    newFigure = new Knight({ x: x, y: y }, side);
-                    break;
-                case Name.ROOK:
-                    newFigure = new Rook({ x: x, y: y }, side);
-                    break;
-                default:
-                    break;
-            }
-            chessBoard.board[x][y].pieceOnSquare = newFigure;
-            document.querySelector(`[id='{"x":${x},"y":${y}}']`).innerHTML = newFigure.display;
-            wrapper.removeChild(promotionWindow);
-            wrapper.removeChild(promoCover);
-            GameHistory.promotion(newFigure.name);
-        }
-        const promotionWindowView = () => {
-            const typePiece = [Name.QUEEN, Name.ROOK, Name.KNIGHT, Name.BISHOP];
-            const promotionWindowList = document.createElement('ul');
-            promotionWindowList.className = 'promotionWindowList';
-            for (const piece of typePiece) {
-                const promotionWindowListIcon = document.createElement('li');
-                promotionWindowListIcon.className = 'promotionWindowListIcon';
-                promotionWindowList.appendChild(promotionWindowListIcon);
-
-                const promoteToNewPiece = document.createElement('i');
-                promoteToNewPiece.className = `fas fa-chess-${piece} ${side}`;
-                promoteToNewPiece.id = `${piece}`;
-                promotionWindowListIcon.appendChild(promoteToNewPiece);
-                promoteToNewPiece.addEventListener('click', (event) => {
-                    switchFigures(event);
-                });
-            }
-            const text = document.createTextNode('Pick promoted figure:');
-            const promoTitle = document.createElement('div');
-            promoTitle.className = 'promoTitle';
-            promoTitle.appendChild(text);
-            promotionWindow.appendChild(promoTitle);
-            promotionWindow.className = 'promotionWindow';
-            promotionWindow.appendChild(promotionWindowList);
-            return promotionWindow;
-        };
-        if (x === (side === Side.WHITE ? 0 : 7)) {
-            wrapper.appendChild(promoCover);
-            wrapper.appendChild(promotionWindowView());
+        // TODO: dono why 'x' is still 1 or 6 when in 'this' object it is correct (0 or 7)
+        if (x === (side === Side.WHITE ? 1 : 6)) {
+            console.log('promote from pawn entered', this.coordinates);
+            const promotionWindow = createPromotionWindowView(switchPieces, this.coordinates, side);
+            showPromotionWindow(promotionWindow);
         }
     }
 

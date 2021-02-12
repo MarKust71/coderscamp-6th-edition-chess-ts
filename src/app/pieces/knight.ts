@@ -1,5 +1,6 @@
 import { Coordinates, Side, Name } from '../types';
-import { chessBoard } from '../board/board';
+import { chessBoard } from '../board/chessBoard';
+import { movesRelated } from '../globals';
 
 import { Piece } from './piece';
 
@@ -7,8 +8,7 @@ interface KnightModel {
     name: string;
     display: string;
     findLegalMoves(): Array<Coordinates>;
-    // move: (coordinates: Coordinates) => void;
-    checkKingIsSafe(expectedX: number, expectedY: number): boolean;
+    checkKingIsSafe(expectedCoordinates: Coordinates): boolean;
 }
 export class Knight extends Piece implements KnightModel {
     name: Name;
@@ -22,31 +22,23 @@ export class Knight extends Piece implements KnightModel {
     findLegalMoves = (): Coordinates[] => {
         const { x, y } = this.coordinates;
         const possibleMoves: Array<Coordinates> = [];
-        const movesRelatedToPiecePosition: Array<Array<number>> = [
-            [-2, -1],
-            [-2, 1],
-            [2, 1],
-            [2, -1],
-            [-1, -2],
-            [-1, 2],
-            [1, 2],
-            [1, -2],
-        ];
 
-        movesRelatedToPiecePosition.map((item) => {
-            if (x + item[0] > -1 && x + item[0] < 8 && y + item[1] > -1 && y + item[1] < 8) {
-                const expectedX = x + item[0] >= 0 && x + item[0] < 8 ? x + item[0] : undefined;
-                const expectedY = y + item[1] >= 0 && y + item[1] < 8 ? y + item[1] : undefined;
-                if (chessBoard.board[x + item[0]][y + item[1]].pieceOnSquare) {
-                    if (this.side !== chessBoard.board[x + item[0]][y + item[1]].pieceOnSquare.side) {
-                        if (this.checkKingIsSafe(expectedX, expectedY))
+        movesRelated.KNIGHT.map((item) => {
+            if (x + item.x > -1 && x + item.x < 8 && y + item.y > -1 && y + item.y < 8) {
+                const expectedX = x + item.x >= 0 && x + item.x < 8 ? x + item.x : undefined;
+                const expectedY = y + item.y >= 0 && y + item.y < 8 ? y + item.y : undefined;
+                if (chessBoard.board[x + item.x][y + item.y].pieceOnSquare) {
+                    if (this.side !== chessBoard.board[x + item.x][y + item.y].pieceOnSquare.side) {
+                        if (this.checkKingIsSafe({ x: expectedX, y: expectedY }))
                             possibleMoves.push({ x: expectedX, y: expectedY });
                     }
                 } else {
-                    if (this.checkKingIsSafe(expectedX, expectedY)) possibleMoves.push({ x: expectedX, y: expectedY });
+                    if (this.checkKingIsSafe({ x: expectedX, y: expectedY }))
+                        possibleMoves.push({ x: expectedX, y: expectedY });
                 }
             }
         });
+
         return possibleMoves;
     };
 }

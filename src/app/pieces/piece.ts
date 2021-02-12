@@ -1,8 +1,8 @@
-import { chessBoard } from '../board/board';
+import { chessBoard } from '../board/chessBoard';
 import { runTimer } from '../timers/runTimer';
 import { Coordinates, Name, Side } from '../types';
 import { GameHistory } from '../gameHistory/gameHistory';
-import { movePiece } from '../../view/boardView';
+import { movePiece } from '../../view/boardView/movePiece';
 
 import { King } from './king';
 
@@ -11,10 +11,11 @@ interface PieceModel {
     side: Side;
     name: Name;
     move: (coordinates: Coordinates) => void;
-    findLegalMoves(): void;
+    findLegalMoves(): Coordinates[];
     promote?(): void;
-    checkKingIsSafe(expectedX: number, expectedY: number): boolean;
+    checkKingIsSafe(expectedCoordinates: Coordinates): boolean;
 }
+
 export class Piece implements PieceModel {
     coordinates: Coordinates;
     side: Side;
@@ -65,9 +66,10 @@ export class Piece implements PieceModel {
             }
         }
     }
-    checkKingIsSafe = (expectedX: number, expectedY: number) => {
+
+    checkKingIsSafe = (expectedXY: Coordinates): boolean => {
         const sameSideKing = Piece.findKing(this.side);
         const canMove = GameHistory.whoseTurn() === this.side;
-        return !(canMove && sameSideKing.moveEndangerKing(this, { x: expectedX, y: expectedY }));
+        return !(canMove && sameSideKing.moveEndangerKing(this, expectedXY));
     };
 }

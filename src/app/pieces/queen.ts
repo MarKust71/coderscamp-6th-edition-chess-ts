@@ -1,5 +1,5 @@
 import { Coordinates, Side, Name } from '../types';
-import { chessBoard } from '../board/board';
+import { chessBoard } from '../board/chessBoard';
 
 import { Piece } from './piece';
 
@@ -8,7 +8,7 @@ interface QueenModel {
     display: string;
     findLegalMoves(): Array<Coordinates>;
     // move: (coordinates: Coordinates) => void;
-    checkKingIsSafe(expectedX: number, expectedY: number): boolean;
+    checkKingIsSafe(expectedCoordinates: Coordinates): boolean;
 }
 
 export class Queen extends Piece implements QueenModel {
@@ -43,12 +43,12 @@ export class Queen extends Piece implements QueenModel {
                         const move = chessBoard.board[expectedX][expectedY].pieceOnSquare;
                         if (move) {
                             if (move.side !== this.side) {
-                                if (this.checkKingIsSafe(expectedX, expectedY))
+                                if (this.checkKingIsSafe({ x: expectedX, y: expectedY }))
                                     possibleMoves.push({ x: expectedX, y: expectedY });
                             }
                             break;
                         } else {
-                            if (this.checkKingIsSafe(expectedX, expectedY))
+                            if (this.checkKingIsSafe({ x: expectedX, y: expectedY }))
                                 possibleMoves.push({ x: expectedX, y: expectedY });
                         }
                     }
