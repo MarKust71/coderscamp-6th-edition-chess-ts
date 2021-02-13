@@ -3,6 +3,7 @@ import { Piece } from '../pieces/piece';
 import { chessBoard } from '../board/chessBoard';
 import { GameHistoryView } from '../../view/gameHistory';
 import { Timers } from '../timers/types';
+import { movePiece } from '../../view/boardView/movePiece';
 
 export class Movement {
     piece: Piece;
@@ -126,19 +127,25 @@ export class GameHistory {
 
     static undoMove(): void {
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
-        const lastMove: Movement = history.pop();
+        const { origin, destination } = history.pop();
+        const piece = chessBoard.board[destination.x][destination.y].pieceOnSquare;
 
-        lastMove.piece.coordinates.x = lastMove.origin.x;
-        lastMove.piece.coordinates.y = lastMove.origin.y;
+        GameHistory.setHistory(history);
+        GameHistoryView.removeLast();
+        piece.coordinates = origin;
+        movePiece(destination, origin, piece.display);
+        chessBoard.movePiece(destination, origin, piece);
+    }
 
-        // Repaint on board
+    static undoMoveListener(event: MouseEvent) {
+        GameHistory.undoMove();
     }
 
     static lastMove(): Movement {
         return GameHistory.getHistory().pop();
     }
 
-    static playFromTheStart(event: MouseEvent, timeBetweenMoves = 600): void {
+    static playFromTheStart(timeBetweenMoves = 600): void {
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
         GameHistory.setHistory([]);
         chessBoard.restartBoard();
@@ -151,5 +158,9 @@ export class GameHistory {
             GameHistoryView.append(move.notation);
             piece.move({ x: move.destination.x, y: move.destination.y });
         }, timeBetweenMoves);
+    }
+
+    static playFromTheStartListener(event: MouseEvent, timeBetweenMoves = 600): void {
+        GameHistory.playFromTheStart(timeBetweenMoves);
     }
 }

@@ -100,7 +100,7 @@ export class ChessBoard {
         chessBoard.board[origin.x][origin.y].pieceOnSquare = undefined;
         this.board[destination.x][destination.y].pieceOnSquare = piece;
         // TODO: should it be fired for every piece? Maybe some condition for Pawn?
-        this.board[destination.x][destination.y].pieceOnSquare.promote();
+        if (piece instanceof Pawn) this.board[destination.x][destination.y].pieceOnSquare.promote();
     }
 }
 
