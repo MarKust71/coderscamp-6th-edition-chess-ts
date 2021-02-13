@@ -7,6 +7,7 @@ import { Timers } from '../timers/types';
 export class Movement {
     piece: Piece;
     origin: Coordinates;
+    destination: Coordinates;
     timers: Timers;
     notation: string;
 
@@ -14,6 +15,7 @@ export class Movement {
         this.piece = piece;
         this.origin = origin;
         this.timers = timers;
+        this.destination = destination;
         this.notation = Movement.createNotation(piece, origin, destination);
     }
 
@@ -136,16 +138,18 @@ export class GameHistory {
         return GameHistory.getHistory().pop();
     }
 
-    static playFromTheStart(): void {
-        const TIME_BETWEEN_MOVES = 600;
+    static playFromTheStart(event: MouseEvent, timeBetweenMoves = 600): void {
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
+        GameHistory.setHistory([]);
+        chessBoard.restartBoard();
+        GameHistoryView.clear();
 
-        for (let i = 0; i < history.length; i++) {
-            setTimeout(() => {
-                const move: Movement = history.shift();
-                const piece = chessBoard.board[move.origin.x][move.origin.y].pieceOnSquare;
-                piece.move({ x: move.origin.x, y: move.origin.y });
-            }, TIME_BETWEEN_MOVES);
-        }
+        setInterval(() => {
+            const move: Movement = history.shift();
+            const piece = chessBoard.board[move.origin.x][move.origin.y].pieceOnSquare;
+            GameHistory.newMove(move);
+            GameHistoryView.append(move.notation);
+            piece.move({ x: move.destination.x, y: move.destination.y });
+        }, timeBetweenMoves);
     }
 }

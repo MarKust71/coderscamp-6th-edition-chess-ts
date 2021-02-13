@@ -3,6 +3,7 @@ import { setupTimerTime } from '../app/timers/setupTimerTime';
 import { GameHistoryView } from './gameHistory';
 import { timer } from './startSetupBox';
 import { timerView } from './timerView';
+import { gameControls } from './gameControls';
 
 export type UpdatePlayerTimerParams = {
     id: string;
@@ -19,6 +20,7 @@ export const gameplaySidebar = (): void => {
 
     gameplaySidebar.appendChild(timerView({ id: 'blackPlayerTimer' }));
     gameplaySidebar.appendChild(GameHistoryView.create());
+    gameplaySidebar.appendChild(gameControls());
     gameplaySidebar.appendChild(timerView({ id: 'whitePlayerTimer' }));
 
     // updatePlayerTimer({ id: 'blackPlayerTimer', time: timer().clockTimer });

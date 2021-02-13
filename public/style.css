@@ -245,6 +245,24 @@ html {
     font-size: 2rem;
 }
 
+.gameControls {
+    margin: 0.2rem;
+    display: flex;
+}
+
+.button {
+    border: 1px solid rgb(205, 205, 23);
+    border-radius: 5px;
+    box-shadow: inset 0 0 5px rgb(205, 205, 23);
+    font-size: 1.2rem;
+}
+
+.button:hover,
+.button:active {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
 @media (max-width: 640px) {
     #board {
         min-width: 50vh;

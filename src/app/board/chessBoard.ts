@@ -13,6 +13,7 @@ import { unmarkLegalMoves } from '../../view/boardView/unmarkLegalMoves';
 import { touched } from '../../view/touched';
 import { Square } from '../square/square';
 import { BOARD_SIDE_LENGTH } from '../globals';
+import { paintPieces } from '../../view/boardView/paintPieces';
 
 export class ChessBoard {
     board: Board;
@@ -27,6 +28,16 @@ export class ChessBoard {
                 square.pieceOnSquare = undefined;
             }
         }
+    }
+
+    setBoard(board: Board): void {
+        this.board = board;
+    }
+
+    restartBoard() {
+        this.clearPieces();
+        this.setBoard(ChessBoard.pieceSetup(this.board));
+        paintPieces(chessBoard.board);
     }
 
     static boardSetup(): Board {
