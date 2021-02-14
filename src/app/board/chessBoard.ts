@@ -84,13 +84,12 @@ export class ChessBoard {
         return board;
     }
 
-    moveEvent({ currentTarget }: MouseEvent, originCoords: Coordinates): void {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { id }: any = currentTarget;
+    moveEvent(currentTarget: HTMLElement): void {
+        const { id } = currentTarget;
         const coordinates = JSON.parse(id);
+        const originCoords = JSON.parse(currentTarget.getAttribute('origin'));
         const piece = chessBoard.board[originCoords.x][originCoords.y].pieceOnSquare;
-
-        unmarkLegalMoves(this.board, touched);
+        unmarkLegalMoves(this.board);
         GameHistory.newMove(new Movement(piece, originCoords, coordinates, runTimer.timers));
         piece.move(coordinates);
         GameHistoryView.append(GameHistory.lastMove().notation);

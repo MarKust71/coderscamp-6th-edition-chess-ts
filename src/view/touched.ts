@@ -5,16 +5,16 @@ import { unmarkLegalMoves } from './boardView/unmarkLegalMoves';
 import { markLegalMoves } from './boardView/markLegalMoves';
 
 export const touched = ({ currentTarget }: MouseEvent): void => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { id }: any = currentTarget;
+    if (!(currentTarget instanceof HTMLElement)) return;
+    const { id, classList } = currentTarget;
     const { x, y } = JSON.parse(id);
     const piece = chessBoard.board[x][y].pieceOnSquare;
 
-    if (!piece || piece.side !== GameHistory.whoseTurn()) return;
-
-    unmarkLegalMoves(chessBoard.board, touched);
-    markLegalMoves({
-        coordinates: chessBoard.board[x][y].pieceOnSquare.findLegalMoves(),
-        originCoords: { x, y },
-    });
+    if (classList.contains('possibleMove')) {
+        chessBoard.moveEvent(currentTarget as HTMLElement);
+        unmarkLegalMoves(chessBoard.board);
+    } else if (piece && piece.side === GameHistory.whoseTurn()) {
+        unmarkLegalMoves(chessBoard.board);
+        markLegalMoves(chessBoard.board[x][y].pieceOnSquare.findLegalMoves(), { x, y });
+    }
 };

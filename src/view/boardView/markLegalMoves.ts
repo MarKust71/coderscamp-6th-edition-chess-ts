@@ -1,13 +1,9 @@
-import { chessBoard } from '../../app/board/chessBoard';
+import { Coordinates } from '../../app/types';
 
-import { MarkLegalMovesParams } from './types';
-
-export function markLegalMoves({ coordinates, originCoords }: MarkLegalMovesParams) {
+export function markLegalMoves(coordinates: Array<Coordinates>, origin: Coordinates) {
     for (const coords of coordinates) {
         const squareElement = document.getElementById(JSON.stringify({ x: coords.x, y: coords.y }));
         squareElement.classList.add('possibleMove');
-        squareElement.addEventListener('click', (event: MouseEvent) => {
-            chessBoard.moveEvent(event, originCoords);
-        });
+        squareElement.setAttribute('origin', JSON.stringify(origin));
     }
 }

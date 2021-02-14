@@ -150,14 +150,19 @@ export class GameHistory {
         GameHistory.setHistory([]);
         chessBoard.restartBoard();
         GameHistoryView.clear();
+        setInterval(oneMove, timeBetweenMoves);
 
-        setInterval(() => {
+        function oneMove(): void {
             const move: Movement = history.shift();
+            if (!move) {
+                clearInterval(this);
+                return;
+            }
             const piece = chessBoard.board[move.origin.x][move.origin.y].pieceOnSquare;
             GameHistory.newMove(move);
             GameHistoryView.append(move.notation);
             piece.move({ x: move.destination.x, y: move.destination.y });
-        }, timeBetweenMoves);
+        }
     }
 
     static playFromTheStartListener(event: MouseEvent, timeBetweenMoves = 600): void {
