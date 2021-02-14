@@ -3,10 +3,12 @@ import { Piece } from '../pieces/piece';
 import { chessBoard } from '../board/chessBoard';
 import { GameHistoryView } from '../../view/gameHistory';
 import { Timers } from '../timers/types';
+import { movePiece } from '../../view/boardView/movePiece';
 
 export class Movement {
     piece: Piece;
     origin: Coordinates;
+    destination: Coordinates;
     timers: Timers;
     notation: string;
 
@@ -14,6 +16,7 @@ export class Movement {
         this.piece = piece;
         this.origin = origin;
         this.timers = timers;
+        this.destination = destination;
         this.notation = Movement.createNotation(piece, origin, destination);
     }
 
@@ -124,28 +127,45 @@ export class GameHistory {
 
     static undoMove(): void {
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
-        const lastMove: Movement = history.pop();
+        const { origin, destination } = history.pop();
+        const piece = chessBoard.board[destination.x][destination.y].pieceOnSquare;
 
-        lastMove.piece.coordinates.x = lastMove.origin.x;
-        lastMove.piece.coordinates.y = lastMove.origin.y;
+        GameHistory.setHistory(history);
+        GameHistoryView.removeLast();
+        piece.coordinates = origin;
+        movePiece(destination, origin, piece.display);
+        chessBoard.movePiece(destination, origin, piece);
+    }
 
-        // Repaint on board
+    static undoMoveListener(event: MouseEvent) {
+        GameHistory.undoMove();
     }
 
     static lastMove(): Movement {
         return GameHistory.getHistory().pop();
     }
 
-    static playFromTheStart(): void {
-        const TIME_BETWEEN_MOVES = 600;
+    static playFromTheStart(timeBetweenMoves = 600): void {
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
+        GameHistory.setHistory([]);
+        chessBoard.restartBoard();
+        GameHistoryView.clear();
+        setInterval(oneMove, timeBetweenMoves);
 
-        for (let i = 0; i < history.length; i++) {
-            setTimeout(() => {
-                const move: Movement = history.shift();
-                const piece = chessBoard.board[move.origin.x][move.origin.y].pieceOnSquare;
-                piece.move({ x: move.origin.x, y: move.origin.y });
-            }, TIME_BETWEEN_MOVES);
+        function oneMove(): void {
+            const move: Movement = history.shift();
+            if (!move) {
+                clearInterval(this);
+                return;
+            }
+            const piece = chessBoard.board[move.origin.x][move.origin.y].pieceOnSquare;
+            GameHistory.newMove(move);
+            GameHistoryView.append(move.notation);
+            piece.move({ x: move.destination.x, y: move.destination.y });
         }
+    }
+
+    static playFromTheStartListener(event: MouseEvent, timeBetweenMoves = 600): void {
+        GameHistory.playFromTheStart(timeBetweenMoves);
     }
 }
