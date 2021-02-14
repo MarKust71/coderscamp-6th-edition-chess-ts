@@ -187,6 +187,7 @@ export class King extends Piece {
         const rook = chessBoard.board[this.coordinates.x][rookOrigin.y].pieceOnSquare;
 
         chessBoard.movePiece(rookOrigin, rookDestination, rook);
+        rook.move(rookDestination);
         movePiece(rookOrigin, rookDestination, rook.display);
     }
 }

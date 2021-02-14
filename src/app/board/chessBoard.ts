@@ -10,9 +10,9 @@ import { Bishop } from '../pieces/bishop';
 import { Knight } from '../pieces/knight';
 import { Queen } from '../pieces/queen';
 import { unmarkLegalMoves } from '../../view/boardView/unmarkLegalMoves';
-import { touched } from '../../view/touched';
 import { Square } from '../square/square';
 import { BOARD_SIDE_LENGTH } from '../globals';
+import { paintPieces } from '../../view/boardView/paintPieces';
 
 export class ChessBoard {
     board: Board;
@@ -27,6 +27,16 @@ export class ChessBoard {
                 square.pieceOnSquare = undefined;
             }
         }
+    }
+
+    setBoard(board: Board): void {
+        this.board = board;
+    }
+
+    restartBoard() {
+        this.clearPieces();
+        this.setBoard(ChessBoard.pieceSetup(this.board));
+        paintPieces(chessBoard.board);
     }
 
     static boardSetup(): Board {
@@ -73,13 +83,12 @@ export class ChessBoard {
         return board;
     }
 
-    moveEvent({ currentTarget }: MouseEvent, originCoords: Coordinates): void {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { id }: any = currentTarget;
+    moveEvent(currentTarget: HTMLElement): void {
+        const { id } = currentTarget;
         const coordinates = JSON.parse(id);
+        const originCoords = JSON.parse(currentTarget.getAttribute('origin'));
         const piece = chessBoard.board[originCoords.x][originCoords.y].pieceOnSquare;
-
-        unmarkLegalMoves(this.board, touched);
+        unmarkLegalMoves(this.board);
         GameHistory.newMove(new Movement(piece, originCoords, coordinates, runTimer.timers));
         piece.move(coordinates);
         GameHistoryView.append(GameHistory.lastMove().notation);
@@ -89,7 +98,7 @@ export class ChessBoard {
         chessBoard.board[origin.x][origin.y].pieceOnSquare = undefined;
         this.board[destination.x][destination.y].pieceOnSquare = piece;
         // TODO: should it be fired for every piece? Maybe some condition for Pawn?
-        this.board[destination.x][destination.y].pieceOnSquare.promote();
+        if (piece instanceof Pawn) this.board[destination.x][destination.y].pieceOnSquare.promote();
     }
 }
 
