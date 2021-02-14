@@ -28,3 +28,5 @@ export const movesRelated: MovesRelatedToPiecePosition = {
 export const MOVE_INTERVAL = 600;
 
 export const INTERVAL_MS = 1000;
+
+export const INITIAL_DEFAULT_TIMER = 300;

@@ -1,13 +1,14 @@
 import { GameHistory } from '../app/gameHistory/gameHistory';
 import { runTimer } from '../app/timers/runTimer';
 import { PLAYTIME } from '../app/types';
+import { INITIAL_DEFAULT_TIMER } from '../app/globals';
 
-import { updatePlayerTimer } from './gameplaySidebar';
 import { updatePlayerNames } from './gameplaySidebar/updatePlayerNames';
 import { addPlayerNamesContainer } from './startSetupBox/addPlayerNamesContainer copy';
+import { updatePlayerTimer } from './gameplaySidebar/updatePlayerTimer';
 
 export const timer = function () {
-    let clockTimer = 300;
+    let clockTimer = INITIAL_DEFAULT_TIMER;
     const startGameButton = document.createElement('input');
     const wrapper = document.getElementById('wrapper');
     const startGameCover = document.createElement('div');

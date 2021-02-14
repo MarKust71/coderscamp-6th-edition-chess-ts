@@ -1,8 +1,8 @@
-import { updatePlayerTimer } from '../../view/gameplaySidebar';
 import { Side } from '../types';
 import { playerTimerClockSwitch } from '../../view/playerTimerClockSwitch';
 import winnerDialogBox from '../../view/winnerDialogBoxView';
 import { INTERVAL_MS } from '../globals';
+import { updatePlayerTimer } from '../../view/gameplaySidebar/updatePlayerTimer';
 
 type RunFirstTimerParams = {
     side: Side;
@@ -11,15 +11,17 @@ type RunFirstTimerParams = {
 
 export const runTimer = (function () {
     let runTimerSide: Side;
-    let runTimerClockTimerBlack: number;
-    let runTimerClockTimerWhite: number;
+    let runTimerClockTimerBlack = 0;
+    let runTimerClockTimerWhite = 0;
     let intervalId: NodeJS.Timeout;
-    const runFirstTimer = ({ side, clockTimer }: RunFirstTimerParams): void => {
+
+    const runFirstTimer = ({ side, clockTimer }: RunFirstTimerParams) => {
         runTimerSide = side;
         runTimerClockTimerBlack = clockTimer;
         runTimerClockTimerWhite = clockTimer;
         startInterval();
     };
+
     const startInterval = () => {
         playerTimerClockSwitch(runTimerSide);
         if (runTimerSide === Side.WHITE) {
@@ -50,6 +52,7 @@ export const runTimer = (function () {
         clearAllIntervals();
         startInterval();
     };
+
     return {
         runFirstTimer,
         setOpponentsTimer,
