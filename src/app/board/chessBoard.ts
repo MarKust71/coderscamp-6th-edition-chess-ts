@@ -97,7 +97,8 @@ export class ChessBoard {
     movePiece(origin: Coordinates, destination: Coordinates, piece: Piece) {
         chessBoard.board[origin.x][origin.y].pieceOnSquare = undefined;
         this.board[destination.x][destination.y].pieceOnSquare = piece;
-        // TODO: should it be fired for every piece? Maybe some condition for Pawn?
+        piece.coordinates.x = destination.x;
+        piece.coordinates.y = destination.y;
         if (piece instanceof Pawn) this.board[destination.x][destination.y].pieceOnSquare.promote();
     }
 }
