@@ -10,7 +10,6 @@ import { Bishop } from '../pieces/bishop';
 import { Knight } from '../pieces/knight';
 import { Queen } from '../pieces/queen';
 import { unmarkLegalMoves } from '../../view/boardView/unmarkLegalMoves';
-import { touched } from '../../view/touched';
 import { Square } from '../square/square';
 import { BOARD_SIDE_LENGTH } from '../globals';
 import { paintPieces } from '../../view/boardView/paintPieces';
