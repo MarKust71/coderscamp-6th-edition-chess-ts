@@ -1,7 +1,9 @@
-export const updatePlayerNames = () => {
-    const white = document.getElementById('whitePlayerNameInput') as HTMLInputElement;
-    document.getElementById('whitePlayerName').innerText = white.value;
+export interface UpdatePlayerNamesParams {
+    whitePlayerName: string;
+    blackPlayerName: string;
+}
 
-    const black = document.getElementById('blackPlayerNameInput') as HTMLInputElement;
-    document.getElementById('blackPlayerName').innerText = black.value;
+export const updatePlayerNames = ({ whitePlayerName, blackPlayerName }: UpdatePlayerNamesParams) => {
+    document.getElementById('whitePlayerName').innerText = whitePlayerName;
+    document.getElementById('blackPlayerName').innerText = blackPlayerName;
 };

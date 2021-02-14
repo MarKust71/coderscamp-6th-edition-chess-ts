@@ -6,6 +6,7 @@ import { INITIAL_DEFAULT_TIMER } from '../app/globals';
 import { updatePlayerNames } from './gameplaySidebar/updatePlayerNames';
 import { addPlayerNamesContainer } from './startSetupBox/addPlayerNamesContainer copy';
 import { updatePlayerTimer } from './gameplaySidebar/updatePlayerTimer';
+import { addPlayerNamesContainer } from './startSetupBox/addPlayerNamesContainer';
 
 export const timer = function () {
     let clockTimer = INITIAL_DEFAULT_TIMER;
@@ -54,7 +55,10 @@ export const timer = function () {
     wrapper.appendChild(startSetupBox);
 
     startGameButton.addEventListener('click', () => {
-        updatePlayerNames();
+        const whitePlayerName = document.getElementById('whitePlayerNameInput') as HTMLInputElement;
+        const blackPlayerName = document.getElementById('whitePlayerNameInput') as HTMLInputElement;
+        updatePlayerNames({ whitePlayerName: whitePlayerName.value, blackPlayerName: blackPlayerName.value });
+
         const { value } = document.getElementById('playTimeSelect') as HTMLInputElement;
         clockTimer = parseInt(value) * 60;
         updatePlayerTimer({ id: 'whitePlayerTimer', time: clockTimer });
