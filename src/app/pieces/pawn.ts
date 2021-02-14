@@ -30,10 +30,17 @@ export class Pawn extends Piece implements PawnModel {
     findLegalMoves = (): Coordinates[] => {
         const { x, y } = this.coordinates;
         const v = this.direction;
-        let possibleMoves: Array<Coordinates> = [];
+
+        let possibleMoves: Coordinates[] = [];
 
         if (x === (this.side === Side.WHITE ? 6 : 1)) {
             if (!chessBoard.board[x + v][y].pieceOnSquare && !chessBoard.board[x + v * 2][y].pieceOnSquare) {
+                // console.log(
+                //     'chessBoard.board[x + v][y]:',
+                //     chessBoard.board[x + v][y],
+                //     'chessBoard.board[x + v * 2][y]:',
+                //     chessBoard.board[x + v * 2][y],
+                // );
                 if (this.checkKingIsSafe({ x: x + v * 2, y })) {
                     possibleMoves.push({ x: x + v * 2, y });
                 }
@@ -46,8 +53,10 @@ export class Pawn extends Piece implements PawnModel {
             { x: x + v, y: y - 1 },
         ];
         probablyMoves.map((move) => {
-            // if (this.checkKingIsSafe(move.x, move.y)) {
+            // if (!chessBoard.board[move.x][move.y].pieceOnSquare) {
+            //     if (this.checkKingIsSafe({ x: move.x, y: move.y })) {
             possibleMoves.push(move);
+            // }
             // }
         });
 
