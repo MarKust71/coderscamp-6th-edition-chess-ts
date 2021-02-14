@@ -32,11 +32,10 @@ export class Pawn extends Piece implements PawnModel {
         const v = this.direction;
 
         const possibleMoves: Coordinates[] = [];
-        const testedMoves: Coordinates[] = [];
 
         if (x === (this.side === Side.WHITE ? 6 : 1)) {
             if (!chessBoard.board[x + v][y].pieceOnSquare && !chessBoard.board[x + v * 2][y].pieceOnSquare) {
-                testedMoves.push({ x: x + v * 2, y });
+                possibleMoves.push({ x: x + v * 2, y });
             }
         }
 
@@ -47,18 +46,14 @@ export class Pawn extends Piece implements PawnModel {
         ];
 
         probablyMoves.map((move) => {
-            if (move.y === y && !chessBoard.board[move.x][move.y].pieceOnSquare) testedMoves.push(move);
+            if (move.y === y && !chessBoard.board[move.x][move.y].pieceOnSquare) possibleMoves.push(move);
             if (chessBoard.board[move.x][move.y]) {
                 const piece = chessBoard.board[move.x][move.y].pieceOnSquare;
-                if (move.y !== y && piece && piece.side !== this.side) testedMoves.push(move);
+                if (move.y !== y && piece && piece.side !== this.side) possibleMoves.push(move);
             }
         });
 
-        testedMoves.map((move) => {
-            if (this.checkKingIsSafe(move)) possibleMoves.push(move);
-        });
-
-        return possibleMoves;
+        return possibleMoves.filter((move) => this.checkKingIsSafe(move));
     };
 
     promote(): void {
