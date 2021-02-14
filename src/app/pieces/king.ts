@@ -23,9 +23,26 @@ export class King extends Piece {
     }
 
     findLegalMoves = (): Array<Coordinates> => {
+        // const { x, y } = this.coordinates;
         let possibleMoves: Array<Coordinates> = [];
         const canMove = GameHistory.whoseTurn() === this.side;
-
+        //
+        //         movesRelated.KING.map((item) => {
+        //             for (let i = 1; i <= 7; i++) {
+        //                 if (x + item.x * i > -1 && x + item.x * i < 8 && y + item.y * i > -1 && y + item.y * i < 8) {
+        //                     const expectedX = x + item.x * i >= 0 && x + item.x * i < 8 ? x + item.x * i : undefined;
+        //                     const expectedY = y + item.y * i >= 0 && y + item.y * i < 8 ? y + item.y * i : undefined;
+        //                     if (typeof expectedX === 'number' && typeof expectedY === 'number') {
+        //                         const piece = chessBoard.board[expectedX][expectedY].pieceOnSquare;
+        //                         const isDestinationSafe = canMove ? this.isSafe({x: expectedX, y: expectedY}) : true;
+        //
+        //                         if (piece) {
+        //                             if (piece.side !== this.side && isDestinationSafe)
+        //                                 possibleMoves.push({x: expectedX, y: expectedY});
+        //                         } else if (isDestinationSafe) possibleMoves.push({x: expectedX, y: expectedY});
+        //                     }
+        //                 }
+        //             }
         for (let x = -1; x <= 1; x++) {
             const expectedX =
                 this.coordinates.x + x >= 0 && this.coordinates.x + x < 8 ? this.coordinates.x + x : undefined;

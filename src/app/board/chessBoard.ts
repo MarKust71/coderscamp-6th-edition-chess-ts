@@ -79,6 +79,8 @@ export class ChessBoard {
         for (let i = 0; i < 8; i++) {
             board[6][i].pieceOnSquare = new Pawn({ x: 6, y: i }, Side.WHITE);
             board[1][i].pieceOnSquare = new Pawn({ x: 1, y: i }, Side.BLACK);
+            // board[5][5].pieceOnSquare = new Pawn({ x: 5, y: 5 }, Side.BLACK);
+            // board[5][7].pieceOnSquare = new Pawn({ x: 5, y: 7 }, Side.BLACK);
         }
         return board;
     }

@@ -35,12 +35,12 @@ export class Pawn extends Piece implements PawnModel {
 
         if (x === (this.side === Side.WHITE ? 6 : 1)) {
             if (!chessBoard.board[x + v][y].pieceOnSquare && !chessBoard.board[x + v * 2][y].pieceOnSquare) {
-                // console.log(
-                //     'chessBoard.board[x + v][y]:',
-                //     chessBoard.board[x + v][y],
-                //     'chessBoard.board[x + v * 2][y]:',
-                //     chessBoard.board[x + v * 2][y],
-                // );
+                console.log(
+                    'chessBoard.board[x + v][y]:',
+                    chessBoard.board[x + v][y],
+                    'chessBoard.board[x + v * 2][y]:',
+                    chessBoard.board[x + v * 2][y],
+                );
                 if (this.checkKingIsSafe({ x: x + v * 2, y })) {
                     possibleMoves.push({ x: x + v * 2, y });
                 }
