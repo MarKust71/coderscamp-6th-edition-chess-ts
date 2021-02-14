@@ -6,7 +6,7 @@ import { Piece } from './piece';
 interface QueenModel {
     name: string;
     display: string;
-    findLegalMoves(): Array<Coordinates>;
+    findLegalMoves(): Coordinates[];
     // move: (coordinates: Coordinates) => void;
     checkKingIsSafe(expectedCoordinates: Coordinates): boolean;
 }
@@ -23,8 +23,8 @@ export class Queen extends Piece implements QueenModel {
 
     findLegalMoves = (): Coordinates[] => {
         const { x, y } = this.coordinates;
-        const possibleMoves: Array<Coordinates> = [];
-        const movesRelatedToPiecePosition: Array<Array<number>> = [
+        const possibleMoves: Coordinates[] = [];
+        const movesRelatedToPiecePosition: number[][] = [
             [1, 0],
             [-1, 0],
             [0, 1],

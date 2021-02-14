@@ -6,8 +6,7 @@ import { Piece } from './piece';
 interface BishopModel {
     name: string;
     display: string;
-    findLegalMoves(): Array<Coordinates>;
-    // move: (coordinates: Coordinates) => void;
+    findLegalMoves(): Coordinates[];
     checkKingIsSafe(expectedCoordinates: Coordinates): boolean;
 }
 
@@ -22,14 +21,14 @@ export class Bishop extends Piece implements BishopModel {
     }
 
     findLegalMoves = (): Coordinates[] => {
-        const movesRelatedToPiecePosition: Array<Array<number>> = [
+        const movesRelatedToPiecePosition: number[][] = [
             [-1, -1],
             [-1, 1],
             [1, 1],
             [1, -1],
         ];
         const { x, y } = this.coordinates;
-        const possibleMoves: Array<Coordinates> = [];
+        const possibleMoves: Coordinates[] = [];
 
         movesRelatedToPiecePosition.map((item) => {
             for (let i = 1; i <= 7; i++) {

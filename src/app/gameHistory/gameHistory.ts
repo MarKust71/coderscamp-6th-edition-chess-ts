@@ -82,7 +82,7 @@ export class Movement {
 }
 
 export class GameHistory {
-    static getHistory(): Array<Movement> {
+    static getHistory(): Movement[] {
         return JSON.parse(localStorage.getItem('history'));
     }
 
@@ -95,7 +95,7 @@ export class GameHistory {
 
     static gameStatus(check: boolean, stall: boolean): void {
         const history = GameHistory.getHistory();
-        let status = '';
+        let status;
         if (check) {
             if (stall) {
                 status = '#';
@@ -106,7 +106,7 @@ export class GameHistory {
         GameHistory.setHistory(history);
     }
 
-    static setHistory(history: Array<Movement>): void {
+    static setHistory(history: Movement[]): void {
         localStorage.setItem('history', JSON.stringify(history));
     }
 
@@ -119,14 +119,14 @@ export class GameHistory {
     }
 
     static newMove(move: Movement): void {
-        const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
+        const history: Movement[] = JSON.parse(localStorage.getItem('history'));
 
         history.push(move);
         localStorage.setItem('history', JSON.stringify(history));
     }
 
     static undoMove(): void {
-        const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
+        const history: Movement[] = JSON.parse(localStorage.getItem('history'));
         const { origin, destination } = history.pop();
         const piece = chessBoard.board[destination.x][destination.y].pieceOnSquare;
 
@@ -137,7 +137,7 @@ export class GameHistory {
         chessBoard.movePiece(destination, origin, piece);
     }
 
-    static undoMoveListener(event: MouseEvent) {
+    static undoMoveListener() {
         GameHistory.undoMove();
     }
 
@@ -146,7 +146,7 @@ export class GameHistory {
     }
 
     static playFromTheStart(timeBetweenMoves = 600): void {
-        const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
+        const history: Movement[] = JSON.parse(localStorage.getItem('history'));
         GameHistory.setHistory([]);
         chessBoard.restartBoard();
         GameHistoryView.clear();

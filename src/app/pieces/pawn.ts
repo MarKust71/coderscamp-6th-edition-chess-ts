@@ -9,7 +9,7 @@ import { Piece } from './piece';
 interface PawnModel {
     name: string;
     display: string;
-    findLegalMoves(): Array<Coordinates>;
+    findLegalMoves(): Coordinates[];
     promote: () => void;
     // enPassant: () => void;
     move: (coordinates: Coordinates) => void;

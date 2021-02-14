@@ -7,7 +7,7 @@ import { Piece } from './piece';
 interface KnightModel {
     name: string;
     display: string;
-    findLegalMoves(): Array<Coordinates>;
+    findLegalMoves(): Coordinates[];
     checkKingIsSafe(expectedCoordinates: Coordinates): boolean;
 }
 export class Knight extends Piece implements KnightModel {
@@ -21,7 +21,7 @@ export class Knight extends Piece implements KnightModel {
     }
     findLegalMoves = (): Coordinates[] => {
         const { x, y } = this.coordinates;
-        const possibleMoves: Array<Coordinates> = [];
+        const possibleMoves: Coordinates[] = [];
 
         movesRelated.KNIGHT.map((item) => {
             if (x + item.x > -1 && x + item.x < 8 && y + item.y > -1 && y + item.y < 8) {

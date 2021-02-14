@@ -22,8 +22,8 @@ export class King extends Piece {
         }
     }
 
-    findLegalMoves = (): Array<Coordinates> => {
-        let possibleMoves: Array<Coordinates> = [];
+    findLegalMoves = (): Coordinates[] => {
+        let possibleMoves: Coordinates[] = [];
         const canMove = GameHistory.whoseTurn() === this.side;
 
         for (let x = -1; x <= 1; x++) {
@@ -121,8 +121,8 @@ export class King extends Piece {
         }
     }
 
-    detectCastle(): Array<Coordinates> {
-        const possibleMoves: Array<Coordinates> = [];
+    detectCastle(): Coordinates[] {
+        const possibleMoves: Coordinates[] = [];
         const rooks = findRooks(this);
 
         if (!this.isSafe(this.coordinates) || this.hasMoved) return [];
@@ -154,7 +154,7 @@ export class King extends Piece {
             return true;
         }
 
-        function findRooks(king: King): Array<Rook> {
+        function findRooks(king: King): Rook[] {
             const rooks = [];
             for (const row of chessBoard.board) {
                 for (const square of row) {
