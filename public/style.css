@@ -159,7 +159,7 @@ html {
 .endGameBox,
 .promotionWindow {
     width: 60vh;
-    height: 30vh; /*było 30 */
+    height: 30vh; /* było 30 */
     display: flex;
     flex-wrap: wrap;
     align-content: center;
@@ -201,8 +201,6 @@ html {
     display: flex;
     flex-direction: column;
 }
-
-
 
 .startGameButton {
     border: 1px solid rgb(205, 205, 23);
@@ -309,7 +307,7 @@ html {
     .startSetupBox,
     .promoChoice {
         width: 40vh;
-        height: 25vh; /*było 25 */
+        height: 25vh; /* było 25 */
         padding: 0.5rem;
     }
 
@@ -379,7 +377,7 @@ html {
     .startSetupBox,
     .promoChoice {
         width: 26vh;
-        height: 18vh; /*było 18 */
+        height: 18vh; /* było 18 */
     }
 
     .setupBoxTitle {
