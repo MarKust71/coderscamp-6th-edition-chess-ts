@@ -1,6 +1,8 @@
 import { setupTimerTime } from '../app/timers/setupTimerTime';
+import { Side } from '../app/types';
 
 import { GameHistoryView } from './gameHistory';
+import { playerName } from './gameplaySidebar/playerName';
 import { timer } from './startSetupBox';
 import { timerView } from './timerView';
 import { gameControls } from './gameControls';
@@ -18,10 +20,12 @@ export const gameplaySidebar = (): void => {
     gameplaySidebar.id = 'gameplaySidebar';
     wrapper.appendChild(gameplaySidebar);
 
+    gameplaySidebar.appendChild(playerName('Player Black', Side.BLACK));
     gameplaySidebar.appendChild(timerView({ id: 'blackPlayerTimer' }));
     gameplaySidebar.appendChild(GameHistoryView.create());
     gameplaySidebar.appendChild(gameControls());
     gameplaySidebar.appendChild(timerView({ id: 'whitePlayerTimer' }));
+    gameplaySidebar.appendChild(playerName('Player White', Side.WHITE));
 
     // updatePlayerTimer({ id: 'blackPlayerTimer', time: timer().clockTimer });
     // updatePlayerTimer({ id: 'whitePlayerTimer', time: timer().clockTimer });

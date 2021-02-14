@@ -25,6 +25,6 @@ export const movesRelated: MovesRelatedToPiecePosition = {
     ],
 };
 
-export const INTERVAL_MS = 100;
-
 export const MOVE_INTERVAL = 600;
+
+export const INTERVAL_MS = 1000;
