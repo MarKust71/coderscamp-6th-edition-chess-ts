@@ -4,7 +4,6 @@ import { PLAYTIME } from '../app/types';
 import { INITIAL_DEFAULT_TIMER } from '../app/globals';
 
 import { updatePlayerNames } from './gameplaySidebar/updatePlayerNames';
-import { addPlayerNamesContainer } from './startSetupBox/addPlayerNamesContainer copy';
 import { updatePlayerTimer } from './gameplaySidebar/updatePlayerTimer';
 import { addPlayerNamesContainer } from './startSetupBox/addPlayerNamesContainer';
 
