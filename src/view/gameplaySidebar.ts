@@ -1,17 +1,16 @@
-import { setupTimerTime } from '../app/timers/setupTimerTime';
 import { Side } from '../app/types';
+import { INITIAL_DEFAULT_TIMER } from '../app/globals';
+import { timerTimeToString } from '../app/timers/timerTimeToString';
 
 import { GameHistoryView } from './gameHistory';
 import { playerName } from './gameplaySidebar/playerName';
-import { timer } from './startSetupBox';
 import { timerView } from './timerView';
 import { gameControls } from './gameControls';
+import { updatePlayerTimer } from './gameplaySidebar/updatePlayerTimer';
+import { timer } from './startSetupBox';
 
-export type UpdatePlayerTimerParams = {
-    id: string;
-    time: number;
-};
-setupTimerTime(timer().clockTimer);
+// TODO: strange way to invoke startSetupBox by calling `timer()`
+timerTimeToString(timer().clockTimer);
 
 export const gameplaySidebar = (): void => {
     const wrapper = document.getElementById('wrapper');
@@ -27,10 +26,6 @@ export const gameplaySidebar = (): void => {
     gameplaySidebar.appendChild(timerView({ id: 'whitePlayerTimer' }));
     gameplaySidebar.appendChild(playerName('Player White', Side.WHITE));
 
-    // updatePlayerTimer({ id: 'blackPlayerTimer', time: timer().clockTimer });
-    // updatePlayerTimer({ id: 'whitePlayerTimer', time: timer().clockTimer });
-};
-
-export const updatePlayerTimer = ({ id, time }: UpdatePlayerTimerParams): void => {
-    document.getElementById(id).innerHTML = setupTimerTime(time);
+    updatePlayerTimer({ id: 'blackPlayerTimer', time: INITIAL_DEFAULT_TIMER });
+    updatePlayerTimer({ id: 'whitePlayerTimer', time: INITIAL_DEFAULT_TIMER });
 };

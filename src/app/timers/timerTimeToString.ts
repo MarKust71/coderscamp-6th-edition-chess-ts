@@ -1,4 +1,4 @@
-export const setupTimerTime = (clockTimer: number): string => {
+export const timerTimeToString = (clockTimer: number): string => {
     let timeLeft: string;
     const minutes = Math.floor(clockTimer / 60);
     const seconds = clockTimer % 60;
