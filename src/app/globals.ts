@@ -25,4 +25,4 @@ export const movesRelated: MovesRelatedToPiecePosition = {
     ],
 };
 
-export const INTERVAL_MS = 100;
+export const INTERVAL_MS = 1000;
