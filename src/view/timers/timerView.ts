@@ -1,6 +1,9 @@
+import './styles.css';
+
 export type TimerViewParams = {
     id: string;
 };
+
 export const timerView = ({ id }: TimerViewParams): HTMLDivElement => {
     const playerTimer = document.createElement('div');
     playerTimer.className = id;
