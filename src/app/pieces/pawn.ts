@@ -31,19 +31,12 @@ export class Pawn extends Piece implements PawnModel {
         const { x, y } = this.coordinates;
         const v = this.direction;
 
-        let possibleMoves: Coordinates[] = [];
+        const possibleMoves: Coordinates[] = [];
+        const testedMoves: Coordinates[] = [];
 
         if (x === (this.side === Side.WHITE ? 6 : 1)) {
             if (!chessBoard.board[x + v][y].pieceOnSquare && !chessBoard.board[x + v * 2][y].pieceOnSquare) {
-                // console.log(
-                //     'chessBoard.board[x + v][y]:',
-                //     chessBoard.board[x + v][y],
-                //     'chessBoard.board[x + v * 2][y]:',
-                //     chessBoard.board[x + v * 2][y],
-                // );
-                if (this.checkKingIsSafe({ x: x + v * 2, y })) {
-                    possibleMoves.push({ x: x + v * 2, y });
-                }
+                testedMoves.push({ x: x + v * 2, y });
             }
         }
 
@@ -52,28 +45,17 @@ export class Pawn extends Piece implements PawnModel {
             { x: x + v, y: y + 1 },
             { x: x + v, y: y - 1 },
         ];
+
         probablyMoves.map((move) => {
-            // if (!chessBoard.board[move.x][move.y].pieceOnSquare) {
-            //     if (this.checkKingIsSafe({ x: move.x, y: move.y })) {
-            possibleMoves.push(move);
-            // }
-            // }
+            if (move.y === y && !chessBoard.board[move.x][move.y].pieceOnSquare) testedMoves.push(move);
+            if (chessBoard.board[move.x][move.y]) {
+                const piece = chessBoard.board[move.x][move.y].pieceOnSquare;
+                if (move.y !== y && piece && piece.side !== this.side) testedMoves.push(move);
+            }
         });
 
-        possibleMoves = possibleMoves.filter((move) => move.x >= 0 && move.x <= 7 && move.y >= 0 && move.y <= 7);
-        possibleMoves = possibleMoves.filter((move) => {
-            const piece = chessBoard.board[move.x][move.y].pieceOnSquare;
-            if (piece) return this.side !== piece.side;
-            return true;
-        });
-        possibleMoves = possibleMoves.filter((move) => {
-            const piece = chessBoard.board[move.x][move.y].pieceOnSquare;
-            if (piece) {
-                if (move.y === y) return false;
-                if (piece.coordinates.y !== y) return this.side !== piece.side;
-                return true;
-            }
-            return move.y === y;
+        testedMoves.map((move) => {
+            if (this.checkKingIsSafe(move)) possibleMoves.push(move);
         });
 
         return possibleMoves;
