@@ -5,6 +5,7 @@ import { Piece } from '../pieces/piece';
 import { createByName } from '../pieces/createByName';
 import { Timers } from '../timers/types';
 import { paintPieces } from '../../view/boardView/paintPieces';
+import { updatePlayerTimer } from '../../view/gameplaySidebar/updatePlayerTimer';
 
 export class Movement {
     piece: Piece;
@@ -130,7 +131,7 @@ export class GameHistory {
 
     static undoMove(): void {
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
-        const { origin, destination, destinationPiece } = history.pop();
+        const { origin, destination, destinationPiece, timers } = history.pop();
         const piece = chessBoard.board[destination.x][destination.y].pieceOnSquare;
 
         GameHistory.setHistory(history);
@@ -143,6 +144,8 @@ export class GameHistory {
             destinationPiece.side,
             destinationPiece.coordinates,
         );
+        updatePlayerTimer({ id: 'blackPlayerTimer', time: timers.blackTimer });
+        updatePlayerTimer({ id: 'whitePlayerTimer', time: timers.whiteTimer });
         paintPieces(chessBoard.board);
     }
 
