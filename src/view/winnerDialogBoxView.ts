@@ -17,7 +17,16 @@ export const winnerDialogBox = () => {
     const newGameButton = document.createElement('button');
     const dialogBox = document.createElement('div');
 
-    message.textContent = `${GameHistory.getHistory()[GameHistory.getHistory().length - 1].piece.side} is a winner!`;
+    if (GameHistory.getHistory().length) {
+        if (GameHistory.getHistory()[GameHistory.getHistory().length - 1].piece.side === 'white') {
+            message.textContent = `${document.getElementById('whitePlayerName').innerText} is a winner!`;
+        } else {
+            message.textContent = `${document.getElementById('blackPlayerName').innerText} is a winner!`;
+        }
+    } else {
+        message.textContent = 'No winner!';
+    }
+
     newGameButton.classList.add('startGameButton');
     newGameButton.textContent = 'New game';
     dialogBox.classList.add('endGameBox');
