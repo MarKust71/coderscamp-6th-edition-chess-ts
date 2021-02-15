@@ -38,7 +38,6 @@ export class Knight extends Piece implements KnightModel {
                 }
             }
         });
-
         return possibleMoves;
     };
 }

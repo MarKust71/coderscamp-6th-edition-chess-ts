@@ -5,6 +5,6 @@ export function undoMove(listener: (event: MouseEvent) => void): HTMLElement {
     button.addEventListener('click', (event) => {
         listener(event);
     });
-    button.textContent = 'Cofnij ruch';
+    button.textContent = 'Undo';
     return button;
 }

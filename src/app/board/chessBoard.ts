@@ -1,18 +1,18 @@
+import { unmarkLegalMoves } from '../../view/boardView/unmarkLegalMoves';
+import { paintPieces } from '../../view/boardView/paintPieces';
 import { GameHistoryView } from '../../view/gameHistory';
+import { GameHistory, Movement } from '../gameHistory/gameHistory';
+import { BOARD_SIDE_LENGTH } from '../globals';
+import { Bishop } from '../pieces/bishop';
 import { King } from '../pieces/king';
+import { Knight } from '../pieces/knight';
 import { Pawn } from '../pieces/pawn';
 import { Piece } from '../pieces/piece';
-import { Board, Coordinates, Side } from '../types';
-import { GameHistory, Movement } from '../gameHistory/gameHistory';
-import { runTimer } from '../timers/runTimer';
-import { Rook } from '../pieces/rook';
-import { Bishop } from '../pieces/bishop';
-import { Knight } from '../pieces/knight';
 import { Queen } from '../pieces/queen';
-import { unmarkLegalMoves } from '../../view/boardView/unmarkLegalMoves';
+import { Rook } from '../pieces/rook';
 import { Square } from '../square/square';
-import { BOARD_SIDE_LENGTH } from '../globals';
-import { paintPieces } from '../../view/boardView/paintPieces';
+import { runTimer } from '../timers/runTimer';
+import { Board, Coordinates, Side } from '../types';
 
 export class ChessBoard {
     board: Board;
@@ -97,9 +97,23 @@ export class ChessBoard {
     movePiece(origin: Coordinates, destination: Coordinates, piece: Piece) {
         chessBoard.board[origin.x][origin.y].pieceOnSquare = undefined;
         this.board[destination.x][destination.y].pieceOnSquare = piece;
+        if (piece instanceof King && Math.abs(origin.y - destination.y) == 2) {
+            piece.castle(destination);
+        }
         piece.coordinates.x = destination.x;
         piece.coordinates.y = destination.y;
         if (piece instanceof Pawn) this.board[destination.x][destination.y].pieceOnSquare.promote();
+    }
+
+    findKing(side: Side): King {
+        for (const row of this.board) {
+            for (const square of row) {
+                const piece = square.pieceOnSquare;
+                if (piece && piece.side === side && piece instanceof King) {
+                    return piece;
+                }
+            }
+        }
     }
 }
 
