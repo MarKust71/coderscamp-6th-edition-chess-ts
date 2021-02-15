@@ -6,6 +6,8 @@ import { createByName } from '../pieces/createByName';
 import { Timers } from '../timers/types';
 import { paintPieces } from '../../view/boardView/paintPieces';
 import { updatePlayerTimer } from '../../view/gameplaySidebar/updatePlayerTimer';
+import { playerTimerClockSwitch } from '../../view/playerTimerClockSwitch';
+import { runTimer } from '../timers/runTimer';
 
 export class Movement {
     piece: Piece;
@@ -139,13 +141,13 @@ export class GameHistory {
 
         piece.coordinates = origin;
         chessBoard.movePiece(destination, origin, piece);
-        chessBoard.board[destinationPiece.coordinates.x][destinationPiece.coordinates.y].pieceOnSquare = createByName(
-            destinationPiece.name,
-            destinationPiece.side,
-            destinationPiece.coordinates,
-        );
-        updatePlayerTimer({ id: 'blackPlayerTimer', time: timers.blackTimer });
-        updatePlayerTimer({ id: 'whitePlayerTimer', time: timers.whiteTimer });
+        if (destinationPiece) {
+            chessBoard.board[destinationPiece.coordinates.x][
+                destinationPiece.coordinates.y
+            ].pieceOnSquare = createByName(destinationPiece.name, destinationPiece.side, destinationPiece.coordinates);
+        }
+        runTimer.setOpponentsTimer();
+        playerTimerClockSwitch(GameHistory.whoseTurn());
         paintPieces(chessBoard.board);
     }
 
