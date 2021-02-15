@@ -5,9 +5,10 @@ import { Piece } from '../pieces/piece';
 import { createByName } from '../pieces/createByName';
 import { Timers } from '../timers/types';
 import { paintPieces } from '../../view/boardView/paintPieces';
-import { updatePlayerTimer } from '../../view/gameplaySidebar/updatePlayerTimer';
 import { playerTimerClockSwitch } from '../../view/playerTimerClockSwitch';
 import { runTimer } from '../timers/runTimer';
+import { Pawn } from '../pieces/pawn';
+import { addPiece } from '../../view/boardView/addPiece';
 
 export class Movement {
     piece: Piece;
@@ -57,7 +58,7 @@ export class Movement {
             if (
                 lastMove &&
                 lastMove.piece.name === Name.PAWN &&
-                Math.abs(lastMove.origin.x - lastMove.piece.coordinates.x) === 2
+                Math.abs(lastMove.origin.x - lastMove.destination.x) === 2
             ) {
                 special = '(e.p.)';
             }
@@ -133,7 +134,7 @@ export class GameHistory {
 
     static undoMove(): void {
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
-        const { origin, destination, destinationPiece, timers } = history.pop();
+        const { origin, destination, destinationPiece, notation } = history.pop();
         const piece = chessBoard.board[destination.x][destination.y].pieceOnSquare;
 
         GameHistory.setHistory(history);
@@ -141,11 +142,17 @@ export class GameHistory {
 
         piece.coordinates = origin;
         chessBoard.movePiece(destination, origin, piece);
+
         if (destinationPiece) {
             chessBoard.board[destinationPiece.coordinates.x][
                 destinationPiece.coordinates.y
             ].pieceOnSquare = createByName(destinationPiece.name, destinationPiece.side, destinationPiece.coordinates);
+        } else if (notation.includes('e.p')) {
+            const pawn = new Pawn({ x: origin.x, y: destination.y }, piece.side === 'white' ? Side.BLACK : Side.WHITE);
+            chessBoard.addPiece(pawn);
+            addPiece(pawn);
         }
+
         runTimer.setOpponentsTimer();
         playerTimerClockSwitch(GameHistory.whoseTurn());
         paintPieces(chessBoard.board);

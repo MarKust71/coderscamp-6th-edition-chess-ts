@@ -11,7 +11,6 @@ interface PieceModel {
     name: Name;
     move: (coordinates: Coordinates) => void;
     findLegalMoves(): Coordinates[];
-    promote?(): void;
     checkKingIsSafe(expectedCoordinates: Coordinates): boolean;
 }
 
@@ -32,15 +31,10 @@ export class Piece implements PieceModel {
         return [];
     };
 
-    promote() {
-        console.log('promote entered');
-    }
-
     move(coordinates: Coordinates): void {
         this.hasMoved = true;
         movePiece(this.coordinates, coordinates, this.display);
         chessBoard.movePiece(this.coordinates, coordinates, this);
-        this.coordinates = coordinates;
 
         const enemyKing = chessBoard.findKing(this.side === Side.WHITE ? Side.BLACK : Side.WHITE);
         const check = enemyKing.underCheck();
