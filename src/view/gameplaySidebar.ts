@@ -4,7 +4,7 @@ import { timerTimeToString } from '../app/timers/timerTimeToString';
 
 import { GameHistoryView } from './gameHistory';
 import { playerName } from './gameplaySidebar/playerName';
-import { timerView } from './timerView';
+import { timerView } from './timers/timerView';
 import { gameControls } from './gameControls';
 import { updatePlayerTimer } from './gameplaySidebar/updatePlayerTimer';
 import { timer } from './startSetupBox';
