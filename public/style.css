@@ -81,7 +81,7 @@ html {
 #gameplaySidebar {
     position: relative;
     display: grid;
-    grid-template-rows: 1fr 1fr 3fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 5fr 1fr 1fr 1fr;
     justify-content: center;
     align-items: center;
     height: calc(80vh + 4px);
@@ -91,33 +91,53 @@ html {
 }
 
 .gameHistoryRecording {
-    height: 54vh;
+    height: 100%;
     width: 100%;
-    font-size: 4vh;
+    font-size: 1.3rem;
     text-align: center;
 }
 
 .listOfMoves {
-    padding: 10px;
+    padding: 6px;
     width: 100%;
-    height: calc(100% - 10vh);
     overflow-y: scroll;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    font-size: 1.8rem;
+    font-size: 0.85rem;
     grid-auto-rows: min-content;
 }
 
 .listOfMoves div {
-    margin: 0.3rem auto;
+    margin: 0.1rem auto;
+}
+
+.blackPlayerTimerContainer,
+.whitePlayerTimerContainer {
+    width: 100%;
+    text-align: center;
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blackPlayerTimer,
+.whitePlayerTimer {
+    background: #ddd;
+    min-width: 80%;
+    min-height: 80%;
+    border: 1px solid rgb(238, 238, 36);
+    border-radius: 5px;
+    box-shadow: inset 0 0 5px rgb(238, 238, 36);
+    font-size: 5vh;
 }
 
 #blackPlayerName,
 #whitePlayerName {
-    padding: 10%;
+    padding: 0.5rem;
     width: 100%;
     display: grid;
-    font-size: 1.8rem;
+    font-size: 1.3rem;
     font-weight: bold;
     text-align: center;
 }
@@ -138,7 +158,7 @@ html {
 .endGameBox,
 .promotionWindow {
     width: 60vh;
-    height: 30vh;
+    height: 40vh;
     display: flex;
     flex-wrap: wrap;
     align-content: center;
@@ -156,6 +176,29 @@ html {
 
 .setupBoxTitle {
     font-size: 5vh;
+}
+
+#playerNamesContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.addPlayerNameContainer {
+    width: 45%;
+}
+
+.addPlayerNameContainer label {
+    width: 45%;
+}
+
+.addPlayerNameContainer label::first-letter {
+    text-transform: uppercase;
+}
+
+.addPlayerNameContainer input {
+    width: 90%;
 }
 
 #playTimeForm {
@@ -248,11 +291,12 @@ html {
 }
 
 .button {
+    padding: 0.1rem;
     border: 1px solid rgb(205, 205, 23);
     border-radius: 5px;
     box-shadow: inset 0 0 5px rgb(205, 205, 23);
-    font-size: 1.2rem;
-    margin: 0.3rem;
+    font-size: 0.85rem;
+    margin: 0.1rem;
 }
 
 .button:hover,
@@ -271,17 +315,13 @@ html {
         height: calc(50vh + 4px);
     }
 
-    .gameHistoryRecording {
-        height: 38vh;
-    }
-
     .recordingListMoves {
         font-size: 3vh;
     }
 
     .blackPlayerTimerContainer,
     .whitePlayerTimerContainer {
-        width: 14vw;
+        width: 100%;
     }
 
     .blackPlayerTimer,
@@ -303,15 +343,20 @@ html {
         display: block;
     }
 
+    .endGameCover,
     .startSetupBox,
     .promoChoice {
         width: 40vh;
-        height: 25vh;
+        height: 32vh;
         padding: 0.5rem;
     }
 
     .setupBoxTitle {
         font-size: 4vh;
+    }
+
+    .addPlayerNameContainer label {
+        font-size: 2vh;
     }
 
     #playTimeForm div {
@@ -336,9 +381,29 @@ html {
         font-size: 5.5vh;
         display: block;
     }
+
+    #blackPlayerName,
+    #whitePlayerName {
+        font-size: 0.75rem;
+        padding: 0.25rem;
+    }
+
+    .button {
+        font-size: 0.6rem;
+        padding: 0;
+    }
+
+    .gameHistoryRecording {
+        font-size: 1rem;
+    }
+
+    .listOfMoves {
+        padding: 3px;
+        font-size: 0.7rem;
+    }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 420px) {
     #board {
         min-width: 35vh;
         min-height: 35vh;
@@ -348,17 +413,13 @@ html {
         height: calc(35vh + 4px);
     }
 
-    .gameHistoryRecording {
-        height: 26.6vh;
-    }
-
     .recordingListMoves {
         font-size: 2vh;
     }
 
     .blackPlayerTimerContainer,
     .whitePlayerTimerContainer {
-        width: 12vw;
+        width: 100%;
     }
 
     .blackPlayerTimer,
@@ -373,10 +434,15 @@ html {
         font-size: 3.2vh;
     }
 
+    .endGameCover,
     .startSetupBox,
     .promoChoice {
-        width: 26vh;
-        height: 18vh;
+        width: 30vh;
+        height: 24vh;
+    }
+
+    .addPlayerNameContainer label {
+        font-size: 1.5vh;
     }
 
     .setupBoxTitle {
@@ -408,17 +474,23 @@ html {
     .promoChoiceItem {
         font-size: 4vh;
     }
-}
 
-.addPlayerNameContainer {
-    display: flex;
-    flex-direction: column;
-}
+    #blackPlayerName,
+    #whitePlayerName {
+        font-size: 0.6rem;
+    }
 
-#playerNamesContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 50%;
-    margin-bottom: 8px;
+    .gameHistoryRecording {
+        font-size: 0.7rem;
+    }
+
+    .button {
+        font-size: 0.6rem;
+        padding: 0;
+    }
+
+    .listOfMoves {
+        padding: 1px;
+        font-size: 0.5rem;
+    }
 }

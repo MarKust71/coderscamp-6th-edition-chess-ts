@@ -27,6 +27,8 @@ export const timer = function () {
     setupBoxTitle.appendChild(title);
     startSetupBox.appendChild(setupBoxTitle);
 
+    startSetupBox.appendChild(addPlayerNamesContainer());
+
     const playTimeForm = document.createElement('div');
     playTimeForm.id = 'playTimeForm';
     const playTimeTitle = document.createTextNode('Round time:  ');
@@ -45,8 +47,6 @@ export const timer = function () {
         playTimeSelect.appendChild(timeOption);
     }
 
-    startSetupBox.appendChild(addPlayerNamesContainer());
-
     startGameButton.setAttribute('type', 'submit');
     startGameButton.className = 'startGameButton';
     startGameButton.value = 'Start game';
@@ -55,7 +55,7 @@ export const timer = function () {
 
     startGameButton.addEventListener('click', () => {
         const whitePlayerName = document.getElementById('whitePlayerNameInput') as HTMLInputElement;
-        const blackPlayerName = document.getElementById('whitePlayerNameInput') as HTMLInputElement;
+        const blackPlayerName = document.getElementById('blackPlayerNameInput') as HTMLInputElement;
         updatePlayerNames({ whitePlayerName: whitePlayerName.value, blackPlayerName: blackPlayerName.value });
 
         const { value } = document.getElementById('playTimeSelect') as HTMLInputElement;
