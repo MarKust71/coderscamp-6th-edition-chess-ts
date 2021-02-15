@@ -1,3 +1,4 @@
+import { defaultPlayerNames } from '../../app/startSetupBox/defaultPlayerNames';
 import { Side } from '../../app/types';
 
 export const addPlayerNameContainer = (side: Side) => {
@@ -10,7 +11,8 @@ export const addPlayerNameContainer = (side: Side) => {
     const playerNameInput = document.createElement('input');
     playerNameInput.id = `${side === Side.WHITE ? 'white' : 'black'}PlayerNameInput`;
     playerNameInput.setAttribute('type', 'text');
-    playerNameInput.defaultValue = `Player ${side === Side.WHITE ? 'White' : 'Black'}`;
+
+    playerNameInput.defaultValue = defaultPlayerNames(side);
 
     playerNameContainer.appendChild(playerNameLabel);
     playerNameContainer.appendChild(playerNameInput);
