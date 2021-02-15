@@ -6,6 +6,6 @@ export function playFromTheStart(listener: (event: MouseEvent, interval: number)
     button.addEventListener('click', (event) => {
         listener(event, MOVE_INTERVAL);
     });
-    button.textContent = 'Odtwórz partię';
+    button.textContent = 'Restore';
     return button;
 }
