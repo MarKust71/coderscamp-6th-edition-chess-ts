@@ -10,6 +10,7 @@ export const addPlayerNameContainer = (side: Side) => {
     const playerNameInput = document.createElement('input');
     playerNameInput.id = `${side === Side.WHITE ? 'white' : 'black'}PlayerNameInput`;
     playerNameInput.setAttribute('type', 'text');
+    playerNameInput.defaultValue = `Player ${side === Side.WHITE ? 'White' : 'Black'}`;
 
     playerNameContainer.appendChild(playerNameLabel);
     playerNameContainer.appendChild(playerNameInput);
