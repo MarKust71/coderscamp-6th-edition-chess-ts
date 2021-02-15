@@ -95,7 +95,7 @@ export class GameHistory {
 
     static gameStatus(check: boolean, stall: boolean): void {
         const history = GameHistory.getHistory();
-        let status = '';
+        let status;
         if (check) {
             if (stall) {
                 status = '#';
@@ -137,7 +137,7 @@ export class GameHistory {
         chessBoard.movePiece(destination, origin, piece);
     }
 
-    static undoMoveListener(event: MouseEvent) {
+    static undoMoveListener() {
         GameHistory.undoMove();
     }
 
