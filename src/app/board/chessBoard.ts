@@ -12,7 +12,8 @@ import { Queen } from '../pieces/queen';
 import { Rook } from '../pieces/rook';
 import { Square } from '../square/square';
 import { runTimer } from '../timers/runTimer';
-import { Board, Coordinates, Side } from '../types';
+import { Board, Coordinates, Side, Name } from '../types';
+import { removePiece } from '../../view/boardView/removePiece';
 
 export class ChessBoard {
     board: Board;
@@ -95,14 +96,33 @@ export class ChessBoard {
     }
 
     movePiece(origin: Coordinates, destination: Coordinates, piece: Piece) {
+        if (
+            piece.name === Name.PAWN &&
+            origin.x !== destination.x &&
+            origin.y !== destination.y &&
+            !chessBoard.board[destination.x][destination.y].pieceOnSquare
+        ) {
+            const pawnCoordinates = { x: origin.x, y: destination.y };
+            chessBoard.removePiece(pawnCoordinates);
+            removePiece(pawnCoordinates);
+        }
+
         chessBoard.board[origin.x][origin.y].pieceOnSquare = undefined;
         this.board[destination.x][destination.y].pieceOnSquare = piece;
         if (piece instanceof King && Math.abs(origin.y - destination.y) == 2) {
             piece.castle(destination);
         }
-        piece.coordinates.x = destination.x;
-        piece.coordinates.y = destination.y;
-        if (piece instanceof Pawn) this.board[destination.x][destination.y].pieceOnSquare.promote();
+
+        piece.coordinates = destination;
+        if (piece instanceof Pawn) piece.promote();
+    }
+
+    removePiece(coordinates: Coordinates): void {
+        this.board[coordinates.x][coordinates.y].pieceOnSquare = undefined;
+    }
+
+    addPiece(piece: Piece) {
+        this.board[piece.coordinates.x][piece.coordinates.y].pieceOnSquare = piece;
     }
 
     findKing(side: Side): King {

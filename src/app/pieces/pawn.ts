@@ -3,6 +3,7 @@ import { chessBoard } from '../board/chessBoard';
 import { createPromotionWindowView } from '../../view/pawnPromotion/createPromotionWindowView';
 import { switchPieces } from '../../view/pawnPromotion/switchPieces';
 import { showPromotionWindow } from '../../view/pawnPromotion/showPromotionWindow';
+import { GameHistory } from '../gameHistory/gameHistory';
 
 import { Piece } from './piece';
 
@@ -11,7 +12,6 @@ interface PawnModel {
     display: string;
     findLegalMoves(): Array<Coordinates>;
     promote: () => void;
-    // enPassant: () => void;
     move: (coordinates: Coordinates) => void;
 }
 
@@ -30,7 +30,7 @@ export class Pawn extends Piece implements PawnModel {
     findLegalMoves = (): Coordinates[] => {
         const { x, y } = this.coordinates;
         const v = this.direction;
-
+        const lastMove = GameHistory.lastMove();
         const possibleMoves: Coordinates[] = [];
 
         if (x === (this.side === Side.WHITE ? 6 : 1)) {
@@ -53,6 +53,17 @@ export class Pawn extends Piece implements PawnModel {
             }
         });
 
+        if (
+            lastMove &&
+            lastMove.piece.name === Name.PAWN &&
+            Math.abs(lastMove.origin.x - lastMove.destination.x) === 2 &&
+            Math.abs(lastMove.piece.coordinates.y - this.coordinates.y) === 1 &&
+            lastMove.destination.x === this.coordinates.x
+        ) {
+            const direction = (lastMove.origin.x - lastMove.destination.x) / 2;
+            possibleMoves.push({ x: lastMove.origin.x - direction, y: lastMove.piece.coordinates.y });
+        }
+
         return possibleMoves.filter((move) => this.checkKingIsSafe(move));
     };
 
@@ -65,6 +76,4 @@ export class Pawn extends Piece implements PawnModel {
             showPromotionWindow(promotionWindow);
         }
     }
-
-    // enPassant(): void {}
 }
