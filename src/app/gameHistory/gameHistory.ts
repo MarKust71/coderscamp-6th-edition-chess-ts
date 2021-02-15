@@ -1,9 +1,10 @@
-import { Coordinates, Side, Name } from '../types';
-import { Piece } from '../pieces/piece';
-import { chessBoard } from '../board/chessBoard';
+import { Coordinates, Name, Side } from '../types';
 import { GameHistoryView } from '../../view/gameHistory';
+import { chessBoard } from '../board/chessBoard';
+import { Piece } from '../pieces/piece';
+import { createByName } from '../pieces/createByName';
 import { Timers } from '../timers/types';
-import { movePiece } from '../../view/boardView/movePiece';
+import { paintPieces } from '../../view/boardView/paintPieces';
 
 export class Movement {
     piece: Piece;
@@ -11,12 +12,14 @@ export class Movement {
     destination: Coordinates;
     timers: Timers;
     notation: string;
+    destinationPiece: Piece;
 
     constructor(piece: Piece, origin: Coordinates, destination: Coordinates, timers: Timers) {
         this.piece = piece;
         this.origin = origin;
         this.timers = timers;
         this.destination = destination;
+        this.destinationPiece = chessBoard.board[destination.x][destination.y].pieceOnSquare;
         this.notation = Movement.createNotation(piece, origin, destination);
     }
 
@@ -127,14 +130,20 @@ export class GameHistory {
 
     static undoMove(): void {
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
-        const { origin, destination } = history.pop();
+        const { origin, destination, destinationPiece } = history.pop();
         const piece = chessBoard.board[destination.x][destination.y].pieceOnSquare;
 
         GameHistory.setHistory(history);
         GameHistoryView.removeLast();
+
         piece.coordinates = origin;
-        movePiece(destination, origin, piece.display);
         chessBoard.movePiece(destination, origin, piece);
+        chessBoard.board[destinationPiece.coordinates.x][destinationPiece.coordinates.y].pieceOnSquare = createByName(
+            destinationPiece.name,
+            destinationPiece.side,
+            destinationPiece.coordinates,
+        );
+        paintPieces(chessBoard.board);
     }
 
     static undoMoveListener(event: MouseEvent) {
