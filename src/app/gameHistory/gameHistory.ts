@@ -58,7 +58,8 @@ export class Movement {
             if (
                 lastMove &&
                 lastMove.piece.name === Name.PAWN &&
-                Math.abs(lastMove.origin.x - lastMove.destination.x) === 2
+                Math.abs(lastMove.origin.x - lastMove.destination.x) === 2 &&
+                lastMove.destination.x === piece.coordinates.x
             ) {
                 special = '(e.p.)';
             }

@@ -3,8 +3,9 @@ import { Pawn } from '../src/app/pieces/pawn';
 import { King } from '../src/app/pieces/king';
 import { Side } from '../src/app/types';
 
-// import { LocalStorageMock } from './mocks/localStorageMock';
+import { LocalStorageMock } from './mocks/localStorageMock';
 
+global.localStorage = new LocalStorageMock();
 test('King construction with correct input.', () => {
     const defaultWhiteKing = new King({ x: -1, y: -1 }, Side.WHITE);
     const whiteKing = new King({ x: 3, y: 4 }, Side.WHITE);
@@ -45,7 +46,6 @@ test('King construction with correct input.', () => {
 });
 
 test('On edge legal moves detection.', () => {
-    // global.localStorage = new LocalStorageMock();
     localStorage.setItem('history', '[]');
 
     const kingInCorner = new King({ x: 0, y: 0 }, Side.WHITE);
@@ -107,7 +107,6 @@ test('On edge legal moves detection.', () => {
 });
 
 test('Same side pieces blocks legal moves.', () => {
-    // global.localStorage = new LocalStorageMock();
     localStorage.setItem('history', '[]');
 
     const king = new King({ x: 4, y: 4 }, Side.WHITE);
@@ -131,7 +130,6 @@ test('Same side pieces blocks legal moves.', () => {
 });
 
 test('Allows attacking opponents pieces.', () => {
-    // global.localStorage = new LocalStorageMock();
     localStorage.setItem('history', '[]');
 
     const king = new King({ x: 4, y: 4 }, Side.WHITE);
@@ -154,7 +152,6 @@ test('Allows attacking opponents pieces.', () => {
 });
 
 test("Don't allow moving on squares and attacking pieces that are backed by enemy.", () => {
-    // global.localStorage = new LocalStorageMock();
     localStorage.setItem('history', '[]');
 
     const king = new King({ x: 4, y: 4 }, Side.WHITE);
@@ -179,7 +176,6 @@ test("Don't allow moving on squares and attacking pieces that are backed by enem
 });
 
 test('Detects if is under the check.', () => {
-    // global.localStorage = new LocalStorageMock();
     localStorage.setItem('history', '[]');
 
     const kingWhite = new King({ x: 4, y: 4 }, Side.WHITE);
@@ -198,7 +194,3 @@ test('Detects if is under the check.', () => {
     expect(kingWhite.underCheck()).toEqual(true);
     expect(kingBlack.underCheck()).toEqual(false);
 });
-
-//test("Making castle.",()=>{})
-
-//test("Detects stale.",()=>{})

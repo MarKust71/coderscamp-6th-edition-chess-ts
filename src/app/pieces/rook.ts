@@ -8,8 +8,6 @@ interface RookModel {
     name: string;
     display: string;
     findLegalMoves(): Coordinates[];
-    // move: (coordinates: Coordinates) => void;
-    // checkKingIsSafe(expectedCoordinates: Coordinates): boolean;
 }
 export class Rook extends Piece implements RookModel {
     name: Name;
