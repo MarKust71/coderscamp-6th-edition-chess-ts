@@ -12,22 +12,21 @@ import { addPiece } from '../../view/boardView/addPiece';
 
 export class Movement {
     piece: Piece;
-    origin: Coordinates;
     destination: Coordinates;
     timers: Timers;
     notation: string;
     destinationPiece: Piece;
 
-    constructor(piece: Piece, origin: Coordinates, destination: Coordinates, timers: Timers) {
+    constructor(piece: Piece, destination: Coordinates, timers: Timers) {
         this.piece = piece;
-        this.origin = origin;
         this.timers = timers;
         this.destination = destination;
         this.destinationPiece = chessBoard.board[destination.x][destination.y].pieceOnSquare;
-        this.notation = Movement.createNotation(piece, origin, destination);
+        this.notation = Movement.createNotation(piece, destination);
     }
 
-    static createNotation(piece: Piece, origin: Coordinates, destination: Coordinates): string {
+    static createNotation(piece: Piece, destination: Coordinates): string {
+        const origin = piece.coordinates;
         const secondPieceCoordinates = sameNameFigureAbleToMove();
         let columnOrRowSymbol = '';
         let special = '';
@@ -58,7 +57,7 @@ export class Movement {
             if (
                 lastMove &&
                 lastMove.piece.name === Name.PAWN &&
-                Math.abs(lastMove.origin.x - lastMove.destination.x) === 2 &&
+                Math.abs(lastMove.piece.coordinates.x - lastMove.destination.x) === 2 &&
                 lastMove.destination.x === piece.coordinates.x
             ) {
                 special = '(e.p.)';
@@ -135,21 +134,24 @@ export class GameHistory {
 
     static undoMove(): void {
         const history: Array<Movement> = JSON.parse(localStorage.getItem('history'));
-        const { origin, destination, destinationPiece, notation } = history.pop();
-        const piece = chessBoard.board[destination.x][destination.y].pieceOnSquare;
+        const { piece, destination, destinationPiece, notation } = history.pop();
+        const pieceAtDestination = chessBoard.board[destination.x][destination.y].pieceOnSquare;
 
         GameHistory.setHistory(history);
         GameHistoryView.removeLast();
 
-        piece.coordinates = origin;
-        chessBoard.movePiece(destination, origin, piece);
+        pieceAtDestination.coordinates = piece.coordinates;
+        chessBoard.movePiece(destination, piece.coordinates, pieceAtDestination);
 
         if (destinationPiece) {
             chessBoard.board[destinationPiece.coordinates.x][
                 destinationPiece.coordinates.y
             ].pieceOnSquare = createByName(destinationPiece.name, destinationPiece.side, destinationPiece.coordinates);
         } else if (notation.includes('e.p')) {
-            const pawn = new Pawn({ x: origin.x, y: destination.y }, piece.side === 'white' ? Side.BLACK : Side.WHITE);
+            const pawn = new Pawn(
+                { x: piece.coordinates.x, y: destination.y },
+                pieceAtDestination.side === 'white' ? Side.BLACK : Side.WHITE,
+            );
             chessBoard.addPiece(pawn);
             addPiece(pawn);
         }
@@ -180,7 +182,7 @@ export class GameHistory {
                 clearInterval(this);
                 return;
             }
-            const piece = chessBoard.board[move.origin.x][move.origin.y].pieceOnSquare;
+            const piece = chessBoard.board[move.piece.coordinates.x][move.piece.coordinates.y].pieceOnSquare;
             GameHistory.newMove(move);
             GameHistoryView.append(move.notation);
             piece.move({ x: move.destination.x, y: move.destination.y });
