@@ -9,7 +9,6 @@ import { gameControls } from './gameControls';
 import { updatePlayerTimer } from './gameplaySidebar/updatePlayerTimer';
 import { timer } from './startSetupBox';
 
-// TODO: strange way to invoke startSetupBox by calling `timer()`
 timerTimeToString(timer().clockTimer);
 
 export const gameplaySidebar = (): void => {

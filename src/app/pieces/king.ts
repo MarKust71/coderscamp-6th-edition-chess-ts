@@ -11,7 +11,7 @@ export class King extends Piece {
         super(coordinates, side);
         this.validateInput(coordinates, side);
         this.name = Name.KING;
-        this.display = `<i class="fas fa-chess-king ${side}"></i>`; // fontawesome king
+        this.display = `<i class="fas fa-chess-king ${side}"></i>`;
 
         if (coordinates.x === -1 || coordinates.y === -1) {
             this.coordinates.x = side === 'white' ? 7 : 0;

@@ -8,7 +8,6 @@ interface QueenModel {
     name: string;
     display: string;
     findLegalMoves(): Array<Coordinates>;
-    // move: (coordinates: Coordinates) => void;
     checkKingIsSafe(expectedCoordinates: Coordinates): boolean;
 }
 

@@ -56,12 +56,12 @@ export class Pawn extends Piece implements PawnModel {
         if (
             lastMove &&
             lastMove.piece.name === Name.PAWN &&
-            Math.abs(lastMove.origin.x - lastMove.destination.x) === 2 &&
+            Math.abs(lastMove.piece.coordinates.x - lastMove.destination.x) === 2 &&
             Math.abs(lastMove.piece.coordinates.y - this.coordinates.y) === 1 &&
             lastMove.destination.x === this.coordinates.x
         ) {
-            const direction = (lastMove.origin.x - lastMove.destination.x) / 2;
-            possibleMoves.push({ x: lastMove.origin.x - direction, y: lastMove.piece.coordinates.y });
+            const direction = (lastMove.piece.coordinates.x - lastMove.destination.x) / 2;
+            possibleMoves.push({ x: lastMove.piece.coordinates.x - direction, y: lastMove.piece.coordinates.y });
         }
 
         return possibleMoves.filter((move) => this.checkKingIsSafe(move));

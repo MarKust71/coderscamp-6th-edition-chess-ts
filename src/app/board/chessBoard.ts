@@ -90,7 +90,7 @@ export class ChessBoard {
         const originCoords = JSON.parse(currentTarget.getAttribute('origin'));
         const piece = chessBoard.board[originCoords.x][originCoords.y].pieceOnSquare;
         unmarkLegalMoves(this.board);
-        GameHistory.newMove(new Movement(piece, originCoords, coordinates, runTimer.timers));
+        GameHistory.newMove(new Movement(piece, coordinates, runTimer.timers));
         piece.move(coordinates);
         GameHistoryView.append(GameHistory.lastMove().notation);
     }
